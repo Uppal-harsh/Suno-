@@ -65,18 +65,11 @@
         <button class="add-cart-btn">Add to Cart</button>
       </article>
     </div>
-  </section>
-<section id="products" class="product-list">
-  <h2>Available Items</h2>
-  <div class="product-grid" id="productGrid">
-    <!-- Product cards will be injected here via JS -->
-    <article class="product-card">
-      <img src="tomato.jpg" alt="Fresh Tomatoes">
-      <h3>Tomatoes</h3>
-      <p>₹30/kg</p>
-      <button class="add-cart-btn">Add to Cart</button>
-    </article>
-  </div>
+ <section id="cart" class="cart-section">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <p>Total: ₹<span id="cartTotal">0</span></p>
+  <button id="checkoutBtn">Proceed to Checkout</button>
 </section>
 </body>
 </html>
