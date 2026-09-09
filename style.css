@@ -26,3 +26,39 @@ nav {
     text-decoration: none;
     color: #222;
 }
+
+section {
+    padding: 40px;
+    margin: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.voice-assistant {
+    text-align: center;
+}
+
+.voice-assistant h2 {
+    font-size: 35px;
+}
+
+.voice-assistant button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.category-list {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.category-card {
+    padding: 15px 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+}
