@@ -78,12 +78,42 @@
   </section>
 
   <!-- 6. CART SECTION -->
-  <section id="cart" class="cart-section">
+  <section id="cart">
+
     <h2>Your Cart</h2>
-    <div id="cartItems"></div>
-    <p>Total: ₹<span id="cartTotal">0</span></p>
-    <button id="checkoutBtn">Proceed to Checkout</button>
-  </section>
+
+    <div id="cartItems">
+
+        <p class="empty-cart">
+            Your cart is empty.
+        </p>
+
+    </div>
+
+    <div class="cart-summary">
+
+        <div>
+            <span>Subtotal</span>
+            <strong id="cartSubtotal">₹0</strong>
+        </div>
+
+        <div>
+            <span>Delivery</span>
+            <strong id="deliveryCharge">₹0</strong>
+        </div>
+
+        <div>
+            <span>Total</span>
+            <strong id="cartTotal">₹0</strong>
+        </div>
+
+        <button id="checkoutButton" type="button">
+            Proceed to Checkout
+        </button>
+
+    </div>
+
+</section>
 
   <!-- 7. HELP SECTION -->
   <section id="help" class="help-section">
