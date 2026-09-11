@@ -81,3 +81,14 @@ section {
     height: 160px;
     object-fit: cover;
 }
+
+.cart-summary {
+    margin-top: 20px;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+}
+
+button {
+    padding: 8px 14px;
+    cursor: pointer;
+}
