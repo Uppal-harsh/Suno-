@@ -92,3 +92,21 @@ button {
     padding: 8px 14px;
     cursor: pointer;
 }
+
+footer {
+    padding: 30px 40px;
+    background-color: #222;
+    color: white;
+}
+
+.footer-links {
+    display: flex;
+    gap: 50px;
+}
+
+.footer-links a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 8px 0;
+}
