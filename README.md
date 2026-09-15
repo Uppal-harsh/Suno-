@@ -62,7 +62,7 @@ Completed:
 - Navigation
 - Categories
 - Product listing
-- Cart section
+- Cart Section
 - Voice assistant UI
 - Product card styling
 - Figma prototype
