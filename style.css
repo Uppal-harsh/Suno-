@@ -13,8 +13,31 @@ nav {
     background-color: white;
     border-bottom: 1px solid #ddd;
 }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 .logo h1 {
-    margin: 0;
+    margin:0;
+}
+.logo p {
+    margin: 2px 0 0 0;
+}
+.logo-mic {
+    background-color: #f4510b;
+    color: white;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
 }
 
 .nav-links {

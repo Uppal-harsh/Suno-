@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=.0">
   <title>EasyKart - Voice Shopping for Everyone</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -13,15 +13,19 @@
     <nav>
 
         <div class="logo">
+          <div class="logo-mic">🎤</div>
+          <div class="logo-text">
             <h1>EasyKart</h1>
+            <p>VOICE FIRST</p>
+          </div>
         </div>
 
         <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#categories">Categories</a>
-            <a href="#products">Products</a>
-            <a href="#cart">Cart</a>
-            <a href="#help">Help</a>
+            <a href="index.html">Home</a>
+            <a href="categories.html">Categories</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">Cart</a>
+            <a href="help.html">Help</a>
         </div>
         <div class="nav-actions">
             <button type="button">👤 Account</button>
@@ -52,78 +56,7 @@
     </div>
   </section>
 
-  <!-- 4. CATEGORIES SECTION -->
-  <section id="categories" class="categories">
-    <h2>Shop by Category</h2>
-    <div class="category-grid">
-      <button class="category-card">🥦 Vegetables</button>
-      <button class="category-card">💊 Medicines</button>
-      <button class="category-card">🥛 Dairy</button>
-      <button class="category-card">🧴 Personal Care</button>
-      <button class="category-card">🧼 Household</button>
-      <button class="category-card">👕 Clothes</button>
-    </div>
-  </section>
-
-  <!-- 5. PRODUCTS SECTION -->
-  <section id="products" class="product-list">
-    <h2>Available Items</h2>
-    <div class="product-grid" id="productGrid">
-      <article class="product-card">
-        <img src="tomato.jpg" alt="Fresh Tomatoes">
-        <h3>Tomatoes</h3>
-        <p>₹30/kg</p>
-        <button class="add-cart-btn">Add to Cart</button>
-      </article>
-    </div>
-  </section>
-
-  <!-- 6. CART SECTION -->
-  <section id="cart">
-
-    <h2>Your Cart</h2>
-
-    <div id="cartItems">
-
-        <p class="empty-cart">
-            Your cart is empty.
-        </p>
-
-    </div>
-
-    <div class="cart-summary">
-
-        <div>
-            <span>Subtotal</span>
-            <strong id="cartSubtotal">₹0</strong>
-        </div>
-
-        <div>
-            <span>Delivery</span>
-            <strong id="deliveryCharge">₹0</strong>
-        </div>
-
-        <div>
-            <span>Total</span>
-            <strong id="cartTotal">₹0</strong>
-        </div>
-
-        <button id="checkoutButton" type="button">
-            Proceed to Checkout
-        </button>
-
-    </div>
-
-</section>
-
-  <!-- 7. HELP SECTION -->
-  <section id="help" class="help-section">
-    <h2>Need Help?</h2>
-    <p>Say "Call for help" anytime, or press the button below.</p>
-    <button id="helpBtn">📞 Talk to a Human</button>
-  </section>
-
-  <!-- 8. FOOTER -->
+  <!-- 4. FOOTER -->
   <footer>
     <p>EasyKart</p>
   </footer>
