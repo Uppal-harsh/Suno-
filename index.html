@@ -3,27 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyKart - Voice First Shopping</title>
+  <title>EasyKart - Home</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Navigation Header -->
+  <!-- Navigation -->
   <header>
     <nav>
       <a href="index.html" class="logo">
-        <div class="logo-mic">
-          <svg class="mic-icon-svg" style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-          </svg>
-        </div>
+        <div class="logo-icon">🎤</div>
         <div class="logo-text">
           <h1>EasyKart</h1>
           <p>VOICE FIRST</p>
         </div>
       </a>
-
       <div class="nav-links">
         <a href="index.html" class="active">Home</a>
         <a href="categories.html">Categories</a>
@@ -35,32 +29,18 @@
   </header>
 
   <!-- Main Content -->
-  <main class="page-container">
-    <div class="home-layout">
-      <!-- Center Voice Hero -->
-      <div class="hero-center">
-        <h1 class="hero-title">Namaste!</h1>
-        <h2 class="hero-subtitle">What would you like to order today?</h2>
-        <span class="hero-hint">PRESS SPEAKER TO START</span>
+  <main class="container">
+    <div class="home-grid">
+      <!-- Voice Search Center -->
+      <section class="hero">
+        <h2>Namaste!</h2>
+        <h3>What would you like to order today?</h3>
+        <span class="hint">PRESS SPEAKER TO START</span>
 
-        <div class="mic-container">
-          <div class="mic-button-wrapper">
-            <button class="mic-button" id="micButton" aria-label="Start voice search">
-              <svg class="mic-icon-svg" viewBox="0 0 24 24">
-                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
+        <button class="mic-btn" aria-label="Mic">🎤</button>
+        <p class="listening-text">• Listening...</p>
 
-        <div class="listening-indicator">
-          <span class="dot-red"></span>
-          <span>Listening...</span>
-        </div>
-
-        <div class="waveform">
-          <span></span>
+        <div class="wave-bars">
           <span></span>
           <span></span>
           <span></span>
@@ -68,37 +48,28 @@
           <span></span>
           <span></span>
         </div>
-      </div>
+      </section>
 
-      <!-- Right Voice Assistant Card -->
-      <div class="assistant-card">
-        <div class="assistant-header">
-          <div class="assistant-avatar">
-            <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-              <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-            </svg>
-          </div>
-          <div class="assistant-info">
+      <!-- Assistant Widget -->
+      <aside class="chat-card">
+        <div class="chat-header">
+          <div class="avatar">🎤</div>
+          <div>
             <h4>EasyKart Assistant</h4>
-            <p><span class="online-dot"></span> Online • Ready to help</p>
+            <p>● Online • Ready to help</p>
           </div>
         </div>
-
-        <div class="assistant-body">
-          <div class="chat-bubble">
+        <div class="chat-body">
+          <div class="chat-msg">
             Hello! I'm your shopping assistant. What do you need?
-            <span class="suggestion">Try: "Show me black shirts under ₹1000"</span>
+            <small>Try: "Show me black shirts under ₹1000"</small>
           </div>
         </div>
-
-        <div class="assistant-input-area">
-          <div class="chat-input-wrapper">
-            <input type="text" class="chat-input" placeholder="Or type here...">
-          </div>
-          <button class="send-btn" type="button">Send</button>
+        <div class="chat-footer">
+          <input type="text" placeholder="Or type here...">
+          <button type="button">Send</button>
         </div>
-      </div>
+      </aside>
     </div>
   </main>
 
