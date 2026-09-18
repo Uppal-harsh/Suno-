@@ -2,63 +2,105 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=.0">
-  <title>EasyKart - Voice Shopping for Everyone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyKart - Voice First Shopping</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- 1. HEADER -->
+  <!-- Navigation Header -->
   <header>
     <nav>
+      <a href="index.html" class="logo">
+        <div class="logo-mic">
+          <svg class="mic-icon-svg" style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <h1>EasyKart</h1>
+          <p>VOICE FIRST</p>
+        </div>
+      </a>
 
-        <div class="logo">
-          <div class="logo-mic">🎤</div>
-          <div class="logo-text">
-            <h1>EasyKart</h1>
-            <p>VOICE FIRST</p>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="categories.html">Categories</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="help.html">Help</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="page-container">
+    <div class="home-layout">
+      <!-- Center Voice Hero -->
+      <div class="hero-center">
+        <h1 class="hero-title">Namaste!</h1>
+        <h2 class="hero-subtitle">What would you like to order today?</h2>
+        <span class="hero-hint">PRESS SPEAKER TO START</span>
+
+        <div class="mic-container">
+          <div class="mic-button-wrapper">
+            <button class="mic-button" id="micButton" aria-label="Start voice search">
+              <svg class="mic-icon-svg" viewBox="0 0 24 24">
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+              </svg>
+            </button>
           </div>
         </div>
 
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="categories.html">Categories</a>
-            <a href="products.html">Products</a>
-            <a href="cart.html">Cart</a>
-            <a href="help.html">Help</a>
+        <div class="listening-indicator">
+          <span class="dot-red"></span>
+          <span>Listening...</span>
         </div>
-        <div class="nav-actions">
-            <button type="button">👤 Account</button>
-            <button type="button">🛒 Cart</button>
+
+        <div class="waveform">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-    </nav>
-</header>
+      </div>
 
+      <!-- Right Voice Assistant Card -->
+      <div class="assistant-card">
+        <div class="assistant-header">
+          <div class="assistant-avatar">
+            <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+              <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+            </svg>
+          </div>
+          <div class="assistant-info">
+            <h4>EasyKart Assistant</h4>
+            <p><span class="online-dot"></span> Online • Ready to help</p>
+          </div>
+        </div>
 
-  <!-- 2. HERO SECTION -->
-  <section class="hero">
-    <h1>Namaste! What would you like to order today?</h1>
-    <p>Tap the microphone and just speak — we'll do the rest.</p>
-    <button class="mic-button" id="micButton" aria-label="Start voice chat">
-      🎤
-    </button>
-    <p id="voiceStatus">Listening... </p>
-  </section>
+        <div class="assistant-body">
+          <div class="chat-bubble">
+            Hello! I'm your shopping assistant. What do you need?
+            <span class="suggestion">Try: "Show me black shirts under ₹1000"</span>
+          </div>
+        </div>
 
-  <!-- 3. AI CHAT BOX -->
-  <section class="ai-chat-box" id="chatBox">
-    <div class="chat-messages" id="chatMessages">
-      <div class="message assistant">Hello! I'm your shopping assistant. What do you need?</div>
+        <div class="assistant-input-area">
+          <div class="chat-input-wrapper">
+            <input type="text" class="chat-input" placeholder="Or type here...">
+          </div>
+          <button class="send-btn" type="button">Send</button>
+        </div>
+      </div>
     </div>
-    <div class="chat-input-row">
-      <input type="text" id="textInput" placeholder="Or type here...">
-      <button id="sendBtn">Send</button>
-    </div>
-  </section>
+  </main>
 
-  <!-- 4. FOOTER -->
-  <footer>
-    <p>EasyKart</p>
-  </footer>
 </body>
 </html>

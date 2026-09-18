@@ -1,11 +1,135 @@
-  <section id="products" class="product-list">
-    <h2>Available Items</h2>
-    <div class="product-grid" id="productGrid">
-      <article class="product-card">
-        <img src="tomato.png" alt="Fresh Tomatoes" style="width: 200px; height: auto;">
-        <h3>Tomatoes</h3>
-        <p>₹30/kg</p>
-        <button class="add-cart-btn">Add to Cart</button>
-      </article>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyKart - Voice Search Results</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <nav>
+      <a href="index.html" class="logo">
+        <div class="logo-mic">
+          <svg class="mic-icon-svg" style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <h1>EasyKart</h1>
+          <p>VOICE FIRST</p>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="categories.html">Categories</a>
+        <a href="products.html" class="active">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="help.html">Help</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Voice Query Banner -->
+  <div class="voice-banner">
+    <div class="voice-dialogue">
+      <div class="dialogue-line">
+        <div class="dialogue-badge badge-user">A</div>
+        <span class="dialogue-text">You said: <strong>“I need a black shirt under ₹1000”</strong></span>
+      </div>
+      <div class="dialogue-line">
+        <div class="dialogue-badge badge-assistant">
+          <svg style="width: 12px; height: 12px;" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+          </svg>
+        </div>
+        <span class="dialogue-text assistant-text">Assistant: “Got it. Showing black shirts under ₹1000.”</span>
+      </div>
     </div>
-  </section>
+
+    <div class="ready-pill">
+      <span class="dot-red"></span>
+      <span>Ready to Speak</span>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="page-container">
+    <div class="results-header-section">
+      <div class="results-heading">
+        <h2>Found 4 Shirts Under ₹1000</h2>
+        <p>Sorted by high-rating. Say “Select number 1” or “Add first shirt to cart”</p>
+      </div>
+
+      <div class="filter-pill">
+        <span>Filter: Max ₹1000 • Black</span>
+        <span class="filter-check">✓</span>
+      </div>
+    </div>
+
+    <div class="products-grid">
+      <!-- Product 1 -->
+      <div class="product-result-card">
+        <div class="product-image-wrap">
+          <span class="product-badge-num">1</span>
+          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80" alt="Classic Regular Fit Black Tee" class="product-img">
+        </div>
+        <div class="product-meta-row">
+          <span class="product-price">₹699</span>
+          <span class="product-rating"><span class="star-icon">★</span> 4.8</span>
+        </div>
+        <h3 class="product-name">Classic Regular Fit Black Tee</h3>
+        <button class="btn-add-cart" type="button">Add to Cart</button>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-result-card">
+        <div class="product-image-wrap">
+          <span class="product-badge-num">2</span>
+          <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&auto=format&fit=crop&q=80" alt="Smart Casual Black Oxford Shirt" class="product-img">
+        </div>
+        <div class="product-meta-row">
+          <span class="product-price">₹950</span>
+          <span class="product-rating"><span class="star-icon">★</span> 4.7</span>
+        </div>
+        <h3 class="product-name">Smart Casual Black Oxford Shirt</h3>
+        <button class="btn-add-cart" type="button">Add to Cart</button>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-result-card">
+        <div class="product-image-wrap">
+          <span class="product-badge-num">3</span>
+          <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500&auto=format&fit=crop&q=80" alt="Athletic Quick-Dry Sport Shirt" class="product-img">
+        </div>
+        <div class="product-meta-row">
+          <span class="product-price">₹550</span>
+          <span class="product-rating"><span class="star-icon">★</span> 4.5</span>
+        </div>
+        <h3 class="product-name">Athletic Quick-Dry Sport Shirt</h3>
+        <button class="btn-add-cart" type="button">Add to Cart</button>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-result-card">
+        <div class="product-image-wrap">
+          <span class="product-badge-num">4</span>
+          <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&auto=format&fit=crop&q=80" alt="Casual Black Linen Mandarin Shirt" class="product-img">
+        </div>
+        <div class="product-meta-row">
+          <span class="product-price">₹899</span>
+          <span class="product-rating"><span class="star-icon">★</span> 4.9</span>
+        </div>
+        <h3 class="product-name">Casual Black Linen Mandarin Shirt</h3>
+        <button class="btn-add-cart" type="button">Add to Cart</button>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>

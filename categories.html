@@ -1,11 +1,97 @@
- <section id="categories" class="categories">
-    <h2>Shop by Category</h2>
-    <div class="category-grid">
-      <button class="category-card">🥦 Vegetables</button>
-      <button class="category-card">💊 Medicines</button>
-      <button class="category-card">🥛 Dairy</button>
-      <button class="category-card">🧴 Personal Care</button>
-      <button class="category-card">🧼 Household</button>
-      <button class="category-card">👕 Clothes</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyKart - Categories</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <nav>
+      <a href="index.html" class="logo">
+        <div class="logo-mic">
+          <svg class="mic-icon-svg" style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <h1>EasyKart</h1>
+          <p>VOICE FIRST</p>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="categories.html" class="active">Categories</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="help.html">Help</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="page-container">
+    <h1 class="categories-title">Categories</h1>
+
+    <div class="categories-grid">
+      <!-- Category 1: Clothing -->
+      <div class="category-item-card">
+        <div class="category-image-wrap">
+          <span class="category-badge-num">1</span>
+          <img src="https://images.unsplash.com/photo-1542272604-780c96856592?w=500&auto=format&fit=crop&q=80" alt="Clothing" class="category-img">
+        </div>
+        <div class="category-meta-row">
+          <span class="category-name">Clothing</span>
+          <span class="category-count">14 categories</span>
+        </div>
+        <a href="products.html" class="btn-open-category">Open</a>
+      </div>
+
+      <!-- Category 2: Electronics -->
+      <div class="category-item-card">
+        <div class="category-image-wrap">
+          <span class="category-badge-num">2</span>
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=80" alt="Electronics" class="category-img">
+        </div>
+        <div class="category-meta-row">
+          <span class="category-name">Electronics</span>
+          <span class="category-count">8 categories</span>
+        </div>
+        <a href="products.html" class="btn-open-category">Open</a>
+      </div>
+
+      <!-- Category 3: Home & Kitchen -->
+      <div class="category-item-card">
+        <div class="category-image-wrap">
+          <span class="category-badge-num">3</span>
+          <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=500&auto=format&fit=crop&q=80" alt="Home & Kitchen" class="category-img">
+        </div>
+        <div class="category-meta-row">
+          <span class="category-name">Home & Kitchen</span>
+          <span class="category-count">12 categories</span>
+        </div>
+        <a href="products.html" class="btn-open-category">Open</a>
+      </div>
+
+      <!-- Category 4: Accessories -->
+      <div class="category-item-card">
+        <div class="category-image-wrap">
+          <span class="category-badge-num">4</span>
+          <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&auto=format&fit=crop&q=80" alt="Accessories" class="category-img">
+        </div>
+        <div class="category-meta-row">
+          <span class="category-name">Accessories</span>
+          <span class="category-count">12 categories</span>
+        </div>
+        <a href="products.html" class="btn-open-category">Open</a>
+      </div>
     </div>
-  </section>
+  </main>
+
+</body>
+</html>
