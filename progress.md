@@ -61,6 +61,10 @@ Group: 4
 - Designed product cards
 - Removed speech recognition functionality
 
+### September 18, 2026
+- Figma design implementation and styles sorting
+- Fixing the colour grading
+
 ## Next Steps
 1. Complete JavaScript interactions.
 2. Connect product cards with the cart.
