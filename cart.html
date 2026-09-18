@@ -3,27 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyKart - Shopping Cart</title>
+  <title>EasyKart - Cart</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Navigation Header -->
+  <!-- Navigation -->
   <header>
     <nav>
       <a href="index.html" class="logo">
-        <div class="logo-mic">
-          <svg class="mic-icon-svg" style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-          </svg>
-        </div>
+        <div class="logo-icon">🎤</div>
         <div class="logo-text">
           <h1>EasyKart</h1>
           <p>VOICE FIRST</p>
         </div>
       </a>
-
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="categories.html">Categories</a>
@@ -35,81 +29,74 @@
   </header>
 
   <!-- Main Content -->
-  <main class="page-container">
-    <h1 class="cart-header-title">Your Shopping Cart (3 Items)</h1>
+  <main class="container">
+    <h2 class="cart-title">Your Shopping Cart (3 Items)</h2>
 
     <div class="cart-layout">
-      <!-- Items List -->
-      <div class="cart-items-list">
+      <!-- Cart Items -->
+      <section class="cart-list">
         <!-- Item 1 -->
-        <div class="cart-item-card">
-          <span class="item-index-badge">1</span>
-          <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=300&auto=format&fit=crop&q=80" alt="Smart Casual Black Oxford Shirt" class="item-image">
-          <div class="item-info">
-            <h3 class="item-title">Smart Casual Black Oxford Shirt</h3>
-            <p class="item-subprice">₹950 each</p>
+        <article class="cart-item">
+          <span class="item-num">1</span>
+          <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=200&auto=format&fit=crop&q=80" alt="Shirt">
+          <div class="item-details">
+            <h4>Smart Casual Black Oxford Shirt</h4>
+            <p>₹950 each</p>
           </div>
-          <div class="quantity-stepper">
-            <button class="qty-btn" type="button">−</button>
-            <span class="qty-val">1</span>
-            <button class="qty-btn" type="button">+</button>
+          <div class="qty-control">
+            <button type="button">−</button>
+            <span>1</span>
+            <button type="button">+</button>
           </div>
-          <div class="item-total-price">₹950</div>
-        </div>
+          <span class="item-price">₹950</span>
+        </article>
 
         <!-- Item 2 -->
-        <div class="cart-item-card">
-          <span class="item-index-badge">2</span>
-          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&auto=format&fit=crop&q=80" alt="Classic Regular Fit Black Tee" class="item-image">
-          <div class="item-info">
-            <h3 class="item-title">Classic Regular Fit Black Tee</h3>
-            <p class="item-subprice">₹699 each</p>
+        <article class="cart-item">
+          <span class="item-num">2</span>
+          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=200&auto=format&fit=crop&q=80" alt="T-Shirt">
+          <div class="item-details">
+            <h4>Classic Regular Fit Black Tee</h4>
+            <p>₹699 each</p>
           </div>
-          <div class="quantity-stepper">
-            <button class="qty-btn" type="button">−</button>
-            <span class="qty-val">2</span>
-            <button class="qty-btn" type="button">+</button>
+          <div class="qty-control">
+            <button type="button">−</button>
+            <span>2</span>
+            <button type="button">+</button>
           </div>
-          <div class="item-total-price">₹1398</div>
-        </div>
-      </div>
+          <span class="item-price">₹1398</span>
+        </article>
+      </section>
 
-      <!-- Right Sidebar: Order Summary & Help -->
-      <div class="cart-sidebar">
-        <!-- Order Summary Card -->
-        <div class="order-summary-card">
-          <h2 class="summary-title">Order Summary</h2>
-          <div class="summary-row">
+      <!-- Sidebar -->
+      <aside class="cart-sidebar">
+        <!-- Order Summary -->
+        <div class="summary-card">
+          <h3>Order Summary</h3>
+          <div class="summary-line">
             <span>Items Subtotal</span>
-            <span>₹2348</span>
+            <strong>₹2348</strong>
           </div>
-          <div class="summary-row">
+          <div class="summary-line">
             <span>Home Delivery</span>
-            <span>₹80</span>
+            <strong>₹80</strong>
           </div>
           <div class="summary-divider"></div>
-          <div class="grand-total-row">
+          <div class="total-line">
             <span>Grand Total</span>
-            <span class="grand-total-price">₹2428</span>
+            <span class="total-price">₹2428</span>
           </div>
-          <button class="btn-checkout" type="button">Proceed to Checkout</button>
+          <button class="btn-primary" type="button">Proceed to Checkout</button>
         </div>
 
-        <!-- Need Help Card -->
+        <!-- Need Help -->
         <div class="help-card">
-          <div class="help-card-header">
-            <div class="help-icon">
-              <svg style="width: 15px; height: 15px;" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.44-5.15-3.75-6.59-6.59l1.97-1.57c.28-.28.36-.67.25-1.02A11.36 11.36 0 0 1 8.5 4.3c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-.99-.92z"/>
-              </svg>
-            </div>
-            <h4>Need Help?</h4>
-          </div>
-          <p class="help-subtitle">Say "Call for help" anytime.</p>
+          <h4>📞 Need Help?</h4>
+          <p class="help-sub">Say "Call for help" anytime.</p>
           <p class="help-desc">Our assistants are available to complete your order over phone or assist with sizing.</p>
-          <button class="btn-talk-human" type="button">Talk to a Human</button>
+          <button class="btn-orange" type="button">Talk to a Human</button>
         </div>
-      </div>
+      </aside>
     </div>
   </main>
 
