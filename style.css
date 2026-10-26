@@ -876,7 +876,7 @@ nav {
 .category-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
+  gap: 19px;
 }
 
 .category-tile {
