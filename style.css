@@ -598,3 +598,458 @@ nav {
     gap: 10px;
   }
 }
+
+
+/* =====================================
+   EASYKART - NEW HOMEPAGE DESIGN
+===================================== */
+
+.container {
+  max-width: 1240px;
+}
+
+.home-grid {
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 55px;
+  min-height: 480px;
+  padding: 45px 0 35px;
+  align-items: center;
+}
+
+/* Hero */
+
+.hero {
+  text-align: left;
+  animation: fadeUp 0.7s ease both;
+}
+
+.ai-badge {
+  display: inline-block;
+  background: #fff0e9;
+  color: #e64a19;
+  padding: 9px 17px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  border: 1px solid #ffd8c9;
+}
+
+.hero h2 {
+  font-size: clamp(36px, 4vw, 52px);
+  letter-spacing: -1.5px;
+  margin-bottom: 8px;
+}
+
+.hero h3 {
+  font-size: clamp(25px, 3vw, 37px);
+  line-height: 1.2;
+  letter-spacing: -1px;
+  max-width: 610px;
+  margin-bottom: 18px;
+}
+
+.orange-text {
+  color: #e64a19;
+}
+
+.hero-description {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #64748b;
+  max-width: 500px;
+  margin-bottom: 30px;
+}
+
+/* Mic */
+
+.mic-area {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.mic-btn {
+  flex-shrink: 0;
+  width: 76px;
+  height: 76px;
+  margin: 0;
+  border: 7px solid #fdeee9;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7043, #e64a19);
+  box-shadow: 0 10px 28px rgba(230, 74, 25, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.mic-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(230, 74, 25, 0.35);
+}
+
+.mic-btn.is-listening {
+  animation: micGlow 1.3s infinite;
+}
+
+@keyframes micGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(230, 74, 25, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 18px rgba(230, 74, 25, 0);
+  }
+}
+
+.listening-text {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* Suggestions */
+
+.suggestion-area > p {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 13px;
+}
+
+.suggestion-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.suggestion-chip {
+  border: 1px solid #e5e7eb;
+  background: white;
+  color: #334155;
+  border-radius: 30px;
+  padding: 11px 15px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.suggestion-chip:hover {
+  background: #fff0e9;
+  border-color: #e64a19;
+  color: #e64a19;
+  transform: translateY(-3px);
+}
+
+/* Chat */
+
+.chat-card {
+  border-radius: 18px;
+  box-shadow: 0 15px 45px rgba(15, 23, 42, 0.07);
+  transition: box-shadow 0.3s;
+}
+
+.chat-card:hover {
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+}
+
+.chat-header {
+  padding: 18px;
+}
+
+.assistant-info {
+  flex: 1;
+}
+
+.assistant-sparkle {
+  color: #fb923c;
+  font-size: 22px;
+}
+
+.chat-body {
+  height: 250px;
+  overflow-y: auto;
+}
+
+.chat-msg {
+  border-radius: 12px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.user-message {
+  background: #fff0e9;
+  border-color: #ffd8c9;
+  margin-left: 20px;
+}
+
+.chat-footer input {
+  min-width: 0;
+}
+
+.chat-footer input:focus {
+  border-color: #e64a19;
+  box-shadow: 0 0 0 3px rgba(230, 74, 25, 0.08);
+}
+
+/* Benefits */
+
+.benefits-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 26px 30px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  margin: 10px 0 65px;
+}
+
+.benefit {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.benefit > span {
+  width: 45px;
+  height: 45px;
+  background: #fff0e9;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+  flex-shrink: 0;
+}
+
+.benefit h4 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.benefit p {
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* Categories */
+
+.home-categories {
+  margin-bottom: 65px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #e64a19;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.section-heading h2 {
+  font-size: 28px;
+  letter-spacing: -0.7px;
+  margin-bottom: 8px;
+}
+
+.section-heading p:not(.section-eyebrow) {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.view-all {
+  color: #e64a19;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.category-tile {
+  text-decoration: none;
+  color: #1a1a1a;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 25px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.category-tile:hover {
+  transform: translateY(-7px);
+  border-color: #ffd1c2;
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.07);
+}
+
+.category-emoji {
+  width: 75px;
+  height: 75px;
+  background: #fff3ed;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  margin: 0 auto 20px;
+  transition: transform 0.3s;
+}
+
+.category-tile:hover .category-emoji {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.category-tile h4 {
+  font-size: 16px;
+  margin-bottom: 7px;
+}
+
+.category-tile p {
+  color: #e64a19;
+  font-size: 12px;
+}
+
+/* Bottom CTA */
+
+.bottom-cta {
+  background: linear-gradient(120deg, #0f172a, #1e293b);
+  border-radius: 20px;
+  padding: 42px 45px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.bottom-cta span {
+  color: #fb923c;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
+.bottom-cta h2 {
+  font-size: 30px;
+  margin: 12px 0;
+}
+
+.bottom-cta p {
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.bottom-cta button {
+  border: none;
+  border-radius: 30px;
+  padding: 15px 22px;
+  background: #e64a19;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+
+.bottom-cta button:hover {
+  background: #f4511e;
+  transform: translateY(-3px);
+}
+
+/* Entrance animation */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    padding: 30px 0;
+  }
+
+  .benefits-section {
+    grid-template-columns: 1fr;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    text-align: center;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .mic-area,
+  .suggestion-chips {
+    justify-content: center;
+  }
+
+  .hero h2 {
+    font-size: 36px;
+  }
+
+  .hero h3 {
+    font-size: 26px;
+  }
+
+  .category-grid {
+    gap: 12px;
+  }
+
+  .category-tile {
+    padding: 20px 10px;
+  }
+
+  .bottom-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 25px;
+  }
+
+  .bottom-cta h2 {
+    font-size: 25px;
+  }
+
+  .bottom-cta button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .mic-btn.is-listening {
+    animation: none;
+  }
+}
