@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyKart - Home</title>
+  <title>EasyKart - AI Voice Shopping</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,6 +19,7 @@
           <p>VOICE FIRST</p>
         </div>
       </a>
+
       <div class="nav-links">
         <a href="index.html" class="active">Home</a>
         <a href="categories.html">Categories</a>
@@ -28,43 +30,299 @@
     </nav>
   </header>
 
-  <!-- Main Content -->
   <main class="container">
+
+    <!-- Hero + Assistant -->
     <div class="home-grid">
-      <!-- Voice Search Center -->
+
       <section class="hero">
-        <h2>Namaste!</h2>
-        <h3>What would you like to order today?</h3>
-        <span class="hint">PRESS SPEAKER TO START</span>
 
-        <button class="mic-btn" aria-label="Mic">🎤</button>
-        <p class="listening-text">• Listening...</p>
+        <div class="ai-badge">
+          ✨ AI-POWERED VOICE SHOPPING
+        </div>
 
-      
+        <h2>Namaste! 👋</h2>
+        <h3>
+          Your next favorite find is
+          <span class="orange-text">one voice away.</span>
+        </h3>
+
+        <p class="hero-description">
+          Shopping has never been this simple.
+          Just tell EasyKart what you're looking for,
+          and let your shopping assistant help.
+        </p>
+
+        <div class="mic-area">
+          <button class="mic-btn" id="micBtn"
+                  aria-label="Start voice search">
+            🎤
+          </button>
+
+          <p class="listening-text" id="voiceStatus">
+            Tap to start speaking
+          </p>
+        </div>
+
+        <div class="suggestion-area">
+          <p>✨ Try asking EasyKart</p>
+
+          <div class="suggestion-chips">
+            <button type="button" class="suggestion-chip"
+                    data-query="Show me headphones under ₹2000">
+              🎧 Headphones under ₹2000
+            </button>
+
+            <button type="button" class="suggestion-chip"
+                    data-query="Show me sneakers">
+              👟 Trending Sneakers
+            </button>
+
+            <button type="button" class="suggestion-chip"
+                    data-query="Show me smartwatches">
+              ⌚ Smartwatches
+            </button>
+          </div>
+        </div>
+
       </section>
 
-      <!-- Assistant Widget -->
+      <!-- AI Assistant -->
       <aside class="chat-card">
+
         <div class="chat-header">
-          <div class="avatar">🎤</div>
-          <div>
-            <h4>EasyKart Assistant</h4>
-            <p>● Online • Ready to help</p>
+          <div class="avatar">🤖</div>
+          <div class="assistant-info">
+            <h4>EasyKart AI Assistant</h4>
+            <p>● Online • Your shopping companion</p>
           </div>
+          <span class="assistant-sparkle">✦</span>
         </div>
-        <div class="chat-body">
+
+        <div class="chat-body" id="chatBody">
           <div class="chat-msg">
-            Hello! I'm your shopping assistant. What do you need?
-            <small>Try: "Show me black shirts under ₹1000"</small>
+            👋 Hey there! Welcome to EasyKart.
+            <br><br>
+            Tell me what you're looking for,
+            and I'll help you get started.
+            <small>
+              Try: "Show me black shirts under ₹1000"
+            </small>
           </div>
         </div>
+
         <div class="chat-footer">
-          <input type="text" placeholder="Or type here...">
-          <button type="button">Send</button>
+          <input
+            type="text"
+            id="chatInput"
+            placeholder="Ask me anything..."
+            aria-label="Chat message"
+          >
+          <button type="button" id="sendBtn">
+            Send ➤
+          </button>
         </div>
+
       </aside>
+
     </div>
+
+    <!-- Benefits -->
+    <section class="benefits-section">
+
+      <div class="benefit">
+        <span>🎙️</span>
+        <div>
+          <h4>Voice First</h4>
+          <p>Speak naturally to search</p>
+        </div>
+      </div>
+
+      <div class="benefit">
+        <span>✨</span>
+        <div>
+          <h4>AI Assisted</h4>
+          <p>Smarter shopping experience</p>
+        </div>
+      </div>
+
+      <div class="benefit">
+        <span>⚡</span>
+        <div>
+          <h4>Quick Discovery</h4>
+          <p>Find products with ease</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Categories -->
+    <section class="home-categories">
+
+      <div class="section-heading">
+        <div>
+          <p class="section-eyebrow">DISCOVER MORE</p>
+          <h2>Explore Categories</h2>
+          <p>Find exactly what you're looking for.</p>
+        </div>
+
+        <a href="categories.html" class="view-all">
+          View all →
+        </a>
+      </div>
+
+      <div class="category-grid">
+
+        <a href="categories.html" class="category-tile">
+          <div class="category-emoji">👕</div>
+          <h4>Fashion</h4>
+          <p>Explore styles →</p>
+        </a>
+
+        <a href="categories.html" class="category-tile">
+          <div class="category-emoji">📱</div>
+          <h4>Electronics</h4>
+          <p>Explore gadgets →</p>
+        </a>
+
+        <a href="categories.html" class="category-tile">
+          <div class="category-emoji">👟</div>
+          <h4>Footwear</h4>
+          <p>Explore shoes →</p>
+        </a>
+
+        <a href="categories.html" class="category-tile">
+          <div class="category-emoji">🎧</div>
+          <h4>Accessories</h4>
+          <p>Explore more →</p>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="bottom-cta">
+      <div>
+        <span>✨ THE FUTURE OF SHOPPING</span>
+        <h2>Don't type it. Just say it.</h2>
+        <p>Discover a simpler way to shop with EasyKart.</p>
+      </div>
+
+      <button type="button" id="bottomMicBtn">
+        🎤 Try Voice Shopping
+      </button>
+    </section>
+
   </main>
+
+  <script>
+    const micBtn = document.getElementById("micBtn");
+    const voiceStatus = document.getElementById("voiceStatus");
+    const chatInput = document.getElementById("chatInput");
+    const chatBody = document.getElementById("chatBody");
+    const sendBtn = document.getElementById("sendBtn");
+
+    function addMessage(message, type = "user") {
+      const msg = document.createElement("div");
+      msg.className = "chat-msg " +
+        (type === "user" ? "user-message" : "");
+
+      msg.textContent = message;
+      chatBody.appendChild(msg);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function sendMessage() {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      addMessage(message);
+      chatInput.value = "";
+
+      // Connect your existing assistant API here.
+      addMessage(
+        "I've received your request. Product search " +
+        "will be available once the shopping backend is connected.",
+        "assistant"
+      );
+    }
+
+    sendBtn.addEventListener("click", sendMessage);
+
+    chatInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") sendMessage();
+    });
+
+    document.querySelectorAll(".suggestion-chip")
+      .forEach((chip) => {
+        chip.addEventListener("click", () => {
+          chatInput.value = chip.dataset.query;
+          chatInput.focus();
+        });
+      });
+
+    const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+
+      recognition.lang = "en-IN";
+      recognition.interimResults = false;
+      recognition.continuous = false;
+
+      micBtn.addEventListener("click", () => {
+        try {
+          recognition.start();
+        } catch (error) {
+          voiceStatus.textContent =
+            "Voice recognition is already active";
+        }
+      });
+
+      recognition.onstart = () => {
+        micBtn.classList.add("is-listening");
+        voiceStatus.textContent = "🔴 Listening...";
+      };
+
+      recognition.onresult = (event) => {
+        const transcript =
+          event.results[0][0].transcript;
+
+        chatInput.value = transcript;
+        voiceStatus.textContent = "✓ Voice captured!";
+        chatInput.focus();
+      };
+
+      recognition.onerror = (event) => {
+        voiceStatus.textContent =
+          "Voice error: " + event.error;
+      };
+
+      recognition.onend = () => {
+        micBtn.classList.remove("is-listening");
+
+        if (voiceStatus.textContent === "🔴 Listening...") {
+          voiceStatus.textContent = "Tap to start speaking";
+        }
+      };
+
+    } else {
+      micBtn.disabled = true;
+      voiceStatus.textContent =
+        "Voice recognition is unavailable in this browser";
+    }
+
+    document.getElementById("bottomMicBtn")
+      .addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+        micBtn.click();
+      });
+  </script>
 
 </body>
 </html>
