@@ -8,7 +8,7 @@
   </head>
   <body>
     <!-- Navigation -->
-    <header>
+    <header id="top">
       <nav>
         <a href="index.html" class="logo">
           <div class="logo-icon">🎤</div>
@@ -21,7 +21,7 @@
           <a href="index.html">Home</a>
           <a href="categories.html">Categories</a>
           <a href="products.html">Products</a>
-          <a href="cart.html" class="active">Cart</a>
+          <a href="cart.html" class="active" aria-current="page">Cart</a>
           <a href="help.html">Help</a>
         </div>
       </nav>
@@ -90,6 +90,32 @@
         </aside>
       </div>
     </main>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>EasyKart</h2>
+          <p>Good finds. Simple shopping. Discover everyday favourites with a search or your voice.</p>
+        </div>
+        <div class="footer-links">
+          <h3>Explore</h3>
+          <a href="index.html">Home</a>
+          <a href="categories.html">Categories</a>
+          <a href="products.html">All products</a>
+        </div>
+        <div class="footer-links">
+          <h3>Here to help</h3>
+          <a href="cart.html">Your cart</a>
+          <a href="help.html">Request help</a>
+          <a href="index.html#how-it-works">How it works</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>EasyKart · A student group project.</span>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
     <!-- JavaScript copies this template once for each saved product. -->
     <template id="cartTemplate">
       <article class="cart-item">

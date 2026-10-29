@@ -1,27 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyKart - AI Voice Shopping</title>
+  <title>EasyKart - Voice Shopping</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Navigation -->
-  <header>
+  <header id="top">
     <nav>
       <a href="index.html" class="logo">
-        <div class="logo-icon">🎤</div>
-        <div class="logo-text">
-          <h1>EasyKart</h1>
-          <p>VOICE FIRST</p>
-        </div>
+        <div class="logo-icon" aria-hidden="true">🎤</div>
+        <div class="logo-text"><h1>EasyKart</h1><p>VOICE FIRST</p></div>
       </a>
-
       <div class="nav-links">
-        <a href="index.html" class="active">Home</a>
+        <a href="index.html" class="active" aria-current="page">Home</a>
         <a href="categories.html">Categories</a>
         <a href="products.html">Products</a>
         <a href="cart.html">Cart</a>
@@ -31,298 +24,176 @@
   </header>
 
   <main class="container">
-
-    <!-- Hero + Assistant -->
-    <div class="home-grid">
-
-      <section class="hero">
-
-        <div class="ai-badge">
-          ✨ AI-POWERED VOICE SHOPPING
-        </div>
-
-        <h2>Namaste! 👋</h2>
-        <h3>
-          Your next favorite find is
-          <span class="orange-text">one voice away.</span>
-        </h3>
-
-        <p class="hero-description">
-          Shopping has never been this simple.
-          Just tell EasyKart what you're looking for,
-          and let your shopping assistant help.
-        </p>
-
-        <div class="mic-area">
-          <button class="mic-btn" id="micBtn"
-                  aria-label="Start voice search">
-            🎤
+    <!-- Two columns: introduction on the left, product photos on the right. -->
+    <section class="home-hero" aria-labelledby="homeTitle">
+      <div class="hero-copy">
+        <p class="home-eyebrow">A little discovery. Every day.</p>
+        <h2 id="homeTitle">Your next find,<br><span>one voice away.</span></h2>
+        <p class="hero-description">From everyday essentials to your next favourite.
+          Say it, find it, make it yours.</p>
+        <div class="hero-actions">
+          <button class="home-button" id="micBtn" type="button">
+            <span aria-hidden="true">🎤</span> Try voice shopping
           </button>
-
-          <p class="listening-text" id="voiceStatus">
-            Tap to start speaking
-          </p>
+          <a class="home-button secondary" href="products.html">Browse products ↗</a>
         </div>
+        <p class="voice-status" id="voiceStatus" role="status">Prefer typing? Search below.</p>
+        <a class="scroll-link" href="#categories">Explore below ↓</a>
+      </div>
 
-        <div class="suggestion-area">
-          <p>✨ Try asking EasyKart</p>
+      <!-- The smaller photo is positioned over the larger photo using CSS. -->
+      <div class="hero-photos">
+        <a class="featured-photo" href="products.html?category=electronics">
+          <img src="images/headphones.jpg" alt="Explore wireless headphones">
+          <span>Everyday audio · ₹1,499</span>
+        </a>
+        <a class="floating-photo" href="products.html?category=footwear">
+          <img src="images/sneakers.jpg" alt="Explore running sneakers">
+          <span>Find your stride <strong>₹1,299</strong></span>
+        </a>
+      </div>
+    </section>
 
-          <div class="suggestion-chips">
-            <button type="button" class="suggestion-chip"
-                    data-query="Show me headphones under ₹2000">
-              🎧 Headphones under ₹2000
-            </button>
-
-            <button type="button" class="suggestion-chip"
-                    data-query="Show me sneakers">
-              👟 Trending Sneakers
-            </button>
-
-            <button type="button" class="suggestion-chip"
-                    data-query="Show me smartwatches">
-              ⌚ Smartwatches
-            </button>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- AI Assistant -->
-      <aside class="chat-card">
-
-        <div class="chat-header">
-          <div class="avatar">🤖</div>
-          <div class="assistant-info">
-            <h4>EasyKart AI Assistant</h4>
-            <p>● Online • Your shopping companion</p>
-          </div>
-          <span class="assistant-sparkle">✦</span>
-        </div>
-
-        <div class="chat-body" id="chatBody">
-          <div class="chat-msg">
-            👋 Hey there! Welcome to EasyKart.
-            <br><br>
-            Tell me what you're looking for,
-            and I'll help you get started.
-            <small>
-              Try: "Show me black shirts under ₹1000"
-            </small>
-          </div>
-        </div>
-
-        <div class="chat-footer">
-          <input
-            type="text"
-            id="chatInput"
-            placeholder="Ask me anything..."
-            aria-label="Chat message"
-          >
-          <button type="button" id="sendBtn">
-            Send ➤
-          </button>
-        </div>
-
-      </aside>
-
+    <!-- Reuses the existing search and voice functions in script.js. -->
+    <form class="home-search" id="searchForm" action="products.html" method="get" role="search">
+      <label for="chatInput">Find your next favourite</label>
+      <div class="search-controls">
+        <input type="search" id="chatInput" name="q" placeholder="Try ‘headphones under ₹2000’" required>
+        <button class="home-button" type="submit">Find it →</button>
+      </div>
+    </form>
+    <div class="suggestion-chips" aria-label="Suggested searches">
+      <span>Try:</span>
+      <button class="suggestion-chip" type="button" data-query="Show me headphones under ₹2000">Headphones under ₹2000</button>
+      <button class="suggestion-chip" type="button" data-query="Show me sneakers">Sneakers</button>
+      <button class="suggestion-chip" type="button" data-query="Show me smartwatches">Smartwatches</button>
     </div>
 
-    <!-- Benefits -->
-    <section class="benefits-section">
-
-      <div class="benefit">
-        <span>🎙️</span>
-        <div>
-          <h4>Voice First</h4>
-          <p>Speak naturally to search</p>
-        </div>
-      </div>
-
-      <div class="benefit">
-        <span>✨</span>
-        <div>
-          <h4>AI Assisted</h4>
-          <p>Smarter shopping experience</p>
-        </div>
-      </div>
-
-      <div class="benefit">
-        <span>⚡</span>
-        <div>
-          <h4>Quick Discovery</h4>
-          <p>Find products with ease</p>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Categories -->
-    <section class="home-categories">
-
+    <section class="home-section" id="categories" aria-labelledby="categoriesTitle">
       <div class="section-heading">
-        <div>
-          <p class="section-eyebrow">DISCOVER MORE</p>
-          <h2>Explore Categories</h2>
-          <p>Find exactly what you're looking for.</p>
-        </div>
-
-        <a href="categories.html" class="view-all">
-          View all →
-        </a>
+        <h2 id="categoriesTitle">What are you looking for?</h2>
+        <a href="categories.html">All 5 categories ↗</a>
       </div>
-
       <div class="category-grid">
-
-        <a href="categories.html" class="category-tile">
-          <div class="category-emoji">👕</div>
-          <h4>Fashion</h4>
-          <p>Explore styles →</p>
+        <a class="category-tile" href="products.html?category=clothing">
+          <img src="images/clothing.jpg" alt="Clothing collection">
+          <span>Clothing <span aria-hidden="true">↗</span></span>
         </a>
-
-        <a href="categories.html" class="category-tile">
-          <div class="category-emoji">📱</div>
-          <h4>Electronics</h4>
-          <p>Explore gadgets →</p>
+        <a class="category-tile" href="products.html?category=electronics">
+          <img src="images/headphones.jpg" alt="Headphones">
+          <span>Electronics <span aria-hidden="true">↗</span></span>
         </a>
-
-        <a href="categories.html" class="category-tile">
-          <div class="category-emoji">👟</div>
-          <h4>Footwear</h4>
-          <p>Explore shoes →</p>
+        <a class="category-tile" href="products.html?category=home">
+          <img src="images/mug.jpg" alt="Ceramic coffee mug">
+          <span>Home &amp; Kitchen <span aria-hidden="true">↗</span></span>
         </a>
-
-        <a href="categories.html" class="category-tile">
-          <div class="category-emoji">🎧</div>
-          <h4>Accessories</h4>
-          <p>Explore more →</p>
+        <a class="category-tile" href="products.html?category=accessories">
+          <img src="images/backpack.jpg" alt="Travel backpack">
+          <span>Accessories <span aria-hidden="true">↗</span></span>
         </a>
-
+        <a class="category-tile" href="products.html?category=footwear">
+          <img src="images/sneakers.jpg" alt="Running sneakers">
+          <span>Footwear <span aria-hidden="true">↗</span></span>
+        </a>
       </div>
     </section>
 
-    <!-- Bottom CTA -->
-    <section class="bottom-cta">
-      <div>
-        <span>✨ THE FUTURE OF SHOPPING</span>
-        <h2>Don't type it. Just say it.</h2>
-        <p>Discover a simpler way to shop with EasyKart.</p>
+    <section class="home-section" aria-labelledby="featuredTitle">
+      <div class="section-heading">
+        <h2 id="featuredTitle">Little things, everyday favourites.</h2>
+        <a href="products.html">Explore all products ↗</a>
       </div>
-
-      <button type="button" id="bottomMicBtn">
-        🎤 Try Voice Shopping
-      </button>
+      <p id="cartStatus" role="status"></p>
+      <div class="featured-grid">
+        <div class="card" data-category="electronics">
+          <div class="img-wrap">
+            <img src="images/headphones.jpg" alt="Wireless Over-Ear Headphones">
+          </div>
+          <div class="card-meta">
+            <span class="price">₹1499</span>
+            <span class="rating">★ 4.6</span>
+          </div>
+          <p class="product-title">Wireless Over-Ear Headphones</p>
+          <button class="btn-orange" type="button" onclick="addToCart(this)">
+            Add to Cart
+          </button>
+        </div>
+        <div class="card" data-category="home">
+          <div class="img-wrap">
+            <img src="images/mug.jpg" alt="Ceramic Coffee Mug">
+          </div>
+          <div class="card-meta">
+            <span class="price">₹299</span>
+            <span class="rating">★ 4.5</span>
+          </div>
+          <p class="product-title">Ceramic Coffee Mug</p>
+          <button class="btn-orange" type="button" onclick="addToCart(this)">
+            Add to Cart
+          </button>
+        </div>
+        <div class="card" data-category="accessories">
+          <div class="img-wrap">
+            <img src="images/backpack.jpg" alt="Everyday Travel Backpack">
+          </div>
+          <div class="card-meta">
+            <span class="price">₹899</span>
+            <span class="rating">★ 4.7</span>
+          </div>
+          <p class="product-title">Everyday Travel Backpack</p>
+          <button class="btn-orange" type="button" onclick="addToCart(this)">
+            Add to Cart
+          </button>
+        </div>
+      </div>
     </section>
 
+    <section class="home-section how-it-works" id="how-it-works" aria-labelledby="stepsTitle">
+      <div class="section-heading"><h2 id="stepsTitle">A simpler way to shop.</h2></div>
+      <ol class="steps-grid">
+        <li>
+          <span class="step-number">01</span>
+          <h3>Say it or type it</h3>
+          <p>Search for what you need. Try “headphones under ₹2000”, or browse a category.</p>
+        </li>
+        <li>
+          <span class="step-number">02</span>
+          <h3>Find your favourites</h3>
+          <p>Explore the products and add your choices to the cart.</p>
+        </li>
+        <li>
+          <span class="step-number">03</span>
+          <h3>Make it your own</h3>
+          <p>Adjust quantities and review your total. Checkout is a demo for this project.</p>
+        </li>
+      </ol>
+    </section>
   </main>
-
-  <script>
-    const micBtn = document.getElementById("micBtn");
-    const voiceStatus = document.getElementById("voiceStatus");
-    const chatInput = document.getElementById("chatInput");
-    const chatBody = document.getElementById("chatBody");
-    const sendBtn = document.getElementById("sendBtn");
-
-    function addMessage(message, type = "user") {
-      const msg = document.createElement("div");
-      msg.className = "chat-msg " +
-        (type === "user" ? "user-message" : "");
-
-      msg.textContent = message;
-      chatBody.appendChild(msg);
-      chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    function sendMessage() {
-      const message = chatInput.value.trim();
-      if (!message) return;
-
-      addMessage(message);
-      chatInput.value = "";
-
-      // Connect your existing assistant API here.
-      addMessage(
-        "I've received your request. Product search " +
-        "will be available once the shopping backend is connected.",
-        "assistant"
-      );
-    }
-
-    sendBtn.addEventListener("click", sendMessage);
-
-    chatInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") sendMessage();
-    });
-
-    document.querySelectorAll(".suggestion-chip")
-      .forEach((chip) => {
-        chip.addEventListener("click", () => {
-          chatInput.value = chip.dataset.query;
-          chatInput.focus();
-        });
-      });
-
-    const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
-
-    if (SpeechRecognition) {
-      const recognition = new SpeechRecognition();
-
-      recognition.lang = "en-IN";
-      recognition.interimResults = false;
-      recognition.continuous = false;
-
-      micBtn.addEventListener("click", () => {
-        try {
-          recognition.start();
-        } catch (error) {
-          voiceStatus.textContent =
-            "Voice recognition is already active";
-        }
-      });
-
-      recognition.onstart = () => {
-        micBtn.classList.add("is-listening");
-        voiceStatus.textContent = "🔴 Listening...";
-      };
-
-      recognition.onresult = (event) => {
-        const transcript =
-          event.results[0][0].transcript;
-
-        chatInput.value = transcript;
-        voiceStatus.textContent = "✓ Voice captured!";
-        chatInput.focus();
-      };
-
-      recognition.onerror = (event) => {
-        voiceStatus.textContent =
-          "Voice error: " + event.error;
-      };
-
-      recognition.onend = () => {
-        micBtn.classList.remove("is-listening");
-
-        if (voiceStatus.textContent === "🔴 Listening...") {
-          voiceStatus.textContent = "Tap to start speaking";
-        }
-      };
-
-    } else {
-      micBtn.disabled = true;
-      voiceStatus.textContent =
-        "Voice recognition is unavailable in this browser";
-    }
-
-    document.getElementById("bottomMicBtn")
-      .addEventListener("click", () => {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-        micBtn.click();
-      });
-  </script>
-
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>EasyKart</h2>
+          <p>Good finds. Simple shopping. Discover everyday favourites with a search or your voice.</p>
+        </div>
+        <div class="footer-links">
+          <h3>Explore</h3>
+          <a href="index.html">Home</a>
+          <a href="categories.html">Categories</a>
+          <a href="products.html">All products</a>
+        </div>
+        <div class="footer-links">
+          <h3>Here to help</h3>
+          <a href="cart.html">Your cart</a>
+          <a href="help.html">Request help</a>
+          <a href="index.html#how-it-works">How it works</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>EasyKart · A student group project.</span>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
 </body>
 </html>
