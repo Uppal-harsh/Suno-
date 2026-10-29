@@ -30,15 +30,25 @@
 
   <!-- Main Content -->
   <main class="container">
-    <div style="max-width: 500px; margin: 40px auto; text-align: center;">
-      <div class="help-card" style="padding: 30px;">
-        <h3 style="font-size: 22px; margin-bottom: 8px;">📞 Need Help?</h3>
-        <p class="help-sub" style="margin-bottom: 6px;">Say "Call for help" anytime.</p>
-        <p class="help-desc" style="margin-bottom: 20px;">Our customer assistants are available to complete your order over phone or assist with any issues.</p>
-        <button class="btn-orange" style="max-width: 200px; margin: 0 auto;" type="button">Talk to a Human</button>
+    <section class="help-card contact-card">
+      <h2>Request Help</h2>
+      <p>Submit a question about products, sizing or your cart.</p>
+      <div id="serverNotice" class="server-notice" hidden>
+        <p>This preview cannot save requests. Run <code>python3 server.py</code> in the VS Code terminal, then open the working form below.</p>
+        <a href="http://127.0.0.1:8000/help.html">Open the working Help form →</a>
       </div>
-    </div>
+      <form id="helpForm" class="help-form">
+        <label for="customerName">Name</label>
+        <input id="customerName" name="name" required minlength="2" maxlength="80" autocomplete="name">
+        <label for="customerEmail">Email</label>
+        <input id="customerEmail" name="email" type="email" required maxlength="120" autocomplete="email">
+        <label for="customerMessage">Message</label>
+        <textarea id="customerMessage" name="message" required minlength="10" maxlength="1000" rows="4"></textarea>
+        <button class="btn-orange" type="submit">Submit Request</button>
+        <p id="formStatus" role="status"></p>
+      </form>
+    </section>
   </main>
-
+   <script src="script.js"></script>
 </body>
 </html>
