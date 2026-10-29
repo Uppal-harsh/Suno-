@@ -1053,3 +1053,6 @@ nav {
     animation: none;
   }
 }
+
+/* Keep filtered products hidden even though cards use flex. */
+.card[hidden] { display: none; }

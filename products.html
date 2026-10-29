@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyKart - Voice Results</title>
+  <title>EasyKart - Products</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,83 +28,211 @@
     </nav>
   </header>
 
-  <!-- Voice Query Banner -->
-  <div class="voice-banner">
-    <div class="voice-dialogue">
-      <p><span class="tag-icon">A</span> You said: <strong>“I need a black shirt under ₹1000”</strong></p>
-      <p><span class="tag-icon orange">🎤</span> Assistant: “Got it. Showing black shirts under ₹1000.”</p>
-    </div>
-    <div class="ready-badge">● Ready to Speak</div>
-  </div>
-
   <!-- Main Content -->
   <main class="container">
     <div class="results-header">
       <div>
-        <h2>Found 4 Shirts Under ₹1000</h2>
-        <p>Sorted by high-rating. Say “Select number 1” or “Add first shirt to cart”</p>
+        <h2>All Products</h2>
+        <p>12 products available</p>
       </div>
-      <div class="filter-tag">Filter: Max ₹1000 - Black ✓</div>
+      <div class="filter-tag">Category: All</div>
     </div>
 
-    <div class="grid-4">
+    <p id="cartStatus" role="status"></p>
+    <div class="grid-4" data-product-grid>
       <!-- Product 1 -->
-      <div class="card">
+      <div class="card" data-category="clothing">
         <div class="img-wrap">
           <span class="badge-num">1</span>
-          <img src="https://imgs.search.brave.com/yyJq3XIVWmQgCYWOpiNsTZVVwuvABoNiUcoMJOZ0Rm4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c2VsZWN0ZWRob21t/ZS5pbi9jZG4vc2hv/cC9maWxlcy8xMzk2/MTQ0MDVfZzQuanBn/P3Y9MTc0NTUwNjQ0/NyZ3aWR0aD0xMDgw" alt="Black Tee" width ="200" height="400" >
+          <img src="images/tee.jpg" alt="Classic Regular Fit Black Tee">
         </div>
         <div class="card-meta">
           <span class="price">₹699</span>
           <span class="rating">★ 4.8</span>
         </div>
         <p class="product-title">Classic Regular Fit Black Tee</p>
-        <button class="btn-orange" type="button">Add to Cart</button>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
       </div>
 
       <!-- Product 2 -->
-      <div class="card">
+      <div class="card" data-category="clothing">
         <div class="img-wrap">
           <span class="badge-num">2</span>
-          <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&auto=format&fit=crop&q=80" alt="Oxford Shirt">
+          <img src="images/oxford-shirt.jpg" alt="Smart Casual Black Oxford Shirt">
         </div>
         <div class="card-meta">
           <span class="price">₹950</span>
           <span class="rating">★ 4.7</span>
         </div>
         <p class="product-title">Smart Casual Black Oxford Shirt</p>
-        <button class="btn-orange" type="button">Add to Cart</button>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
       </div>
 
       <!-- Product 3 -->
-      <div class="card">
+      <div class="card" data-category="clothing">
         <div class="img-wrap">
           <span class="badge-num">3</span>
-          <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400&auto=format&fit=crop&q=80" alt="Sport Shirt">
+          <img src="images/sport-shirt.jpg" alt="Athletic Quick-Dry Sport Shirt">
         </div>
         <div class="card-meta">
           <span class="price">₹550</span>
           <span class="rating">★ 4.5</span>
         </div>
         <p class="product-title">Athletic Quick-Dry Sport Shirt</p>
-        <button class="btn-orange" type="button">Add to Cart</button>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
       </div>
 
       <!-- Product 4 -->
-      <div class="card">
+      <div class="card" data-category="clothing">
         <div class="img-wrap">
           <span class="badge-num">4</span>
-          <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&auto=format&fit=crop&q=80" alt="Linen Shirt">
+          <img src="images/linen-shirt.jpg" alt="Casual Black Linen Mandarin Shirt">
         </div>
         <div class="card-meta">
           <span class="price">₹899</span>
           <span class="rating">★ 4.9</span>
         </div>
         <p class="product-title">Casual Black Linen Mandarin Shirt</p>
-        <button class="btn-orange" type="button">Add to Cart</button>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="card" data-category="electronics">
+        <div class="img-wrap">
+          <span class="badge-num">5</span>
+          <img src="images/headphones.jpg" alt="Wireless Over-Ear Headphones">
+        </div>
+        <div class="card-meta">
+          <span class="price">₹1499</span>
+          <span class="rating">★ 4.6</span>
+        </div>
+        <p class="product-title">Wireless Over-Ear Headphones</p>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="card" data-category="electronics">
+        <div class="img-wrap">
+          <span class="badge-num">6</span>
+          <img src="images/smartwatch.jpg" alt="Everyday Smartwatch">
+        </div>
+        <div class="card-meta">
+          <span class="price">₹1999</span>
+          <span class="rating">★ 4.4</span>
+        </div>
+        <p class="product-title">Everyday Smartwatch</p>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- Product 7 -->
+      <div class="card" data-category="home">
+        <div class="img-wrap">
+          <span class="badge-num">7</span>
+          <img src="images/mug.jpg" alt="Ceramic Coffee Mug">
+        </div>
+        <div class="card-meta">
+          <span class="price">₹299</span>
+          <span class="rating">★ 4.5</span>
+        </div>
+        <p class="product-title">Ceramic Coffee Mug</p>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- Product 8 -->
+      <div class="card" data-category="home">
+        <div class="img-wrap">
+          <span class="badge-num">8</span>
+          <img src="images/cookware.jpg" alt="Kitchen Cookware Set">
+        </div>
+        <div class="card-meta">
+          <span class="price">₹1799</span>
+          <span class="rating">★ 4.6</span>
+        </div>
+        <p class="product-title">Kitchen Cookware Set</p>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- Product 9 -->
+      <div class="card" data-category="accessories">
+        <div class="img-wrap">
+          <span class="badge-num">9</span>
+          <img src="images/backpack.jpg" alt="Everyday Travel Backpack">
+        </div>
+        <div class="card-meta">
+          <span class="price">₹899</span>
+          <span class="rating">★ 4.7</span>
+        </div>
+        <p class="product-title">Everyday Travel Backpack</p>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- Product 10 -->
+      <div class="card" data-category="accessories">
+        <div class="img-wrap">
+          <span class="badge-num">10</span>
+          <img src="images/sunglasses.jpg" alt="Classic Sunglasses">
+        </div>
+        <div class="card-meta">
+          <span class="price">₹499</span>
+          <span class="rating">★ 4.4</span>
+        </div>
+        <p class="product-title">Classic Sunglasses</p>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- Product 11 -->
+      <div class="card" data-category="footwear">
+        <div class="img-wrap">
+          <span class="badge-num">11</span>
+          <img src="images/sneakers.jpg" alt="Lightweight Running Sneakers">
+        </div>
+        <div class="card-meta">
+          <span class="price">₹1299</span>
+          <span class="rating">★ 4.6</span>
+        </div>
+        <p class="product-title">Lightweight Running Sneakers</p>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
+      </div>
+
+      <!-- Product 12 -->
+      <div class="card" data-category="footwear">
+        <div class="img-wrap">
+          <span class="badge-num">12</span>
+          <img src="images/casual-shoes.jpg" alt="Everyday Casual Shoes">
+        </div>
+        <div class="card-meta">
+          <span class="price">₹999</span>
+          <span class="rating">★ 4.5</span>
+        </div>
+        <p class="product-title">Everyday Casual Shoes</p>
+        <button class="btn-orange" type="button" onclick="addToCart(this)">
+          Add to Cart
+        </button>
       </div>
     </div>
   </main>
-
+   <script src="script.js"></script>
 </body>
 </html>

@@ -1,104 +1,107 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EasyKart - Cart</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-  <!-- Navigation -->
-  <header>
-    <nav>
-      <a href="index.html" class="logo">
-        <div class="logo-icon">🎤</div>
-        <div class="logo-text">
-          <h1>EasyKart</h1>
-          <p>VOICE FIRST</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EasyKart - Cart</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <header>
+      <nav>
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🎤</div>
+          <div class="logo-text">
+            <h1>EasyKart</h1>
+            <p>VOICE FIRST</p>
+          </div>
+        </a>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="categories.html">Categories</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html" class="active">Cart</a>
+          <a href="help.html">Help</a>
         </div>
-      </a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="categories.html">Categories</a>
-        <a href="products.html">Products</a>
-        <a href="cart.html" class="active">Cart</a>
-        <a href="help.html">Help</a>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+      <h2 class="cart-title">Your Shopping Cart</h2>
+      <p id="cartStatus" role="status"></p>
+
+      <div class="cart-layout">
+        <!-- Cart Items -->
+        <section class="cart-list" id="cartItems">
+          <!-- Populated from the saved cart by script.js. -->
+        </section>
+
+        <!-- Sidebar -->
+        <aside class="cart-sidebar">
+          <div class="summary-card">
+            <h3>Order Summary</h3>
+
+            <!-- Subtotal -->
+            <div class="summary-line">
+              <span>Items Subtotal</span>
+              <strong id="subtotal">₹0</strong>
+            </div>
+
+            <!-- Delivery Charge -->
+            <div class="summary-line">
+              <span>Home Delivery</span>
+              <strong id="deliveryFee">₹0</strong>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <!-- Total Price -->
+            <div class="total-line">
+              <span>Grand Total</span>
+              <span class="total-price" id="totalPrice">₹0</span>
+            </div>
+
+            <!-- Checkout Button -->
+            <button class="btn-primary" type="button" onclick="checkout()">
+              Review Order (Demo)
+            </button>
+
+            <!-- Clear Cart Button -->
+            <button
+              class="btn-orange"
+              type="button"
+              onclick="clearCart()"
+              style="margin-top: 10px"
+            >
+              Clear Cart
+            </button>
+          </div>
+          <!-- Need Help -->
+          <div class="help-card">
+            <h4>📞 Need Help?</h4>
+            <p class="help-sub">Submit a help request.</p>
+            <p class="help-desc">
+              Use the Help page to save a question about your order or sizing.
+            </p>
+            <a class="btn-orange" href="help.html">Request Help</a>
+          </div>
+        </aside>
       </div>
-    </nav>
-  </header>
-
-  <!-- Main Content -->
-  <main class="container">
-    <h2 class="cart-title">Your Shopping Cart (3 Items)</h2>
-
-    <div class="cart-layout">
-      <!-- Cart Items -->
-      <section class="cart-list">
-        <!-- Item 1 -->
-        <article class="cart-item">
-          <span class="item-num">1</span>
-          <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=200&auto=format&fit=crop&q=80" alt="Shirt">
-          <div class="item-details">
-            <h4>Smart Casual Black Oxford Shirt</h4>
-            <p>₹950 each</p>
-          </div>
-          <div class="qty-control">
-            <button type="button">−</button>
-            <span>1</span>
-            <button type="button">+</button>
-          </div>
-          <span class="item-price">₹950</span>
-        </article>
-
-        <!-- Item 2 -->
-        <article class="cart-item">
-          <span class="item-num">2</span>
-          <img src="https://imgs.search.brave.com/yyJq3XIVWmQgCYWOpiNsTZVVwuvABoNiUcoMJOZ0Rm4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/c2VsZWN0ZWRob21t/ZS5pbi9jZG4vc2hv/cC9maWxlcy8xMzk2/MTQ0MDVfZzQuanBn/P3Y9MTc0NTUwNjQ0/NyZ3aWR0aD0xMDgw" alt="T-Shirt">
-          <div class="item-details">
-            <h4>Classic Regular Fit Black Tee</h4>
-            <p>₹699 each</p>
-          </div>
-          <div class="qty-control">
-            <button type="button">−</button>
-            <span>2</span>
-            <button type="button">+</button>
-          </div>
-          <span class="item-price">₹1398</span>
-        </article>
-      </section>
-
-      <!-- Sidebar -->
-      <aside class="cart-sidebar">
-        <!-- Order Summary -->
-        <div class="summary-card">
-          <h3>Order Summary</h3>
-          <div class="summary-line">
-            <span>Items Subtotal</span>
-            <strong>₹2348</strong>
-          </div>
-          <div class="summary-line">
-            <span>Home Delivery</span>
-            <strong>₹80</strong>
-          </div>
-          <div class="summary-divider"></div>
-          <div class="total-line">
-            <span>Grand Total</span>
-            <span class="total-price">₹2428</span>
-          </div>
-          <button class="btn-primary" type="button">Proceed to Checkout</button>
+    </main>
+    <!-- JavaScript copies this template once for each saved product. -->
+    <template id="cartTemplate">
+      <article class="cart-item">
+        <span class="item-num"></span>
+        <img alt="">
+        <div class="item-details"><h4></h4><p></p></div>
+        <div class="qty-control">
+          <button type="button">−</button><span></span><button type="button">+</button>
         </div>
-
-        <!-- Need Help -->
-        <div class="help-card">
-          <h4>📞 Need Help?</h4>
-          <p class="help-sub">Say "Call for help" anytime.</p>
-          <p class="help-desc">Our assistants are available to complete your order over phone or assist with sizing.</p>
-          <button class="btn-orange" type="button">Talk to a Human</button>
-        </div>
-      </aside>
-    </div>
-  </main>
-
-</body>
+        <span class="item-price"></span>
+      </article>
+    </template>
+    <script src="script.js"></script>
+  </body>
 </html>
