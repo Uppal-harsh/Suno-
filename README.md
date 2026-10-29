@@ -67,7 +67,25 @@ Completed:
 - Product card styling
 - Figma prototype
 
-The latest development work removed the browser speech-recognition functionality while the frontend design is being refined. Voice interaction is therefore currently represented primarily through the UI/prototype rather than a live speech-recognition implementation.
+The local demo supports category and keyword filtering, a persistent cart, quantity
+updates, and a validated Help form saved to `data/help_requests.json`.
+Voice uses browser speech recognition when supported; the assistant uses simple
+keywords. Review Order is a demo without payment or order placement.
+
+## Run and prepare for viva
+
+Run `python3 server.py` from the project folder, then open
+[EasyKart locally](http://127.0.0.1:8000). No additional Python packages are required.
+Use this server for form submission; a static server cannot write the JSON file.
+
+In VS Code you can also choose **Terminal → Run Task → Start EasyKart**.
+Keep that terminal running and open **http://127.0.0.1:8000**.
+The Live Server **Go Live** button opens port 5500, which only previews pages;
+it rejects form POST requests with error 405. The Help page now explains this
+before submission and provides a link to the working form.
+
+See [VIVA.md](VIVA.md) for the requirement mapping, code terms, demonstration steps
+and project limitations. Form data in `data/` is excluded from Git.
 
 ## Team
 

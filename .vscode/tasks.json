@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start EasyKart",
+      "type": "process",
+      "command": "python3",
+      "args": ["server.py"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always" }
+    }
+  ]
+}

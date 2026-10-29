@@ -26,11 +26,14 @@ Group: 4
 - [x] Product discovery interface
 - [x] Shopping cart UI
 - [x] Human assistance / help interface
-- [ ] Final JavaScript interactions
+- [x] Cart quantities, totals, category filtering and keyword search
+- [x] Help form validation, submission and local JSON saving
 - [ ] Final accessibility testing
 - [ ] Final responsive refinement
 
-> Note: Speech recognition functionality was removed in the latest styling commit. The current project focuses on the frontend UI and interaction design.
+> Run `python3 server.py` to serve the project and save Help form submissions.
+> Voice capture uses browser speech recognition when available. Search uses keywords;
+> order review is a demo without payment. See `VIVA.md` for demonstration steps.
 
 ## Development Timeline
 
@@ -66,8 +69,6 @@ Group: 4
 - Fixing the colour grading
 
 ## Next Steps
-1. Complete JavaScript interactions.
-2. Connect product cards with the cart.
-3. Add final accessibility improvements.
-4. Test the website across screen sizes.
-5. Finalize documentation and presentation.
+1. Confirm any additional third-evaluation requirements with the teacher.
+2. Complete final accessibility and responsive testing.
+3. Practise the demonstration and explanations in `VIVA.md`.
