@@ -14,13 +14,17 @@ function loadCart() {
 let cart = loadCart();
 
 function cartMessage(message) {
-    document.getElementById("cartStatus").textContent = message;
+    const status = document.getElementById("cartStatus");
+    if (status) status.textContent = message;
+    if (typeof showToast === "function") showToast(message);
 }
 
 function saveCart() {
     try {
         localStorage.setItem("easykartCart", JSON.stringify(cart));
         renderCart();
+        if (typeof updateCartBadge === "function") updateCartBadge();
+        if (typeof syncCart === "function") syncCart();
         return true;
     } catch (error) {
         cart = loadCart();
@@ -38,12 +42,18 @@ function addToCart(button) {
     cart = loadCart();
     const item = cart.find(function(product) { return product.name === name; });
     if (item) {
+        if (item.quantity >= 99) { cartMessage("Maximum 99 of each product."); return; }
         item.quantity += 1;
     } else {
         cart.push({ name: name, price: price, quantity: 1,
             image: card.querySelector("img").getAttribute("src") });
     }
-    if (saveCart()) cartMessage(name + " added to your cart.");
+    if (saveCart()) {
+        cartMessage(name + " added to your cart.");
+        button.textContent = "Added!";
+        clearTimeout(button.feedbackTimer);
+        button.feedbackTimer = setTimeout(() => { button.textContent = "Add to Cart"; }, 1500);
+    }
 }
 
 function calculateTotal() {
@@ -53,6 +63,7 @@ function calculateTotal() {
 }
 
 function changeQuantity(index, amount) {
+    if (cart[index].quantity + amount > 99) { cartMessage("Maximum 99 of each product."); return; }
     cart[index].quantity += amount;
     if (cart[index].quantity === 0) cart.splice(index, 1);
     if (saveCart()) cartMessage("Cart updated.");
@@ -64,8 +75,7 @@ function clearCart() {
 }
 
 function checkout() {
-    cartMessage(cart.length ? "Order total: ₹" + calculateTotal() +
-        ". This is a demo; payment is not connected." : "Please add a product first.");
+    openCheckout();
 }
 
 // 3. Clone the HTML template and fill its text. textContent treats names as text.
@@ -163,7 +173,7 @@ function startVoice() {
     }
 }
 
-// 6. Prevent page reload, validate the form, then POST JSON to the Python server.
+// 6. Prevent page reload, validate the form, then POST JSON to the Node.js server.
 async function submitHelp(event) {
     event.preventDefault();
     if (!document.getElementById("serverNotice").hidden) return;
@@ -190,7 +200,7 @@ async function submitHelp(event) {
         status.textContent = result.message;
         if (response.ok) form.reset();
     } catch (error) {
-        status.textContent = "Saving was not confirmed. Keep this page open, run python3 server.py, and try again. Your entries are still here.";
+        status.textContent = "Saving was not confirmed. Keep this page open, run node server.js, and try again. Your entries are still here.";
     }
     button.disabled = false;
 }
@@ -202,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const helpForm = document.getElementById("helpForm");
     if (helpForm) {
         helpForm.onsubmit = submitHelp;
-        // Live Server displays pages, but only our Python server saves JSON.
+        // Live Server displays pages, but only our Node.js server saves JSON.
         if (window.location.protocol === "file:" || window.location.port !== "8000") {
             document.getElementById("serverNotice").hidden = false;
             helpForm.querySelector("button").disabled = true;

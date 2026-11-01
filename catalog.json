@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Classic Regular Fit Black Tee",
+    "price": 699,
+    "image": "images/tee.jpg",
+    "category": "clothing"
+  },
+  {
+    "name": "Smart Casual Black Oxford Shirt",
+    "price": 950,
+    "image": "images/oxford-shirt.jpg",
+    "category": "clothing"
+  },
+  {
+    "name": "Athletic Quick-Dry Sport Shirt",
+    "price": 550,
+    "image": "images/sport-shirt.jpg",
+    "category": "clothing"
+  },
+  {
+    "name": "Casual Black Linen Mandarin Shirt",
+    "price": 899,
+    "image": "images/linen-shirt.jpg",
+    "category": "clothing"
+  },
+  {
+    "name": "Wireless Over-Ear Headphones",
+    "price": 1499,
+    "image": "images/headphones.jpg",
+    "category": "electronics"
+  },
+  {
+    "name": "Everyday Smartwatch",
+    "price": 1999,
+    "image": "images/smartwatch.jpg",
+    "category": "electronics"
+  },
+  {
+    "name": "Ceramic Coffee Mug",
+    "price": 299,
+    "image": "images/mug.jpg",
+    "category": "home"
+  },
+  {
+    "name": "Kitchen Cookware Set",
+    "price": 1799,
+    "image": "images/cookware.jpg",
+    "category": "home"
+  },
+  {
+    "name": "Everyday Travel Backpack",
+    "price": 899,
+    "image": "images/backpack.jpg",
+    "category": "accessories"
+  },
+  {
+    "name": "Classic Sunglasses",
+    "price": 499,
+    "image": "images/sunglasses.jpg",
+    "category": "accessories"
+  },
+  {
+    "name": "Lightweight Running Sneakers",
+    "price": 1299,
+    "image": "images/sneakers.jpg",
+    "category": "footwear"
+  },
+  {
+    "name": "Everyday Casual Shoes",
+    "price": 999,
+    "image": "images/casual-shoes.jpg",
+    "category": "footwear"
+  }
+]

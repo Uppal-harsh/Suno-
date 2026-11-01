@@ -3,23 +3,23 @@
 ## Run the project
 
 1. Open the project folder in VS Code.
-2. In Terminal, run `python3 server.py`.
+2. In Terminal, run `node server.js`.
 3. Open http://127.0.0.1:8000.
 4. Stop with Ctrl+C. If port 8000 is busy, stop the earlier server first.
 
-The plain `python3 -m http.server` command serves pages but cannot save submitted forms.
-Python uses only its standard library; no packages need installing.
+A static preview server serves pages but cannot save submitted forms.
+Node.js uses only its standard library; no packages need installing.
 In VS Code, **Terminal → Run Task → Start EasyKart** runs the same command.
 Use port **8000**, not Live Server's **5500**. Error **405** means that the
 server does not allow the POST method used by our form. The Help page detects
-the wrong port, disables submission, and links to the Python-served form.
+the wrong port, disables submission, and links to the Node.js-served form.
 If a save fails, entered details remain in the form so they can be retried.
 
 ## Explain the project in your own words
 
 “HTML creates the page structure, CSS styles it, and JavaScript handles clicks,
 search, form submission and cart updates. Cart data stays in browser storage.
-The Help form sends JSON to a small Python server, which saves it in a local file.”
+The Help form sends JSON to a small Node.js server, which saves it in a local file.”
 
 ## Where each requirement is implemented
 
@@ -29,7 +29,7 @@ The Help form sends JSON to a small Python server, which saves it in a local fil
 | JavaScript interactions | Product filtering, suggestion buttons, cart quantities and totals. |
 | Forms and validation | Help form: required name, valid email, message of 10–1000 characters. |
 | Form submission | `submitHelp()` prevents reload and sends a POST request with `fetch()`. |
-| Local JSON file saving | `server.py` writes each valid request to `data/help_requests.json`. |
+| Local JSON file saving | `server.js` writes each valid request to `data/help_requests.json`. |
 
 Only the second-evaluation requirements were visible in the supplied screenshot.
 
@@ -37,12 +37,12 @@ Only the second-evaluation requirements were visible in the supplied screenshot.
 
 This requirement is implemented by the Help form. Its flow is:
 
-`Help form → JavaScript → POST /api/help → Python → data/help_requests.json`
+`Help form → JavaScript → POST /api/help → Node.js → data/help_requests.json`
 
 Say this in your own words:
 
 “Our Help form collects a name, email and message. JavaScript checks the input,
-converts it into JSON text and sends it to our local Python server. Python checks
+converts it into JSON text and sends it to our local Node.js server. Node.js checks
 the data again, reads the saved requests, adds the new request and saves the list
 back into help_requests.json. Then the page shows a success message.”
 
@@ -53,10 +53,10 @@ back into help_requests.json. Then the page shows a success message.”
 | What does JavaScript do? | `submitHelp()` collects the fields. `JSON.stringify(data)` makes JSON text; `fetch()` sends it using POST. |
 | What is POST? | An HTTP request method used here to submit data to the server. |
 | What is `/api/help`? | The address on our local server that receives Help submissions. It is not an external service. |
-| Why use Python? | Ordinary browser code cannot silently write to our project folder. The local server performs that file-writing step. |
-| What does `json.loads()` do? | Converts JSON text into Python data so we can read or update it. |
-| What does `requests.append()` do? | Adds the new request to the list while keeping previous requests. |
-| What does `json.dumps()` do? | Converts the list back into JSON text. `indent=2` makes the file easy to read. |
+| Why use Node.js? | Ordinary browser code cannot silently write to our project folder. The local server performs that file-writing step. |
+| What does `JSON.parse()` do? | Converts JSON text into JavaScript objects so we can read or update it. |
+| What does `requests.push()` do? | Adds the new request to the list while keeping previous requests. |
+| What does `JSON.stringify()` do? | Converts the list back into JSON text. The third argument `2` makes the file easy to read. |
 | Why write a temporary file? | The server finishes writing first, then replaces the saved file, reducing the risk of leaving a partly written file. |
 | Does it create a file for every submission? | No. One JSON file holds a list of all requests. Each submission adds one record. |
 | What is saved? | Name, email, message and submission time (`submitted_at`). |
@@ -66,14 +66,14 @@ back into help_requests.json. Then the page shows a success message.”
 
 To demonstrate this point:
 
-1. Run `python3 server.py` in the VS Code terminal. If it is already running, use it.
+1. Run `node server.js` in the VS Code terminal. If it is already running, use it.
 2. Open `http://127.0.0.1:8000/help.html`.
 3. Enter a fictional name, a valid email such as `demo@example.test`, and a message of at least 10 characters.
 4. Click Submit Request and show the success message.
 5. In VS Code, open `data/help_requests.json` and show the new record.
 6. Submit another message and show both records in the list.
 
-Use this Python server for the demonstration. Opening the HTML directly or using
+Use this Node.js server for the demonstration. Opening the HTML directly or using
 VS Code Live Server alone does not provide the POST handler needed to save the file.
 The folder is created automatically on the first valid submission and is ignored
 by Git so submitted contact details are not committed.
@@ -87,7 +87,7 @@ by Git so submitted contact details are not committed.
 - `help.html`: labelled inputs and the Help form.
 - `style.css`: colours, spacing, Grid, Flexbox and responsive media queries.
 - `script.js`: seven numbered sections for cart, display, search, voice and form events.
-- `server.py`: serves files, validates POST data and writes JSON.
+- `server.js`: serves files, validates POST data and writes JSON.
 
 ## Explain the shared Warm storefront theme
 
@@ -140,17 +140,19 @@ All five pages use the same CSS colours, header and footer. The design uses ordi
 | `Boolean` / `Number` | Convert a value to true/false or a number. |
 | `===`, `&&`, `||`, `!` | Equal with matching type, AND, OR, NOT. |
 
-## Python terms used in the server
+## Node.js terms used in the server
 
-- `HTTPServer`: listens for browser requests on the computer.
-- `SimpleHTTPRequestHandler`: serves HTML, CSS, JS and images; our `Handler` adds POST support.
-- `def`, `self`, `super()`: define a method, refer to its instance and call its parent class.
-- `do_POST()`: receives a submitted form at `/api/help`.
-- `json.loads` / `json.dumps`: read JSON text / produce JSON text.
-- `Path`: represents a file or folder; `read_text` and `write_text` access it.
-- `mkdir`: creates the data folder. `replace`: replaces the JSON file after writing.
-- `200`, `400`, `404`, `500`: success, invalid input, unknown route, server failure.
+- `require('node:http')`: loads the built-in HTTP module.
+- `http.createServer`: receives requests and sends responses.
+- `req.method` and the URL path select the request handler.
+- `req.on('data')` / `req.on('end')`: collect the submitted JSON body.
+- `JSON.parse` / `JSON.stringify`: read JSON text / produce JSON text.
+- `fs.readFileSync` / `fs.writeFileSync`: read and write local files.
+- `fs.mkdirSync`: creates the data folder; `fs.renameSync` replaces the file after writing.
+- `200`, `400`, `404`, `405`, `413`, `415`, `500`: success, invalid input, missing route, wrong method, oversized body, wrong content type, server failure.
 - Server validation repeats browser checks because a request can bypass the form.
+- Synchronous saving processes one write at a time; this is suitable for a small local demo.
+- Static files are allowlisted so private JSON data and source files cannot be downloaded.
 
 ## Demonstration order
 
@@ -158,7 +160,7 @@ All five pages use the same CSS colours, header and footer. The design uses ordi
 2. Open Electronics: only its two products appear.
 3. On Home, click “Headphones under ₹2000”: matching products appear.
 4. Add a product twice, open Cart and show quantity, total and reload persistence.
-5. Decrease a quantity to zero, review the demo order, then clear the cart.
+5. Decrease a quantity to zero, open checkout, then demonstrate Clear Cart.
 6. In Help, try submitting empty fields or a bad email to show browser validation.
 7. Submit a test name, email and message. Show the success text and open
    `data/help_requests.json` in VS Code. Submit again to show records append.
@@ -169,7 +171,31 @@ All five pages use the same CSS colours, header and footer. The design uses ordi
 - Search uses words and an optional “under ₹2000” limit; it is not an AI model.
 - Voice uses the browser's speech recognition, requires permission and depends on browser support.
   You can demonstrate all search features by typing if voice is unavailable.
-- Review Order is a demo; there is no payment service or order placement.
+- Checkout saves a demo order; no payment service is connected.
 - Help requests are saved locally. They are not emailed or sent to a live support team.
 - This server is intended for a single local classroom demonstration.
 - `data/` is ignored by Git so real submitted contact details are not committed.
+
+## New checkout and admin demonstration
+
+1. Start node server.js and note the admin password printed in the terminal.
+2. Add a product: show the toast, Added button and cart count.
+3. Open Store admin in another tab, sign in, and open Active carts to see an anonymous guest cart.
+4. Return to Cart, choose Proceed to checkout, and submit fictional customer details.
+5. In admin, choose Refresh and Orders. Show customer name/email/address, items and the server-calculated total.
+6. Change the order from New to Packed and refresh to demonstrate persistence.
+7. Search by name or product and filter by status. Open Help inbox to view saved requests.
+8. Sign out: customer/order data must no longer be accessible through the admin APIs.
+
+### How to explain the new code
+
+shop.js displays notifications, syncs carts using fetch, and submits checkout JSON.
+commerce.js validates requests and uses JSON.parse / JSON.stringify with the fs module to store records.
+The server chooses prices from catalog.json; it does not trust a price sent by the browser.
+A random HttpOnly cookie identifies an anonymous browser; this is not a verified user account.
+At checkout, the customer provides their details, which are saved on the order.
+A separate HttpOnly admin cookie identifies a signed-in administrator. The server checks it before returning data or accepting a status update.
+A requestId makes retries return the same order instead of creating duplicates.
+The order and cart change are saved together in commerce.json using a temporary file and rename.
+Admin pages insert customer text with textContent so it is displayed as text instead of executable HTML.
+There is no payment processing, customer login or automatic delivery integration.

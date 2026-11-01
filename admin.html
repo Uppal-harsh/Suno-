@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>EasyKart | Store admin</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><nav><a class="admin-brand" href="index.html">EasyKart <span>STORE ADMIN</span></a><a href="index.html">Back to store &rarr;</a></nav></header>
+<main class="container admin-main">
+  <div class="admin-heading"><div><p class="eyebrow">YOUR STORE, AT A GLANCE</p><h1>Store dashboard</h1><p class="muted">Follow every order, from first click to delivery.</p></div><div class="admin-actions" id="adminActions" hidden><button id="refreshButton" class="btn-orange">Refresh</button><button id="logoutButton" class="btn-orange">Sign out</button></div></div>
+  <p id="adminStatus" role="status" aria-live="polite"></p>
+  <section id="loginPanel" class="admin-login panel">
+    <span class="eyebrow">ADMIN ACCESS</span><h2>Welcome back.</h2><p>Use the admin password shown in the terminal when you start the server.</p>
+    <form id="loginForm"><label for="adminPassword">Admin password</label><input id="adminPassword" name="password" type="password" autocomplete="current-password" required maxlength="200"><button class="btn-primary" type="submit">Open dashboard &rarr;</button></form>
+    <p class="muted">Orders and customer details are only available after signing in.</p>
+  </section>
+  <section id="dashboard" hidden>
+    <div class="admin-stats" id="stats"></div>
+    <div class="admin-toolbar"><div class="admin-tabs" aria-label="Dashboard views"><button data-view="orders" aria-pressed="true">Orders</button><button data-view="carts" aria-pressed="false">Active carts</button><button data-view="help" aria-pressed="false">Help inbox</button></div><span id="updatedTime" class="muted"></span></div>
+    <div class="admin-filters"><label for="adminSearch">Search customer, product or reference<input id="adminSearch" type="search" placeholder="Search this view..."></label><label id="statusFilterLabel" for="statusFilter">Order status<select id="statusFilter"><option value="">All statuses</option></select></label></div>
+    <p id="viewDescription" class="muted"></p><div id="adminList" class="admin-list"></div>
+  </section>
+</main><script src="admin.js"></script>
+</body></html>

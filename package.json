@@ -1,0 +1,8 @@
+{
+  "name": "easykart",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EasyKart with plain Node.js and local JSON storage",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=22" }
+}

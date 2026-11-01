@@ -31,7 +31,7 @@ Group: 4
 - [ ] Final accessibility testing
 - [ ] Final responsive refinement
 
-> Run `python3 server.py` to serve the project and save Help form submissions.
+> Run `node server.js` to serve the project and save Help form submissions.
 > Voice capture uses browser speech recognition when available. Search uses keywords;
 > order review is a demo without payment. See `VIVA.md` for demonstration steps.
 
@@ -72,3 +72,10 @@ Group: 4
 1. Confirm any additional third-evaluation requirements with the teacher.
 2. Complete final accessibility and responsive testing.
 3. Practise the demonstration and explanations in `VIVA.md`.
+
+## November 1, 2026 - Node shop upgrade
+- Added cart toast, button feedback and count.
+- Added demo checkout and JSON order storage.
+- Added protected admin portal with order status editing, search, guest carts and Help inbox.
+- Added server-authoritative prices and idempotent order retries.
+- Tested handlers and cart feedback directly; full browser/network end-to-end testing remains pending.

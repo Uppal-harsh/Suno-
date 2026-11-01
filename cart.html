@@ -65,7 +65,7 @@
 
             <!-- Checkout Button -->
             <button class="btn-primary" type="button" onclick="checkout()">
-              Review Order (Demo)
+              Proceed to checkout
             </button>
 
             <!-- Clear Cart Button -->
@@ -89,6 +89,19 @@
           </div>
         </aside>
       </div>
+
+      <section id="checkoutPanel" class="panel checkout-panel" hidden>
+        <p class="eyebrow">ONE LAST STEP</p><h2>Where should your order go?</h2>
+        <p class="muted">Your details and items will be saved for the store admin. This is a demo order; no payment is collected.</p>
+        <form id="checkoutForm">
+          <label for="customerName">Full name<input id="customerName" name="name" autocomplete="name" required minlength="2" maxlength="80"></label>
+          <label for="customerEmail">Email address<input id="customerEmail" name="email" type="email" autocomplete="email" required maxlength="120"></label>
+          <label for="customerAddress" class="full-width">Delivery address<textarea id="customerAddress" name="address" autocomplete="street-address" required minlength="10" maxlength="300" rows="3"></textarea></label>
+          <button type="submit" class="btn-primary">Place order</button>
+        </form>
+        <p id="checkoutStatus" role="status" aria-live="polite"></p>
+        <div id="orderReceipt" class="order-receipt" role="status" hidden></div>
+      </section>
     </main>
   <footer class="site-footer">
     <div class="footer-content">
@@ -107,6 +120,7 @@
           <h3>Here to help</h3>
           <a href="cart.html">Your cart</a>
           <a href="help.html">Request help</a>
+          <a href="admin.html">Store admin</a>
           <a href="index.html#how-it-works">How it works</a>
         </div>
       </div>
@@ -129,5 +143,6 @@
       </article>
     </template>
     <script src="script.js"></script>
+    <script src="shop.js"></script>
   </body>
 </html>
