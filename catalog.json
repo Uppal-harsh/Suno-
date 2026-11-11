@@ -30,82 +30,98 @@
   {
     "name": "Straight Fit Blue Jeans",
     "price": 799,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/straight-fit-blue-jeans.webp"
   },
   {
     "name": "Slim Fit Black Jeans",
     "price": 999,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/slim-fit-black-jeans.webp"
   },
   {
     "name": "Relaxed Fit Indigo Jeans",
     "price": 1299,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/relaxed-fit-indigo-jeans.webp"
   },
   {
     "name": "Tapered Dark Wash Jeans",
     "price": 1199,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/tapered-dark-wash-jeans.webp"
   },
   {
     "name": "High Rise Wide Leg Jeans",
     "price": 1499,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/high-rise-wide-leg-jeans.webp"
   },
   {
     "name": "Cotton Crew Neck White Tee",
     "price": 449,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/cotton-crew-neck-white-tee.webp"
   },
   {
     "name": "Striped Polo Shirt",
     "price": 749,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/striped-polo-shirt.webp"
   },
   {
     "name": "Olive Cargo Trousers",
     "price": 1099,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/olive-cargo-trousers.webp"
   },
   {
     "name": "Beige Slim Fit Chinos",
     "price": 1199,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/beige-slim-fit-chinos.webp"
   },
   {
     "name": "Heather Grey Zip Hoodie",
     "price": 1299,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/heather-grey-zip-hoodie.webp"
   },
   {
     "name": "Navy Fleece Sweatshirt",
     "price": 999,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/navy-fleece-sweatshirt.webp"
   },
   {
     "name": "Checked Flannel Shirt",
     "price": 899,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/checked-flannel-shirt.webp"
   },
   {
     "name": "Lightweight Denim Jacket",
     "price": 1799,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/lightweight-denim-jacket.webp"
   },
   {
     "name": "Cotton Lounge Shorts",
     "price": 549,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/cotton-lounge-shorts.webp"
   },
   {
     "name": "Maroon Ribbed Sweater",
     "price": 1199,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/maroon-ribbed-sweater.webp"
   },
   {
     "name": "Water Resistant Windbreaker",
     "price": 1599,
-    "category": "clothing"
+    "category": "clothing",
+    "image": "images/water-resistant-windbreaker.webp"
   },
   {
     "name": "Wireless Over-Ear Headphones",
@@ -124,92 +140,110 @@
   {
     "name": "Wired In-Ear Earphones",
     "price": 399,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/wired-in-ear-earphones.webp"
   },
   {
     "name": "Bluetooth Neckband Earphones",
     "price": 899,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/bluetooth-neckband-earphones.webp"
   },
   {
     "name": "Compact Bluetooth Speaker",
     "price": 1199,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/compact-bluetooth-speaker.webp"
   },
   {
     "name": "USB-C Charging Cable",
     "price": 249,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/usb-c-charging-cable.webp"
   },
   {
     "name": "Dual Port Wall Charger",
     "price": 699,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/dual-port-wall-charger.webp"
   },
   {
     "name": "10000 mAh Power Bank",
     "price": 1299,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/10000-mah-power-bank.webp"
   },
   {
     "name": "Wireless Charging Pad",
     "price": 899,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/wireless-charging-pad.webp"
   },
   {
     "name": "Foldable Phone Stand",
     "price": 349,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/foldable-phone-stand.webp"
   },
   {
     "name": "USB Desk Microphone",
     "price": 1499,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/usb-desk-microphone.webp"
   },
   {
     "name": "Compact USB Webcam",
     "price": 1699,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/compact-usb-webcam.webp"
   },
   {
     "name": "Wireless Optical Mouse",
     "price": 549,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/wireless-optical-mouse.webp"
   },
   {
     "name": "Quiet Wired Keyboard",
     "price": 799,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/quiet-wired-keyboard.webp"
   },
   {
     "name": "USB-C Four Port Hub",
     "price": 1199,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/usb-c-four-port-hub.webp"
   },
   {
     "name": "HDMI Display Cable",
     "price": 399,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/hdmi-display-cable.webp"
   },
   {
     "name": "Clip-On Reading Light",
     "price": 449,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/clip-on-reading-light.webp"
   },
   {
     "name": "Digital Alarm Clock",
     "price": 699,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/digital-alarm-clock.webp"
   },
   {
     "name": "Rechargeable LED Torch",
     "price": 499,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/rechargeable-led-torch.webp"
   },
   {
     "name": "Universal Travel Adapter",
     "price": 999,
-    "category": "electronics"
+    "category": "electronics",
+    "image": "images/universal-travel-adapter.webp"
   },
   {
     "name": "Ceramic Coffee Mug",
@@ -228,92 +262,110 @@
   {
     "name": "Stainless Steel Water Bottle",
     "price": 649,
-    "category": "home"
+    "category": "home",
+    "image": "images/stainless-steel-water-bottle.webp"
   },
   {
     "name": "Glass Storage Jar Set",
     "price": 799,
-    "category": "home"
+    "category": "home",
+    "image": "images/glass-storage-jar-set.webp"
   },
   {
     "name": "Bamboo Cutting Board",
     "price": 499,
-    "category": "home"
+    "category": "home",
+    "image": "images/bamboo-cutting-board.webp"
   },
   {
     "name": "Silicone Cooking Spoon Set",
     "price": 349,
-    "category": "home"
+    "category": "home",
+    "image": "images/silicone-cooking-spoon-set.webp"
   },
   {
     "name": "Nonstick Frying Pan",
     "price": 899,
-    "category": "home"
+    "category": "home",
+    "image": "images/nonstick-frying-pan.webp"
   },
   {
     "name": "Stainless Steel Saucepan",
     "price": 1099,
-    "category": "home"
+    "category": "home",
+    "image": "images/stainless-steel-saucepan.webp"
   },
   {
     "name": "Insulated Lunch Box",
     "price": 749,
-    "category": "home"
+    "category": "home",
+    "image": "images/insulated-lunch-box.webp"
   },
   {
     "name": "Stackable Glass Tumbler Set",
     "price": 599,
-    "category": "home"
+    "category": "home",
+    "image": "images/stackable-glass-tumbler-set.webp"
   },
   {
     "name": "Stoneware Dinner Plate Set",
     "price": 1299,
-    "category": "home"
+    "category": "home",
+    "image": "images/stoneware-dinner-plate-set.webp"
   },
   {
     "name": "Cotton Kitchen Towel Set",
     "price": 399,
-    "category": "home"
+    "category": "home",
+    "image": "images/cotton-kitchen-towel-set.webp"
   },
   {
     "name": "Microfiber Cleaning Cloth Set",
     "price": 299,
-    "category": "home"
+    "category": "home",
+    "image": "images/microfiber-cleaning-cloth-set.webp"
   },
   {
     "name": "Foldable Laundry Basket",
     "price": 699,
-    "category": "home"
+    "category": "home",
+    "image": "images/foldable-laundry-basket.webp"
   },
   {
     "name": "Desk Drawer Organizer",
     "price": 449,
-    "category": "home"
+    "category": "home",
+    "image": "images/desk-drawer-organizer.webp"
   },
   {
     "name": "Bedside Table Lamp",
     "price": 1099,
-    "category": "home"
+    "category": "home",
+    "image": "images/bedside-table-lamp.webp"
   },
   {
     "name": "Cotton Cushion Cover Set",
     "price": 549,
-    "category": "home"
+    "category": "home",
+    "image": "images/cotton-cushion-cover-set.webp"
   },
   {
     "name": "Woven Doormat",
     "price": 499,
-    "category": "home"
+    "category": "home",
+    "image": "images/woven-doormat.webp"
   },
   {
     "name": "Single Cotton Bedsheet",
     "price": 999,
-    "category": "home"
+    "category": "home",
+    "image": "images/single-cotton-bedsheet.webp"
   },
   {
     "name": "Stainless Steel Tea Strainer",
     "price": 199,
-    "category": "home"
+    "category": "home",
+    "image": "images/stainless-steel-tea-strainer.webp"
   },
   {
     "name": "Everyday Travel Backpack",
@@ -332,92 +384,110 @@
   {
     "name": "Canvas Tote Bag",
     "price": 399,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/canvas-tote-bag.webp"
   },
   {
     "name": "Compact Crossbody Bag",
     "price": 699,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/compact-crossbody-bag.webp"
   },
   {
     "name": "Laptop Sleeve",
     "price": 599,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/laptop-sleeve.webp"
   },
   {
     "name": "Zip Travel Organizer",
     "price": 449,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/zip-travel-organizer.webp"
   },
   {
     "name": "Canvas Pencil Pouch",
     "price": 249,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/canvas-pencil-pouch.webp"
   },
   {
     "name": "Slim Bifold Wallet",
     "price": 499,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/slim-bifold-wallet.webp"
   },
   {
     "name": "Card Holder Wallet",
     "price": 299,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/card-holder-wallet.webp"
   },
   {
     "name": "Reversible Casual Belt",
     "price": 649,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/reversible-casual-belt.webp"
   },
   {
     "name": "Adjustable Baseball Cap",
     "price": 399,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/adjustable-baseball-cap.webp"
   },
   {
     "name": "Cotton Bucket Hat",
     "price": 499,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/cotton-bucket-hat.webp"
   },
   {
     "name": "Polarized Sport Sunglasses",
     "price": 799,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/polarized-sport-sunglasses.webp"
   },
   {
     "name": "Round Reading Glasses",
     "price": 449,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/round-reading-glasses.webp"
   },
   {
     "name": "Silicone Watch Strap",
     "price": 349,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/silicone-watch-strap.webp"
   },
   {
     "name": "Woven Key Lanyard",
     "price": 199,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/woven-key-lanyard.webp"
   },
   {
     "name": "Travel Luggage Tag Set",
     "price": 299,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/travel-luggage-tag-set.webp"
   },
   {
     "name": "Foldable Travel Umbrella",
     "price": 599,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/foldable-travel-umbrella.webp"
   },
   {
     "name": "Knitted Winter Scarf",
     "price": 549,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/knitted-winter-scarf.webp"
   },
   {
     "name": "Padded Camera Shoulder Bag",
     "price": 1099,
-    "category": "accessories"
+    "category": "accessories",
+    "image": "images/padded-camera-shoulder-bag.webp"
   },
   {
     "name": "Lightweight Running Sneakers",
@@ -436,91 +506,109 @@
   {
     "name": "Canvas Low-Top Sneakers",
     "price": 899,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/canvas-low-top-sneakers.webp"
   },
   {
     "name": "White Court Sneakers",
     "price": 1499,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/white-court-sneakers.webp"
   },
   {
     "name": "Mesh Walking Shoes",
     "price": 1099,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/mesh-walking-shoes.webp"
   },
   {
     "name": "Cushioned Trail Running Shoes",
     "price": 1799,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/cushioned-trail-running-shoes.webp"
   },
   {
     "name": "Lace-Up Training Shoes",
     "price": 1399,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/lace-up-training-shoes.webp"
   },
   {
     "name": "Slip-On Knit Trainers",
     "price": 1199,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/slip-on-knit-trainers.webp"
   },
   {
     "name": "Classic Skate Sneakers",
     "price": 1299,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/classic-skate-sneakers.webp"
   },
   {
     "name": "Casual Suede Loafers",
     "price": 1599,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/casual-suede-loafers.webp"
   },
   {
     "name": "Black Oxford Dress Shoes",
     "price": 1899,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/black-oxford-dress-shoes.webp"
   },
   {
     "name": "Brown Derby Dress Shoes",
     "price": 1699,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/brown-derby-dress-shoes.webp"
   },
   {
     "name": "Round Toe Ballet Flats",
     "price": 899,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/round-toe-ballet-flats.webp"
   },
   {
     "name": "Pointed Toe Office Flats",
     "price": 999,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/pointed-toe-office-flats.webp"
   },
   {
     "name": "Adjustable Walking Sandals",
     "price": 799,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/adjustable-walking-sandals.webp"
   },
   {
     "name": "Cork Footbed Sandals",
     "price": 999,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/cork-footbed-sandals.webp"
   },
   {
     "name": "Textured Pool Slides",
     "price": 399,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/textured-pool-slides.webp"
   },
   {
     "name": "Rubber Flip-Flops",
     "price": 299,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/rubber-flip-flops.webp"
   },
   {
     "name": "Padded House Slippers",
     "price": 499,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/padded-house-slippers.webp"
   },
   {
     "name": "Ankle Hiking Boots",
     "price": 2199,
-    "category": "footwear"
+    "category": "footwear",
+    "image": "images/ankle-hiking-boots.webp"
   }
 ]
