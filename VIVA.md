@@ -3,13 +3,12 @@
 ## Run the project
 
 1. Open the project folder in VS Code.
-2. In Terminal, run `node server.js`.
+2. In Terminal, run `npm ci` once, then `npm start`.
 3. Open http://127.0.0.1:8000.
 4. Stop with Ctrl+C. If port 8000 is busy, stop the earlier server first.
 
 A static preview server serves pages but cannot save submitted forms.
-Node.js uses only its standard library; no packages need installing.
-In VS Code, **Terminal → Run Task → Start EasyKart** runs the same command.
+In VS Code, **Terminal → Run Task → Start EasyKart** starts the server after dependencies are installed.
 Use port **8000**, not Live Server's **5500**. Error **405** means that the
 server does not allow the POST method used by our form. The Help page detects
 the wrong port, disables submission, and links to the Node.js-served form.
@@ -66,7 +65,7 @@ back into help_requests.json. Then the page shows a success message.”
 
 To demonstrate this point:
 
-1. Run `node server.js` in the VS Code terminal. If it is already running, use it.
+1. Run `npm start` in the VS Code terminal. If it is already running, use it.
 2. Open `http://127.0.0.1:8000/help.html`.
 3. Enter a fictional name, a valid email such as `demo@example.test`, and a message of at least 10 characters.
 4. Click Submit Request and show the success message.
@@ -82,12 +81,15 @@ by Git so submitted contact details are not committed.
 
 - `index.html`: homepage and assistant controls.
 - `categories.html`: links with a category in the URL.
-- `products.html`: twelve product cards; `addToCart(this)` passes the clicked button.
+- `products.html`: grid for the product cards rendered by `script.js`.
+- `catalog.json`: 100 local products shared by search, voice results and checkout.
 - `cart.html`: a reusable `<template>` for cart rows.
 - `help.html`: labelled inputs and the Help form.
 - `style.css`: colours, spacing, Grid, Flexbox and responsive media queries.
-- `script.js`: seven numbered sections for cart, display, search, voice and form events.
-- `server.js`: serves files, validates POST data and writes JSON.
+- `script.js`: cart, product filtering, results rendering and form events.
+- `voice.js`: waits for recognition to end, shows results, speaks the follow-up and listens for yes or no.
+- `server.js`: Express serves files, parses JSON and handles Help submissions.
+- `commerce.js`: Express routes for cart, orders and admin.
 
 ## Explain the shared Warm storefront theme
 
@@ -157,7 +159,7 @@ All five pages use the same CSS colours, header and footer. The design uses ordi
 ## Demonstration order
 
 1. Navigate through all five pages.
-2. Open Electronics: only its two products appear.
+2. Open Electronics: its 20 products appear.
 3. On Home, click “Headphones under ₹2000”: matching products appear.
 4. Add a product twice, open Cart and show quantity, total and reload persistence.
 5. Decrease a quantity to zero, open checkout, then demonstrate Clear Cart.
@@ -178,7 +180,7 @@ All five pages use the same CSS colours, header and footer. The design uses ordi
 
 ## New checkout and admin demonstration
 
-1. Start node server.js and note the admin password printed in the terminal.
+1. Run `npm start` and note the admin password printed in the terminal.
 2. Add a product: show the toast, Added button and cart count.
 3. Open Store admin in another tab, sign in, and open Active carts to see an anonymous guest cart.
 4. Return to Cart, choose Proceed to checkout, and submit fictional customer details.

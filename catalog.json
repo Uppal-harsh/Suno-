@@ -3,72 +3,524 @@
     "name": "Classic Regular Fit Black Tee",
     "price": 699,
     "image": "images/tee.jpg",
-    "category": "clothing"
+    "category": "clothing",
+    "rating": 4.8
   },
   {
     "name": "Smart Casual Black Oxford Shirt",
     "price": 950,
     "image": "images/oxford-shirt.jpg",
-    "category": "clothing"
+    "category": "clothing",
+    "rating": 4.7
   },
   {
     "name": "Athletic Quick-Dry Sport Shirt",
     "price": 550,
     "image": "images/sport-shirt.jpg",
-    "category": "clothing"
+    "category": "clothing",
+    "rating": 4.5
   },
   {
     "name": "Casual Black Linen Mandarin Shirt",
     "price": 899,
     "image": "images/linen-shirt.jpg",
+    "category": "clothing",
+    "rating": 4.9
+  },
+  {
+    "name": "Straight Fit Blue Jeans",
+    "price": 799,
+    "category": "clothing"
+  },
+  {
+    "name": "Slim Fit Black Jeans",
+    "price": 999,
+    "category": "clothing"
+  },
+  {
+    "name": "Relaxed Fit Indigo Jeans",
+    "price": 1299,
+    "category": "clothing"
+  },
+  {
+    "name": "Tapered Dark Wash Jeans",
+    "price": 1199,
+    "category": "clothing"
+  },
+  {
+    "name": "High Rise Wide Leg Jeans",
+    "price": 1499,
+    "category": "clothing"
+  },
+  {
+    "name": "Cotton Crew Neck White Tee",
+    "price": 449,
+    "category": "clothing"
+  },
+  {
+    "name": "Striped Polo Shirt",
+    "price": 749,
+    "category": "clothing"
+  },
+  {
+    "name": "Olive Cargo Trousers",
+    "price": 1099,
+    "category": "clothing"
+  },
+  {
+    "name": "Beige Slim Fit Chinos",
+    "price": 1199,
+    "category": "clothing"
+  },
+  {
+    "name": "Heather Grey Zip Hoodie",
+    "price": 1299,
+    "category": "clothing"
+  },
+  {
+    "name": "Navy Fleece Sweatshirt",
+    "price": 999,
+    "category": "clothing"
+  },
+  {
+    "name": "Checked Flannel Shirt",
+    "price": 899,
+    "category": "clothing"
+  },
+  {
+    "name": "Lightweight Denim Jacket",
+    "price": 1799,
+    "category": "clothing"
+  },
+  {
+    "name": "Cotton Lounge Shorts",
+    "price": 549,
+    "category": "clothing"
+  },
+  {
+    "name": "Maroon Ribbed Sweater",
+    "price": 1199,
+    "category": "clothing"
+  },
+  {
+    "name": "Water Resistant Windbreaker",
+    "price": 1599,
     "category": "clothing"
   },
   {
     "name": "Wireless Over-Ear Headphones",
     "price": 1499,
     "image": "images/headphones.jpg",
-    "category": "electronics"
+    "category": "electronics",
+    "rating": 4.6
   },
   {
     "name": "Everyday Smartwatch",
     "price": 1999,
     "image": "images/smartwatch.jpg",
+    "category": "electronics",
+    "rating": 4.4
+  },
+  {
+    "name": "Wired In-Ear Earphones",
+    "price": 399,
+    "category": "electronics"
+  },
+  {
+    "name": "Bluetooth Neckband Earphones",
+    "price": 899,
+    "category": "electronics"
+  },
+  {
+    "name": "Compact Bluetooth Speaker",
+    "price": 1199,
+    "category": "electronics"
+  },
+  {
+    "name": "USB-C Charging Cable",
+    "price": 249,
+    "category": "electronics"
+  },
+  {
+    "name": "Dual Port Wall Charger",
+    "price": 699,
+    "category": "electronics"
+  },
+  {
+    "name": "10000 mAh Power Bank",
+    "price": 1299,
+    "category": "electronics"
+  },
+  {
+    "name": "Wireless Charging Pad",
+    "price": 899,
+    "category": "electronics"
+  },
+  {
+    "name": "Foldable Phone Stand",
+    "price": 349,
+    "category": "electronics"
+  },
+  {
+    "name": "USB Desk Microphone",
+    "price": 1499,
+    "category": "electronics"
+  },
+  {
+    "name": "Compact USB Webcam",
+    "price": 1699,
+    "category": "electronics"
+  },
+  {
+    "name": "Wireless Optical Mouse",
+    "price": 549,
+    "category": "electronics"
+  },
+  {
+    "name": "Quiet Wired Keyboard",
+    "price": 799,
+    "category": "electronics"
+  },
+  {
+    "name": "USB-C Four Port Hub",
+    "price": 1199,
+    "category": "electronics"
+  },
+  {
+    "name": "HDMI Display Cable",
+    "price": 399,
+    "category": "electronics"
+  },
+  {
+    "name": "Clip-On Reading Light",
+    "price": 449,
+    "category": "electronics"
+  },
+  {
+    "name": "Digital Alarm Clock",
+    "price": 699,
+    "category": "electronics"
+  },
+  {
+    "name": "Rechargeable LED Torch",
+    "price": 499,
+    "category": "electronics"
+  },
+  {
+    "name": "Universal Travel Adapter",
+    "price": 999,
     "category": "electronics"
   },
   {
     "name": "Ceramic Coffee Mug",
     "price": 299,
     "image": "images/mug.jpg",
-    "category": "home"
+    "category": "home",
+    "rating": 4.5
   },
   {
     "name": "Kitchen Cookware Set",
     "price": 1799,
     "image": "images/cookware.jpg",
+    "category": "home",
+    "rating": 4.6
+  },
+  {
+    "name": "Stainless Steel Water Bottle",
+    "price": 649,
+    "category": "home"
+  },
+  {
+    "name": "Glass Storage Jar Set",
+    "price": 799,
+    "category": "home"
+  },
+  {
+    "name": "Bamboo Cutting Board",
+    "price": 499,
+    "category": "home"
+  },
+  {
+    "name": "Silicone Cooking Spoon Set",
+    "price": 349,
+    "category": "home"
+  },
+  {
+    "name": "Nonstick Frying Pan",
+    "price": 899,
+    "category": "home"
+  },
+  {
+    "name": "Stainless Steel Saucepan",
+    "price": 1099,
+    "category": "home"
+  },
+  {
+    "name": "Insulated Lunch Box",
+    "price": 749,
+    "category": "home"
+  },
+  {
+    "name": "Stackable Glass Tumbler Set",
+    "price": 599,
+    "category": "home"
+  },
+  {
+    "name": "Stoneware Dinner Plate Set",
+    "price": 1299,
+    "category": "home"
+  },
+  {
+    "name": "Cotton Kitchen Towel Set",
+    "price": 399,
+    "category": "home"
+  },
+  {
+    "name": "Microfiber Cleaning Cloth Set",
+    "price": 299,
+    "category": "home"
+  },
+  {
+    "name": "Foldable Laundry Basket",
+    "price": 699,
+    "category": "home"
+  },
+  {
+    "name": "Desk Drawer Organizer",
+    "price": 449,
+    "category": "home"
+  },
+  {
+    "name": "Bedside Table Lamp",
+    "price": 1099,
+    "category": "home"
+  },
+  {
+    "name": "Cotton Cushion Cover Set",
+    "price": 549,
+    "category": "home"
+  },
+  {
+    "name": "Woven Doormat",
+    "price": 499,
+    "category": "home"
+  },
+  {
+    "name": "Single Cotton Bedsheet",
+    "price": 999,
+    "category": "home"
+  },
+  {
+    "name": "Stainless Steel Tea Strainer",
+    "price": 199,
     "category": "home"
   },
   {
     "name": "Everyday Travel Backpack",
     "price": 899,
     "image": "images/backpack.jpg",
-    "category": "accessories"
+    "category": "accessories",
+    "rating": 4.7
   },
   {
     "name": "Classic Sunglasses",
     "price": 499,
     "image": "images/sunglasses.jpg",
+    "category": "accessories",
+    "rating": 4.4
+  },
+  {
+    "name": "Canvas Tote Bag",
+    "price": 399,
+    "category": "accessories"
+  },
+  {
+    "name": "Compact Crossbody Bag",
+    "price": 699,
+    "category": "accessories"
+  },
+  {
+    "name": "Laptop Sleeve",
+    "price": 599,
+    "category": "accessories"
+  },
+  {
+    "name": "Zip Travel Organizer",
+    "price": 449,
+    "category": "accessories"
+  },
+  {
+    "name": "Canvas Pencil Pouch",
+    "price": 249,
+    "category": "accessories"
+  },
+  {
+    "name": "Slim Bifold Wallet",
+    "price": 499,
+    "category": "accessories"
+  },
+  {
+    "name": "Card Holder Wallet",
+    "price": 299,
+    "category": "accessories"
+  },
+  {
+    "name": "Reversible Casual Belt",
+    "price": 649,
+    "category": "accessories"
+  },
+  {
+    "name": "Adjustable Baseball Cap",
+    "price": 399,
+    "category": "accessories"
+  },
+  {
+    "name": "Cotton Bucket Hat",
+    "price": 499,
+    "category": "accessories"
+  },
+  {
+    "name": "Polarized Sport Sunglasses",
+    "price": 799,
+    "category": "accessories"
+  },
+  {
+    "name": "Round Reading Glasses",
+    "price": 449,
+    "category": "accessories"
+  },
+  {
+    "name": "Silicone Watch Strap",
+    "price": 349,
+    "category": "accessories"
+  },
+  {
+    "name": "Woven Key Lanyard",
+    "price": 199,
+    "category": "accessories"
+  },
+  {
+    "name": "Travel Luggage Tag Set",
+    "price": 299,
+    "category": "accessories"
+  },
+  {
+    "name": "Foldable Travel Umbrella",
+    "price": 599,
+    "category": "accessories"
+  },
+  {
+    "name": "Knitted Winter Scarf",
+    "price": 549,
+    "category": "accessories"
+  },
+  {
+    "name": "Padded Camera Shoulder Bag",
+    "price": 1099,
     "category": "accessories"
   },
   {
     "name": "Lightweight Running Sneakers",
     "price": 1299,
     "image": "images/sneakers.jpg",
-    "category": "footwear"
+    "category": "footwear",
+    "rating": 4.6
   },
   {
     "name": "Everyday Casual Shoes",
     "price": 999,
     "image": "images/casual-shoes.jpg",
+    "category": "footwear",
+    "rating": 4.5
+  },
+  {
+    "name": "Canvas Low-Top Sneakers",
+    "price": 899,
+    "category": "footwear"
+  },
+  {
+    "name": "White Court Sneakers",
+    "price": 1499,
+    "category": "footwear"
+  },
+  {
+    "name": "Mesh Walking Shoes",
+    "price": 1099,
+    "category": "footwear"
+  },
+  {
+    "name": "Cushioned Trail Running Shoes",
+    "price": 1799,
+    "category": "footwear"
+  },
+  {
+    "name": "Lace-Up Training Shoes",
+    "price": 1399,
+    "category": "footwear"
+  },
+  {
+    "name": "Slip-On Knit Trainers",
+    "price": 1199,
+    "category": "footwear"
+  },
+  {
+    "name": "Classic Skate Sneakers",
+    "price": 1299,
+    "category": "footwear"
+  },
+  {
+    "name": "Casual Suede Loafers",
+    "price": 1599,
+    "category": "footwear"
+  },
+  {
+    "name": "Black Oxford Dress Shoes",
+    "price": 1899,
+    "category": "footwear"
+  },
+  {
+    "name": "Brown Derby Dress Shoes",
+    "price": 1699,
+    "category": "footwear"
+  },
+  {
+    "name": "Round Toe Ballet Flats",
+    "price": 899,
+    "category": "footwear"
+  },
+  {
+    "name": "Pointed Toe Office Flats",
+    "price": 999,
+    "category": "footwear"
+  },
+  {
+    "name": "Adjustable Walking Sandals",
+    "price": 799,
+    "category": "footwear"
+  },
+  {
+    "name": "Cork Footbed Sandals",
+    "price": 999,
+    "category": "footwear"
+  },
+  {
+    "name": "Textured Pool Slides",
+    "price": 399,
+    "category": "footwear"
+  },
+  {
+    "name": "Rubber Flip-Flops",
+    "price": 299,
+    "category": "footwear"
+  },
+  {
+    "name": "Padded House Slippers",
+    "price": 499,
+    "category": "footwear"
+  },
+  {
+    "name": "Ankle Hiking Boots",
+    "price": 2199,
     "category": "footwear"
   }
 ]

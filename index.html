@@ -32,7 +32,7 @@
         <p class="hero-description">From everyday essentials to your next favourite.
           Say it, find it, make it yours.</p>
         <div class="hero-actions">
-          <button class="home-button" id="micBtn" type="button">
+          <button class="home-button" id="micBtn" type="button" aria-pressed="false">
             <span aria-hidden="true">🎤</span> Try voice shopping
           </button>
           <a class="home-button secondary" href="products.html">Browse products ↗</a>
@@ -68,6 +68,19 @@
       <button class="suggestion-chip" type="button" data-query="Show me sneakers">Sneakers</button>
       <button class="suggestion-chip" type="button" data-query="Show me smartwatches">Smartwatches</button>
     </div>
+
+    <section class="home-section" id="voiceResults" aria-label="Voice search results" hidden>
+      <div id="voiceProducts">
+        <div class="results-header">
+          <div><h2>Search results</h2><p></p></div>
+          <div class="filter-tag"></div>
+        </div>
+        <p id="cartStatus" role="status"></p>
+        <div class="grid-4" data-product-grid></div>
+      </div>
+      <p class="voice-status" id="voiceFollowup" role="status"></p>
+      <button class="home-button secondary" id="stopVoice" type="button" hidden>Stop voice shopping</button>
+    </section>
 
     <section class="home-section" id="categories" aria-labelledby="categoriesTitle">
       <div class="section-heading">
@@ -196,6 +209,7 @@
     </div>
   </footer>
   <script src="script.js"></script>
+  <script src="voice.js"></script>
     <script src="shop.js"></script>
 </body>
 </html>

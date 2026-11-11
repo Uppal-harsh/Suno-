@@ -69,13 +69,12 @@ Completed:
 
 The local demo supports category and keyword filtering, a persistent cart, quantity
 updates, and a validated Help form saved to `data/help_requests.json`.
-Voice uses browser speech recognition when supported; the assistant uses simple
-keywords. Checkout saves a demo order for the admin; no payment is collected.
+Voice uses the browser’s speech recognition and spoken prompts. Checkout saves a demo order for the admin.
 
 ## Run and prepare for viva
 
-Run `node server.js` from the project folder, then open
-[EasyKart locally](http://127.0.0.1:8000). No additional Node.js packages are required.
+Use Node.js 22 or newer. Run `npm ci` from the project folder, then `npm start`.
+Open [EasyKart locally](http://127.0.0.1:8000).
 Use this server for form submission; a static server cannot write the JSON file.
 
 In VS Code you can also choose **Terminal → Run Task → Start EasyKart**.
@@ -86,6 +85,15 @@ before submission and provides a link to the working form.
 
 See [VIVA.md](VIVA.md) for the requirement mapping, code terms, demonstration steps
 and project limitations. Form data in `data/` is excluded from Git.
+
+## Try voice shopping
+
+1. Click **Try voice shopping** and allow the microphone in a browser that supports speech recognition.
+2. Say “I want jeans under one thousand.” The ₹799 and ₹999 jeans appear on the home page.
+3. After the spoken question, say “yes” and give another search, or say “no” to turn the microphone off.
+
+Use the typed search if your browser cannot recognize speech. The same filter understands
+“under” as a strict limit and “up to” as an inclusive limit.
 
 ## Team
 
@@ -110,7 +118,9 @@ To create a simple and accessible shopping interface that reduces the complexity
 
 ## Backend
 
-Plain Node.js built-in HTTP and file-system modules; no Express, MongoDB or external dependencies. Run with node server.js or npm start. POST /api/help accepts JSON containing name, email and message. Existing JSON records are preserved. The cart remains in browser localStorage. The server also supports guest cart syncing, checkout, admin login, order viewing and order-status updates.
+`server.js` uses Express for page serving, JSON request parsing and Help submissions.
+`commerce.js` registers the cart, checkout and admin routes. Node’s file-system module
+continues to read and write the existing local JSON files.
 
 
 ## Store and admin features
@@ -141,7 +151,9 @@ The cart also remains in browser localStorage. Server syncing requires the Node 
 Saved carts are not restored to another device and are not verified customer identities.
 Orders are classroom demo records, not actual payments or fulfilment requests. Order value is not collected revenue.
 This remains a single-process, localhost-only demo with JSON storage, not a production shop.
-If you change product names or prices, update catalog.json and the corresponding product cards together.
+`catalog.json` holds 100 demo products across five categories. Product records have a name,
+price in rupees and category, with optional local image paths and ratings. Edit this file to
+update the Products page, voice search and checkout. Restart the server after changing the catalog.
 
 ### API overview
 
@@ -155,5 +167,3 @@ If you change product names or prices, update catalog.json and the corresponding
 | GET | /api/admin/dashboard | Read orders, carts and Help messages (admin only) |
 | PATCH | /api/admin/orders/:id | Change order status (admin only) |
 | POST | /api/admin/logout | End admin session |
-
-No Express, MongoDB, Python or third-party packages are used.

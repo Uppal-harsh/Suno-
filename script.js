@@ -46,7 +46,7 @@ function addToCart(button) {
         item.quantity += 1;
     } else {
         cart.push({ name: name, price: price, quantity: 1,
-            image: card.querySelector("img").getAttribute("src") });
+            image: card.querySelector("img")?.getAttribute("src") });
     }
     if (saveCart()) {
         cartMessage(name + " added to your cart.");
@@ -107,34 +107,88 @@ function renderCart() {
     document.getElementById("totalPrice").textContent = "₹" + calculateTotal();
 }
 
-// 4. Read category/search values from the URL and show matching cards.
-function filterProducts() {
-    const grid = document.querySelector("[data-product-grid]");
-    if (!grid) return;
-    const params = new URLSearchParams(window.location.search);
+// Read the product words and an optional rupee ceiling.
+function parseProductSearch(query) {
+    const smallNumbers = {
+        one: 1, two: 2, three: 3, four: 4, five: 5,
+        six: 6, seven: 7, eight: 8, nine: 9
+    };
+    const normalized = query.toLowerCase().replace(/(\d),(?=\d)/g, "$1")
+        .replace(/\b(one|two|three|four|five|six|seven|eight|nine)[ -]+(hundred|thousand)\b/g,
+            (_, number, scale) => smallNumbers[number] * (scale === "thousand" ? 1000 : 100));
+    const budget = /\b(under|below|less than|up to|at most)\s*(?:₹|rs\.?\s*|inr\s*)?\s*(\d+(?:\.\d+)?)(\s*k\b)?(?:\s+rupees?)?/;
+    const limit = normalized.match(budget);
+    const words = normalized.replace(budget, "").replace(/[^a-z0-9]+/g, " ")
+        .replace(/\b(show|me|i|want|would|like|need|for|a|an|the|please|find|some|can|you|all)\b/g, "")
+        .trim().split(/\s+/).filter(Boolean);
+    return {
+        words,
+        maxPrice: limit ? Number(limit[2]) * (limit[3] ? 1000 : 1) : Infinity,
+        inclusive: Boolean(limit && ["up to", "at most"].includes(limit[1]))
+    };
+}
+
+function productCard(product, position) {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+        <div class="img-wrap"><span class="badge-num"></span><img loading="lazy"></div>
+        <div class="card-meta"><span class="price"></span><span class="rating"></span></div>
+        <p class="product-title"></p>
+        <button class="btn-orange" type="button">Add to Cart</button>`;
+    if (product.image) {
+        const image = card.querySelector("img");
+        image.src = product.image;
+        image.alt = product.name;
+        card.querySelector(".badge-num").textContent = position;
+    } else {
+        card.querySelector(".img-wrap").remove();
+    }
+    card.querySelector(".price").textContent = "₹" + product.price;
+    if (product.rating) card.querySelector(".rating").textContent = "★ " + product.rating;
+    card.querySelector(".product-title").textContent = product.name;
+    const button = card.querySelector("button");
+    button.addEventListener("click", () => addToCart(button));
+    return card;
+}
+
+async function showProducts(root, params, signal) {
+    const response = await fetch("catalog.json", { signal });
+    if (!response.ok) throw new Error("Could not load the catalog.");
+    const catalog = await response.json();
+    signal?.throwIfAborted();
     const category = params.get("category");
-    const query = (params.get("q") || "").replace(/(\d),(?=\d{3}\b)/g, "$1");
-    const labels = { clothing: "Clothing", electronics: "Electronics",
-        home: "Home & Kitchen", accessories: "Accessories", footwear: "Footwear" };
-    const limit = query.match(/under\s*₹?\s*(\d+)/i);
-    const words = query.toLowerCase().replace(/under\s*₹?\s*\d+/g, "")
-        .replace(/\b(show|me|i|need|a|an|the|please|find)\b/g, "").trim().split(/\s+/);
-    let count = 0;
-    for (const card of grid.querySelectorAll(".card")) {
-        const name = card.querySelector(".product-title").textContent.toLowerCase();
-        const price = Number(card.querySelector(".price").textContent.replace("₹", ""));
-        const matches = words.every(function(word) {
+    const query = params.get("q") || "";
+    const labels = new Map([
+        ["clothing", "Clothing"], ["electronics", "Electronics"], ["home", "Home & Kitchen"],
+        ["accessories", "Accessories"], ["footwear", "Footwear"]
+    ]);
+    const { words, maxPrice, inclusive } = parseProductSearch(query);
+    const matches = catalog.filter(product => {
+        if (labels.has(category) && product.category !== category) return false;
+        if (inclusive ? product.price > maxPrice : product.price >= maxPrice) return false;
+        const name = product.name.toLowerCase();
+        return words.every(word => {
             const singular = word.replace(/watches$/, "watch").replace(/s$/, "");
             return name.includes(word) || (singular.length > 0 && name.includes(singular));
         });
-        card.hidden = (Boolean(labels[category]) && card.dataset.category !== category) ||
-            !matches || (Boolean(limit) && price > Number(limit[1]));
-        if (!card.hidden) card.querySelector(".badge-num").textContent = ++count;
-    }
-    document.querySelector(".results-header h2").textContent = query ? "Search: " + query : labels[category] || "All Products";
-    document.querySelector(".results-header p").textContent = count + " products available";
-    document.querySelector(".filter-tag").textContent = "Category: " + (labels[category] || "All");
-    if (!count) cartMessage("No matching products. Try another category or search.");
+    });
+
+    root.querySelector("[data-product-grid]").replaceChildren(
+        ...matches.map((product, index) => productCard(product, index + 1))
+    );
+    const label = labels.get(category);
+    root.querySelector(".results-header h2").textContent = query ? "Search: " + query : label || "All Products";
+    root.querySelector(".results-header p").textContent = matches.length + " products available";
+    root.querySelector(".filter-tag").textContent = "Category: " + (label || "All");
+    root.querySelector("#cartStatus").textContent = matches.length ? "" : "No matching products. Try another search.";
+}
+
+async function showVoiceProducts(query, signal) {
+    const results = document.getElementById("voiceResults");
+    await showProducts(results, new URLSearchParams({ q: query }), signal);
+    results.hidden = false;
+    results.scrollIntoView({ block: "start" });
 }
 
 // 5. The homepage uses simple keywords, not an AI service.
@@ -147,30 +201,6 @@ function sendMessage() {
     else if (command.includes("categor")) window.location.href = "categories.html";
     else if (command.includes("help")) window.location.href = "help.html";
     else window.location.href = "products.html?q=" + encodeURIComponent(message);
-}
-
-function startVoice() {
-    const status = document.getElementById("voiceStatus");
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        status.textContent = "Voice is unavailable here. Please type your search.";
-        return;
-    }
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en-IN";
-    recognition.onstart = function() { status.textContent = "Listening..."; };
-    recognition.onresult = function(event) {
-        document.getElementById("chatInput").value = event.results[0][0].transcript;
-        status.textContent = "Voice captured. Choose Find it to search.";
-    };
-    recognition.onerror = function(event) { status.textContent = "Voice error: " + event.error; };
-    recognition.onend = function() { document.getElementById("micBtn").disabled = false; };
-    document.getElementById("micBtn").disabled = true;
-    try { recognition.start(); }
-    catch (error) {
-        document.getElementById("micBtn").disabled = false;
-        status.textContent = "Could not start voice search. Please try again.";
-    }
 }
 
 // 6. Prevent page reload, validate the form, then POST JSON to the Node.js server.
@@ -208,7 +238,12 @@ async function submitHelp(event) {
 // 7. Attach events after the browser has created the page elements.
 document.addEventListener("DOMContentLoaded", function() {
     renderCart();
-    filterProducts();
+    const productGrid = document.querySelector("main > [data-product-grid]");
+    if (productGrid) {
+        showProducts(productGrid.parentElement, new URLSearchParams(window.location.search)).catch(() => {
+            document.querySelector(".results-header p").textContent = "Could not load products. Open EasyKart through the local server.";
+        });
+    }
     const helpForm = document.getElementById("helpForm");
     if (helpForm) {
         helpForm.onsubmit = submitHelp;
@@ -226,7 +261,6 @@ document.addEventListener("DOMContentLoaded", function() {
     for (const chip of document.querySelectorAll(".suggestion-chip")) {
         chip.onclick = function() { document.getElementById("chatInput").value = chip.dataset.query; sendMessage(); };
     }
-    document.getElementById("micBtn").onclick = startVoice;
 });
 
 window.addEventListener("storage", function(event) {
