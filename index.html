@@ -37,7 +37,7 @@
           </button>
           <a class="home-button secondary" href="products.html">Browse products ↗</a>
         </div>
-        <p class="voice-status" id="voiceStatus" role="status">Prefer typing? Search below.</p>
+        <p class="voice-status" id="voiceStatus" role="status">Try saying “jeans under 1000”. You can also type below.</p>
         <a class="scroll-link" href="#categories">Explore below ↓</a>
       </div>
 
@@ -79,6 +79,10 @@
         <div class="grid-4" data-product-grid></div>
       </div>
       <p class="voice-status" id="voiceFollowup" role="status"></p>
+      <div class="hero-actions" id="voiceChoices" hidden>
+        <button class="home-button" id="continueVoice" type="button">Yes, search again</button>
+        <button class="home-button secondary" id="endVoice" type="button">No, stop</button>
+      </div>
       <button class="home-button secondary" id="stopVoice" type="button" hidden>Stop voice shopping</button>
     </section>
 

@@ -1,5 +1,8 @@
 const micButton = document.getElementById("micBtn");
 const stopVoiceButton = document.getElementById("stopVoice");
+const choices = document.getElementById("voiceChoices");
+const continueButton = document.getElementById("continueVoice");
+const endButton = document.getElementById("endVoice");
 const homeVoiceStatus = document.getElementById("voiceStatus");
 const followupStatus = document.getElementById("voiceFollowup");
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -15,10 +18,19 @@ function stopVoice(message = "Voice shopping is off.") {
     voiceSession = null;
     session.controller.abort();
     session.recognition?.abort();
-    if (session.prompt) window.speechSynthesis.cancel();
+    clearPrompt(session);
+    choices.hidden = true;
     micButton.setAttribute("aria-pressed", "false");
     stopVoiceButton.hidden = true;
     voiceStatus(session, message);
+}
+
+function clearPrompt(session) {
+    clearTimeout(session.promptTimer);
+    if (session.prompt) {
+        session.prompt = null;
+        window.speechSynthesis.cancel();
+    }
 }
 
 function listen(session, message, onSpeech) {
@@ -27,20 +39,36 @@ function listen(session, message, onSpeech) {
     session.recognition = recognition;
     recognition.lang = "en-IN";
     let transcript = "";
-    voiceStatus(session, message);
+    voiceStatus(session, "Starting microphone…");
+    recognition.onstart = () => {
+        if (voiceSession === session && session.recognition === recognition) voiceStatus(session, message);
+    };
     recognition.onresult = event => {
-        transcript = event.results[0][0].transcript.trim();
+        if (voiceSession !== session || session.recognition !== recognition) return;
+        transcript = event.results[event.resultIndex || 0][0].transcript.trim();
+        if (transcript) recognition.stop();
     };
     recognition.onerror = event => {
-        if (voiceSession !== session) return;
-        stopVoice(event.error === "not-allowed" || event.error === "service-not-allowed"
-            ? "Allow microphone access to use voice shopping. You can also type a search."
-            : "Voice recognition stopped. Start voice shopping again or type a search.");
+        if (voiceSession !== session || session.recognition !== recognition) return;
+        const errors = {
+            "not-allowed": "Microphone access was blocked. Allow it in your browser or type a search.",
+            "service-not-allowed": "Speech recognition is blocked in this browser. Try Chrome or type a search.",
+            "audio-capture": "No microphone is available. Check your input device or type a search.",
+            "network": "The browser’s speech service couldn’t connect. Check your connection or type a search.",
+            "no-speech": "No speech heard. Try again or type a search."
+        };
+        if (onSpeech === handleVoiceAnswer && event.error === "no-speech") {
+            session.recognition = null;
+            voiceStatus(session, "No answer heard. Choose Yes or No.");
+            return;
+        }
+        stopVoice(errors[event.error] || "Voice recognition stopped. Try again or type a search.");
     };
     recognition.onend = () => {
-        if (voiceSession !== session) return;
+        if (voiceSession !== session || session.recognition !== recognition) return;
         session.recognition = null;
         if (transcript) onSpeech(session, transcript);
+        else if (onSpeech === handleVoiceAnswer) voiceStatus(session, "No answer heard. Choose Yes or No.");
         else stopVoice("No speech heard. Start voice shopping again or type a search.");
     };
     try {
@@ -66,10 +94,11 @@ async function searchByVoice(session, query) {
 }
 
 function askToContinue(session, message = "Would you like more voice-assisted help? Say yes or no.") {
+    choices.hidden = false;
     voiceStatus(session, message);
     const hearAnswer = () => {
         if (voiceSession !== session) return;
-        session.prompt = null;
+        clearPrompt(session);
         listen(session, message, handleVoiceAnswer);
     };
     if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) {
@@ -85,20 +114,35 @@ function askToContinue(session, message = "Would you like more voice-assisted he
     prompt.onend = finishPrompt;
     prompt.onerror = finishPrompt;
     session.prompt = prompt;
-    window.speechSynthesis.speak(prompt);
+    session.promptTimer = setTimeout(finishPrompt, 8000);
+    try {
+        window.speechSynthesis.speak(prompt);
+    } catch {
+        finishPrompt();
+    }
 }
 
 function handleVoiceAnswer(session, transcript) {
     const answer = transcript.toLowerCase().match(/^[\s.,!?]*(yes|no)\b/)?.[1];
     if (answer === "no") stopVoice();
-    else if (answer === "yes") listen(session, "Listening… Tell me what you’d like to find next.", searchByVoice);
+    else if (answer === "yes") continueSearch(session);
     else askToContinue(session, "Please say yes to search again, or no to stop.");
+}
+
+function continueSearch(session) {
+    if (!session) return;
+    clearPrompt(session);
+    const previous = session.recognition;
+    session.recognition = null;
+    previous?.abort();
+    choices.hidden = true;
+    listen(session, "Listening… Tell me what you’d like to find next.", searchByVoice);
 }
 
 function startVoice() {
     if (voiceSession) return stopVoice();
-    if (!SpeechRecognition) {
-        homeVoiceStatus.textContent = "Voice recognition is unavailable here. Please type your search.";
+    if (!SpeechRecognition || !window.isSecureContext) {
+        homeVoiceStatus.textContent = "Open EasyKart in a browser with speech recognition using localhost or HTTPS. You can type below.";
         return;
     }
     voiceSession = { controller: new AbortController(), hasResults: false };
@@ -106,6 +150,8 @@ function startVoice() {
     listen(voiceSession, "Listening… Tell me what you’re looking for.", searchByVoice);
 }
 
+continueButton.addEventListener("click", () => continueSearch(voiceSession));
+endButton.addEventListener("click", () => stopVoice());
 micButton.addEventListener("click", startVoice);
 stopVoiceButton.addEventListener("click", () => stopVoice());
 window.addEventListener("pagehide", () => stopVoice());
