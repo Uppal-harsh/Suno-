@@ -128,11 +128,11 @@ function parseProductSearch(query) {
     };
 }
 
-function productCard(product, position) {
+function productCard(product) {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-        <div class="img-wrap"><span class="badge-num"></span><img loading="lazy"></div>
+        <div class="img-wrap"><img loading="lazy"></div>
         <div class="card-meta"><span class="price"></span><span class="rating"></span></div>
         <p class="product-title"></p>
         <button class="btn-orange" type="button">Add to Cart</button>`;
@@ -140,7 +140,6 @@ function productCard(product, position) {
         const image = card.querySelector("img");
         image.src = product.image;
         image.alt = product.name;
-        card.querySelector(".badge-num").textContent = position;
     } else {
         card.querySelector(".img-wrap").remove();
     }
@@ -175,7 +174,7 @@ async function showProducts(root, params, signal) {
     });
 
     root.querySelector("[data-product-grid]").replaceChildren(
-        ...matches.map((product, index) => productCard(product, index + 1))
+        ...matches.map(productCard)
     );
     const label = labels.get(category);
     root.querySelector(".results-header h2").textContent = query ? "Search: " + query : label || "All Products";
