@@ -17,6 +17,7 @@ function stopVoice(message = "Voice shopping is off.") {
     if (!session) return;
     voiceSession = null;
     session.controller.abort();
+    clearTimeout(session.startTimer);
     session.recognition?.abort();
     clearPrompt(session);
     choices.hidden = true;
@@ -40,8 +41,15 @@ function listen(session, message, onSpeech) {
     recognition.lang = "en-IN";
     let transcript = "";
     voiceStatus(session, "Starting microphone…");
+    session.startTimer = setTimeout(() => {
+        if (voiceSession === session && session.recognition === recognition) {
+            stopVoice("The microphone didn’t start. Check your browser’s microphone permission or type a search.");
+        }
+    }, 12000);
     recognition.onstart = () => {
-        if (voiceSession === session && session.recognition === recognition) voiceStatus(session, message);
+        if (voiceSession !== session || session.recognition !== recognition) return;
+        clearTimeout(session.startTimer);
+        voiceStatus(session, message);
     };
     recognition.onresult = event => {
         if (voiceSession !== session || session.recognition !== recognition) return;
@@ -57,6 +65,7 @@ function listen(session, message, onSpeech) {
             "network": "The browser’s speech service couldn’t connect. Check your connection or type a search.",
             "no-speech": "No speech heard. Try again or type a search."
         };
+        clearTimeout(session.startTimer);
         if (onSpeech === handleVoiceAnswer && event.error === "no-speech") {
             session.recognition = null;
             voiceStatus(session, "No answer heard. Choose Yes or No.");
@@ -66,6 +75,7 @@ function listen(session, message, onSpeech) {
     };
     recognition.onend = () => {
         if (voiceSession !== session || session.recognition !== recognition) return;
+        clearTimeout(session.startTimer);
         session.recognition = null;
         if (transcript) onSpeech(session, transcript);
         else if (onSpeech === handleVoiceAnswer) voiceStatus(session, "No answer heard. Choose Yes or No.");
@@ -132,6 +142,7 @@ function handleVoiceAnswer(session, transcript) {
 function continueSearch(session) {
     if (!session) return;
     clearPrompt(session);
+    clearTimeout(session.startTimer);
     const previous = session.recognition;
     session.recognition = null;
     previous?.abort();
