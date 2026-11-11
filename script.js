@@ -119,7 +119,7 @@ function parseProductSearch(query) {
     const budget = /\b(under|below|less than|up to|at most)\s*(?:₹|rs\.?\s*|inr\s*)?\s*(\d+(?:\.\d+)?)(\s*k\b)?(?:\s+rupees?)?/;
     const limit = normalized.match(budget);
     const words = normalized.replace(budget, "").replace(/[^a-z0-9]+/g, " ")
-        .replace(/\b(show|me|i|want|would|like|need|for|a|an|the|please|find|some|can|you|all|pair|of|get|looking|priced)\b/g, "")
+        .replace(/\b(show|me|i|am|want|would|like|need|for|a|an|the|please|find|some|can|you|all|pair|of|get|looking|priced)\b/g, "")
         .trim().split(/\s+/).filter(Boolean);
     return {
         words,
