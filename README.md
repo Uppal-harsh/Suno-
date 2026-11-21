@@ -116,11 +116,31 @@ To create a simple and accessible shopping interface that reduces the complexity
 **Batch:** 2025, 3rd Semester  
 **Academic Year:** 2026–27
 
-## Backend
+## Backend and MongoDB
 
-`server.js` uses Express for page serving, JSON request parsing and Help submissions.
-`commerce.js` registers the cart, checkout and admin routes. Node’s file-system module
-continues to read and write the existing local JSON files.
+`server.js` serves the pages and API. `commerce.js` handles carts, checkout, and the
+admin dashboard. When `MONGODB_URI` is configured, MongoDB stores orders, carts, and
+Help requests in the database named by `MONGODB_DB_NAME` (default: `easykart`). On
+the first MongoDB startup, existing JSON records are imported into empty collections.
+Without a MongoDB URI, the server keeps using the local JSON files for an offline demo.
+
+### Connect MongoDB Atlas
+
+1. Create a free MongoDB Atlas cluster and a database user. Allow your current IP in
+   Atlas Network Access; avoid opening database access to every IP for a real deployment.
+2. In the project folder, copy `.env.example` to `.env`.
+3. Replace the `MONGODB_URI` example with the connection string from Atlas, filling in
+   the database user's username and password. URL-encode special characters in the password.
+4. Keep `.env` private. It is excluded from Git. Never place the connection string in
+   frontend JavaScript or commit it.
+5. Run `npm ci`, then `npm start`. The terminal confirms whether MongoDB or local JSON
+   storage is active. If the MongoDB connection fails, the server stops instead of
+   silently switching to local storage.
+
+MongoDB creates the `orders`, `carts`, and `help_requests` collections automatically.
+Unique indexes protect order retry handling and cart ownership. Existing JSON data is
+left in the ignored `data/` folder after import; keep a backup until you verify the
+records in Atlas. Do not repeatedly reset the database to import newer JSON changes.
 
 
 ## Store and admin features
@@ -139,18 +159,19 @@ continues to read and write the existing local JSON files.
 Run npm start (or node server.js) and keep the terminal open.
 Open http://127.0.0.1:8000, add products, then proceed to checkout.
 Open http://127.0.0.1:8000/admin.html or choose Store admin in the footer.
-The terminal displays a random admin password on each server start. To choose a persistent password, set ADMIN_PASSWORD in your terminal environment before starting Node; do not put the password in Git.
+The terminal displays a random admin password on each server start. To choose a persistent password, uncomment and set `ADMIN_PASSWORD` in `.env`; keep `.env` private.
 Admin sessions expire after eight hours and are invalidated when the server restarts. Sign out on a shared computer.
 Use Refresh in the dashboard to load the latest activity.
 
 ### Storage and limitations
 
-Help messages remain in data/help_requests.json. Orders and active carts are in data/commerce.json.
-Both files are private and excluded from Git; the upgrade does not replace existing data.
-The cart also remains in browser localStorage. Server syncing requires the Node server, not Live Server.
+With MongoDB configured, Help messages, orders, and active carts are stored in MongoDB.
+Without it, Help messages remain in `data/help_requests.json`, and orders and carts are
+in `data/commerce.json`. These files are private and excluded from Git. The cart also
+remains in browser localStorage. Server syncing requires the Node server, not Live Server.
 Saved carts are not restored to another device and are not verified customer identities.
 Orders are classroom demo records, not actual payments or fulfilment requests. Order value is not collected revenue.
-This remains a single-process, localhost-only demo with JSON storage, not a production shop.
+This remains a single-process, localhost-only classroom demo, not a production shop.
 `catalog.json` holds 100 demo products across five categories. Product records have a name,
 price in rupees and category, with optional local image paths and ratings. Edit this file to
 update the Products page, voice search and checkout. Restart the server after changing the catalog.
