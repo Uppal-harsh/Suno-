@@ -1,11 +1,11 @@
 // Express server: run node server.js, then open http://127.0.0.1:8000.
+require('dotenv').config();
 const express = require('express');
-const fs = require('node:fs');
 const path = require('node:path');
 
 const ROOT = __dirname;
 const commerce = require('./commerce');
-const DATA_FILE = path.join(ROOT, 'data', 'help_requests.json');
+const storage = require('./storage');
 const pages = new Set(['index.html', 'categories.html', 'products.html',
     'cart.html', 'help.html', 'style.css', 'script.js', 'tomato.png', 'admin.html', 'admin.js', 'shop.js', 'voice.js', 'catalog.json']);
 const app = express();
@@ -35,7 +35,7 @@ function jsonBody(limit, invalidMessage) {
     };
 }
 
-function saveHelp(req, res) {
+async function saveHelp(req, res) {
     let name, email, message;
     try {
         const data = req.body;
@@ -53,16 +53,7 @@ function saveHelp(req, res) {
         return reply(res, 400, 'Please enter a valid name, email and message.');
     }
     try {
-        fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
-        const requests = fs.existsSync(DATA_FILE)
-            ? JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')) : [];
-        if (!Array.isArray(requests)) throw new Error('Saved data must be a list');
-        requests.push({ name, email, message, submitted_at: new Date().toISOString() });
-        // Synchronous read/write keeps submissions sequential in this small local demo.
-        // Rename only after writing, preserving the old file if the write fails.
-        const temporary = DATA_FILE + '.tmp';
-        fs.writeFileSync(temporary, JSON.stringify(requests, null, 2), 'utf8');
-        fs.renameSync(temporary, DATA_FILE);
+        await storage.addHelp({ name, email, message, submitted_at: new Date().toISOString() });
     } catch {
         return reply(res, 500, 'Could not save the request. Please try again.');
     }
@@ -96,14 +87,20 @@ app.use((req, res) => {
 });
 
 if (require.main === module) {
-    const server = app.listen(8000, '127.0.0.1', () => {
-        console.log('Open http://127.0.0.1:8000 - press Ctrl+C to stop.');
-        console.log('Admin: http://127.0.0.1:8000/admin.html');
-        console.log('Admin password: ' + commerce.password);
-    });
-    server.on('error', error => {
-        console.error(error.code === 'EADDRINUSE'
-            ? 'Port 8000 is busy. Stop the earlier server, then try again.' : error.message);
+    storage.connect().then(() => {
+        const server = app.listen(8000, '127.0.0.1', () => {
+            console.log('Open http://127.0.0.1:8000 - press Ctrl+C to stop.');
+            console.log('Admin: http://127.0.0.1:8000/admin.html');
+            console.log('Admin password: ' + commerce.password);
+        });
+        server.on('error', error => {
+            console.error(error.code === 'EADDRINUSE'
+                ? 'Port 8000 is busy. Stop the earlier server, then try again.' : error.message);
+            process.exitCode = 1;
+        });
+    }).catch(error => {
+        console.error('Database connection failed. Check MONGODB_URI and network access.');
+        console.error(error.message);
         process.exitCode = 1;
     });
 }
