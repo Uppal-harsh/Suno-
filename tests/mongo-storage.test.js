@@ -114,4 +114,34 @@ describe('Storage backed by an isolated real MongoDB', { timeout: 180000 }, () =
         assert.equal((await storage.listOrders()).length, 1);
         assert.equal((await storage.listOrders())[0].id, 'current');
     });
+
+    it('stores exactly one order when simultaneous retries race', async () => {
+        await storage.connect();
+        const order = { id: crypto.randomUUID(), visitorId: 'visitor-a', requestId: crypto.randomUUID(), created_at: new Date().toISOString() };
+        const results = await Promise.all(Array.from({ length: 6 }, () => storage.createOrder({ ...order, id: crypto.randomUUID() })));
+        assert.equal(results.filter(result => result.created).length, 1);
+        assert.equal(new Set(results.map(result => result.order.id)).size, 1);
+        assert.equal(await db.collection('orders').countDocuments(), 1);
+    });
+
+    it('rejects an unrelated order ID collision instead of returning a null order', async () => {
+        await storage.connect();
+        await storage.createOrder({ id: 'same-id', visitorId: 'first-visitor', requestId: 'first-request' });
+        await assert.rejects(storage.createOrder({ id: 'same-id', visitorId: 'other-visitor', requestId: 'other-request' }), error => error.code === 11000);
+        assert.equal(await db.collection('orders').countDocuments(), 1);
+    });
+
+    it('retries incomplete cart cleanup without deleting a newer cart', async () => {
+        await storage.connect();
+        const order = { id: 'saved-order', visitorId: 'visitor-a', requestId: 'request-a', created_at: '2026-11-22T11:00:00.000Z' };
+        // Simulate an order saved immediately before the cleanup connection failed.
+        await db.collection('orders').insertOne({ ...order });
+        await storage.saveCart(order.visitorId, { items: [{ name: 'Jeans', quantity: 1 }], updated_at: '2026-11-22T10:59:00.000Z' });
+        assert.equal((await storage.createOrder(order)).created, false);
+        assert.deepEqual(await storage.listCarts(), []);
+        const newerCart = { items: [{ name: 'Watch', quantity: 1 }], updated_at: '2026-11-22T11:01:00.000Z' };
+        await storage.saveCart(order.visitorId, newerCart);
+        await storage.createOrder(order);
+        assert.deepEqual(await storage.listCarts(), [newerCart]);
+    });
 });

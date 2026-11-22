@@ -150,25 +150,39 @@ async function saveCart(visitorId, cart) {
 async function createOrder(order) {
     requireConnection();
     if (collections) {
+        const filter = { visitorId: order.visitorId, requestId: order.requestId };
         let result;
+        let saved;
         try {
             result = await collections.orders.updateOne(
-                { visitorId: order.visitorId, requestId: order.requestId },
+                filter,
                 { $setOnInsert: order }, { upsert: true }
             );
         } catch (error) {
             if (error.code !== 11000) throw error;
+            saved = await collections.orders.findOne(filter, { projection: { _id: 0 } });
+            // Only a duplicate of this checkout is a successful retry.
+            if (!saved) throw error;
         }
-        const saved = await collections.orders.findOne(
-            { visitorId: order.visitorId, requestId: order.requestId }, { projection: { _id: 0 } }
-        );
-        if (result?.upsertedCount) await collections.carts.deleteOne({ visitorId: order.visitorId });
+        saved ||= await collections.orders.findOne(filter, { projection: { _id: 0 } });
+        if (!saved) throw new Error('Order could not be confirmed. Retry the same checkout.');
+        if (saved.created_at) {
+            // Retry unfinished cleanup, while preserving a cart changed after checkout.
+            await collections.carts.deleteOne({ visitorId: saved.visitorId, $or: [
+                { updated_at: { $lte: saved.created_at } }, { updated_at: { $exists: false } }
+            ] });
+        } else if (result?.upsertedCount) {
+            await collections.carts.deleteOne({ visitorId: saved.visitorId });
+        }
         return { order: saved, created: result?.upsertedCount === 1 };
     }
     const store = readCommerce();
     const existing = store.orders.find(item => item.visitorId === order.visitorId && item.requestId === order.requestId);
     if (existing) return { order: existing, created: false };
-    store.orders.push(order); delete store.carts[order.visitorId]; writeJson(commerceFile, store);
+    store.orders.push(order);
+    const cart = store.carts[order.visitorId];
+    if (!order.created_at || !cart?.updated_at || cart.updated_at <= order.created_at) delete store.carts[order.visitorId];
+    writeJson(commerceFile, store);
     return { order, created: true };
 }
 async function updateOrder(id, update) {
