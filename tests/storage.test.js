@@ -66,4 +66,12 @@ describe('JSON storage in a temporary directory', () => {
         await assert.rejects(storage.addHelp({ message: 'Do not overwrite existing data.' }), SyntaxError);
         assert.equal(fs.readFileSync(file, 'utf8'), '{broken');
     });
+
+    it('refuses to overwrite JSON with an invalid commerce structure', async () => {
+        const file = path.join(dataDir, 'commerce.json');
+        const invalid = JSON.stringify({ orders: [], carts: [] });
+        fs.writeFileSync(file, invalid);
+        await assert.rejects(storage.saveCart('visitor-a', { items: [] }), /Invalid saved commerce data/);
+        assert.equal(fs.readFileSync(file, 'utf8'), invalid);
+    });
 });

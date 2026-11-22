@@ -73,4 +73,45 @@ describe('Storage backed by an isolated real MongoDB', { timeout: 180000 }, () =
         assert.equal((await storage.updateOrder(order.id, { status: 'Packed' })).status, 'Packed');
         assert.equal(await storage.updateOrder('missing', { status: 'Packed' }), null);
     });
+
+    it('imports JSON once and never resurrects deleted carts or help messages', async () => {
+        const order = { id: 'legacy-order', visitorId: 'legacy-visitor', requestId: 'legacy-request', status: 'New' };
+        const cart = { visitor: 'legacy', items: [{ name: 'Jeans', price: 799, quantity: 1 }] };
+        const help = [{ name: 'Demo shopper', email: 'demo@example.com', message: 'Legacy help', submitted_at: '2026-11-22T10:00:00Z' }];
+        fs.writeFileSync(path.join(dataDir, 'commerce.json'), JSON.stringify({ orders: [order], carts: { 'legacy-visitor': cart } }));
+        fs.writeFileSync(path.join(dataDir, 'help_requests.json'), JSON.stringify(help));
+        await storage.connect();
+        assert.deepEqual(await storage.listOrders(), [order]);
+        assert.deepEqual(await storage.listCarts(), [cart]);
+        assert.deepEqual(await storage.listHelp(), help);
+        await storage.saveCart('legacy-visitor', null);
+        await db.collection('help_requests').deleteMany({});
+        await storage.close();
+        await storage.connect();
+        assert.deepEqual(await storage.listCarts(), []);
+        assert.deepEqual(await storage.listHelp(), []);
+        assert.equal(await db.collection('_migrations').countDocuments({ complete: true }), 3);
+    });
+
+    it('resumes a partially completed import without duplicates or overwriting orders', async () => {
+        const orders = [
+            { id: 'legacy-a', visitorId: 'a', requestId: 'a', status: 'New' },
+            { id: 'legacy-b', visitorId: 'b', requestId: 'b', status: 'New' }
+        ];
+        fs.writeFileSync(path.join(dataDir, 'commerce.json'), JSON.stringify({ orders, carts: {} }));
+        await db.collection('_migrations').insertOne({ _id: 'json-v1:orders', import: true, complete: false });
+        await db.collection('orders').insertOne({ ...orders[0], status: 'Packed' });
+        await storage.connect();
+        assert.equal(await db.collection('orders').countDocuments(), 2);
+        assert.equal((await db.collection('orders').findOne({ id: 'legacy-a' })).status, 'Packed');
+        assert.equal((await db.collection('_migrations').findOne({ _id: 'json-v1:orders' })).complete, true);
+    });
+
+    it('preserves pre-existing MongoDB records instead of mixing in old JSON', async () => {
+        await db.collection('orders').insertOne({ id: 'current', visitorId: 'current', requestId: 'current', status: 'Delivered' });
+        fs.writeFileSync(path.join(dataDir, 'commerce.json'), JSON.stringify({ orders: [{ id: 'old', visitorId: 'old', requestId: 'old' }], carts: {} }));
+        await storage.connect();
+        assert.equal((await storage.listOrders()).length, 1);
+        assert.equal((await storage.listOrders())[0].id, 'current');
+    });
 });
