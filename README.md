@@ -28,6 +28,8 @@ The interface is designed around a simple shopping flow where users can communic
 - **HTML5** — semantic page structure
 - **CSS3** — layout, styling and responsive design
 - **JavaScript** — frontend interactions
+- **Node.js and Express** — local web server and API
+- **MongoDB** — optional persistent storage for orders, carts and Help messages
 - **Figma** — UI/UX design and prototyping
 - **Git & GitHub** — version control
 
@@ -55,7 +57,8 @@ The design prioritizes readable typography, strong contrast, large controls, cle
 
 ## Current Status
 
-The frontend design and core page structure are under development.
+The local store supports product discovery, voice search, carts, demo checkout,
+an admin dashboard, and optional MongoDB persistence.
 
 Completed:
 - Basic project structure
@@ -68,14 +71,15 @@ Completed:
 - Figma prototype
 
 The local demo supports category and keyword filtering, a persistent cart, quantity
-updates, and a validated Help form saved to `data/help_requests.json`.
+updates, and a validated Help form. With MongoDB configured, records are stored in
+the database; offline mode uses the ignored JSON files in `data/`.
 Voice uses the browser’s speech recognition and spoken prompts. Checkout saves a demo order for the admin.
 
 ## Run and prepare for viva
 
 Use Node.js 22 or newer. Run `npm ci` from the project folder, then `npm start`.
 Open [EasyKart locally](http://127.0.0.1:8000).
-Use this server for form submission; a static server cannot write the JSON file.
+Use this server for form submission; a static server cannot save form records.
 
 In VS Code you can also choose **Terminal → Run Task → Start EasyKart**.
 Keep that terminal running and open **http://127.0.0.1:8000**.
@@ -83,8 +87,8 @@ The Live Server **Go Live** button opens port 5500, which only previews pages;
 it rejects form POST requests with error 405. The Help page now explains this
 before submission and provides a link to the working form.
 
-See [VIVA.md](VIVA.md) for the requirement mapping, code terms, demonstration steps
-and project limitations. Form data in `data/` is excluded from Git.
+See [DATABASE.md](DATABASE.md) for Atlas setup, the data model, migration behavior,
+verification steps, and project limitations. Form data in `data/` is excluded from Git.
 
 ## Try voice shopping
 
@@ -137,10 +141,20 @@ Without a MongoDB URI, the server keeps using the local JSON files for an offlin
    storage is active. If the MongoDB connection fails, the server stops instead of
    silently switching to local storage.
 
+Run `npm run db:check` for a read-only connection check. Then start the app and open
+`/api/health`; `storage: "mongodb"` confirms MongoDB mode. The health endpoint returns
+503 if the configured MongoDB connection is unavailable.
+
 MongoDB creates the `orders`, `carts`, and `help_requests` collections automatically.
 Unique indexes protect order retry handling and cart ownership. Existing JSON data is
 left in the ignored `data/` folder after import; keep a backup until you verify the
-records in Atlas. Do not repeatedly reset the database to import newer JSON changes.
+records in Atlas. Internal `_migrations` checkpoints make imports resumable and prevent
+old records returning when collections become empty. Do not reset these checkpoints
+to import newer JSON changes. See [the database guide](DATABASE.md) for details.
+
+Run `npm test` for isolated JSON, MongoDB and HTTP regression tests. If the Postman
+CLI is installed, `npm run test:postman` runs the reusable demo collection against
+its own disposable database. Neither command uses Atlas or your real saved records.
 
 
 ## Store and admin features
@@ -180,6 +194,7 @@ update the Products page, voice search and checkout. Restart the server after ch
 
 | Method | Path | Purpose |
 | --- | --- | --- |
+| GET | /api/health | Report active storage mode and connection health |
 | POST | /api/help | Submit Help message |
 | GET | /api/cart | Start anonymous browser session |
 | PUT | /api/cart | Sync current cart |
