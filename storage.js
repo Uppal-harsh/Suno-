@@ -3,11 +3,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { MongoClient } = require('mongodb');
 
-const dataDir = path.join(__dirname, 'data');
+function createStorage({
+    dataDir = path.join(__dirname, 'data'),
+    uri = process.env.MONGODB_URI,
+    databaseName = process.env.MONGODB_DB_NAME || 'easykart'
+} = {}) {
 const commerceFile = path.join(dataDir, 'commerce.json');
 const helpFile = path.join(dataDir, 'help_requests.json');
-const uri = process.env.MONGODB_URI;
-const databaseName = process.env.MONGODB_DB_NAME || 'easykart';
 let client;
 let collections;
 
@@ -128,4 +130,13 @@ async function updateOrder(id, update) {
     return order;
 }
 
-module.exports = { connect, addHelp, listOrders, listCarts, listHelp, saveCart, createOrder, updateOrder };
+async function close() {
+    await client?.close();
+    client = undefined;
+    collections = undefined;
+}
+
+return { connect, close, addHelp, listOrders, listCarts, listHelp, saveCart, createOrder, updateOrder };
+}
+
+module.exports = { ...createStorage(), createStorage };
