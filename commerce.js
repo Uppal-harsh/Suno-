@@ -1,7 +1,9 @@
-// Classroom commerce routes with MongoDB storage and a local JSON fallback.
+// Local classroom demo: JSON files and cookie sessions.
+const fs = require('node:fs');
+const path = require('node:path');
 const crypto = require('node:crypto');
 const catalog = require('./catalog.json');
-const storage = require('./storage');
+const file = path.join(__dirname, 'data', 'commerce.json');
 const password = process.env.ADMIN_PASSWORD || crypto.randomBytes(12).toString('base64url');
 const digest = value => crypto.createHash('sha256').update(value).digest();
 const sessions = new Map();
@@ -12,6 +14,19 @@ function send(res, status, body) {
     res.set('Cache-Control', 'no-store').status(status).json(body);
 }
 function fail(status, message) { throw Object.assign(new Error(message), { status }); }
+function readStore() {
+    if (!fs.existsSync(file)) return { orders: [], carts: {} };
+    const store = JSON.parse(fs.readFileSync(file, 'utf8'));
+    if (!Array.isArray(store.orders) || !store.carts || typeof store.carts !== 'object' || Array.isArray(store.carts)) {
+        throw new Error('Invalid saved store');
+    }
+    return store;
+}
+function writeStore(store) {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file + '.tmp', JSON.stringify(store, null, 2));
+    fs.renameSync(file + '.tmp', file);
+}
 function cookie(req, name) {
     const pair = (req.headers.cookie || '').split(';').map(x => x.trim()).find(x => x.startsWith(name + '='));
     return pair ? pair.slice(name.length + 1) : '';
@@ -84,18 +99,20 @@ function registerRoutes(app, parseJson) {
         return send(res, 200, { message: 'Signed out.' });
     });
 
-    app.get('/api/admin/dashboard', async (req, res) => {
-        const [orders, carts, help] = await Promise.all([
-            storage.listOrders(), storage.listCarts(), storage.listHelp()
-        ]);
-        return send(res, 200, { orders, carts, help, statuses });
+    app.get('/api/admin/dashboard', (req, res) => {
+        const store = readStore();
+        const helpFile = path.join(__dirname, 'data', 'help_requests.json');
+        const help = fs.existsSync(helpFile) ? JSON.parse(fs.readFileSync(helpFile, 'utf8')) : [];
+        if (!Array.isArray(help)) throw new Error('Invalid help data');
+        return send(res, 200, { orders: store.orders, carts: Object.values(store.carts), help, statuses });
     });
 
-    app.patch(/^\/api\/admin\/orders\/([a-f0-9-]{36})$/, parseJson, async (req, res) => {
+    app.patch(/^\/api\/admin\/orders\/([a-f0-9-]{36})$/, parseJson, (req, res) => {
         const data = req.body;
         if (!statuses.includes(data.status)) fail(400, 'Invalid order status.');
-        const order = await storage.updateOrder(req.params[0], { status: data.status, updated_at: new Date().toISOString() });
+        const store = readStore(); const order = store.orders.find(o => o.id === req.params[0]);
         if (!order) fail(404, 'Order not found.');
+        order.status = data.status; order.updated_at = new Date().toISOString(); writeStore(store);
         return send(res, 200, { order });
     });
 
@@ -104,19 +121,21 @@ function registerRoutes(app, parseJson) {
         return send(res, 200, { visitor: id.slice(0, 8) });
     });
 
-    app.put('/api/cart', parseJson, async (req, res) => {
+    app.put('/api/cart', parseJson, (req, res) => {
         const data = req.body; const items = itemsFrom(data.items, true);
-        const id = visitor(req, res);
-        const cart = items.length ? { visitor: id.slice(0, 8), items, updated_at: new Date().toISOString() } : null;
-        await storage.saveCart(id, cart);
-        return send(res, 200, { message: 'Cart synced.' });
+        const id = visitor(req, res); const store = readStore();
+        if (items.length) store.carts[id] = { visitor: id.slice(0, 8), items, updated_at: new Date().toISOString() };
+        else delete store.carts[id];
+        writeStore(store); return send(res, 200, { message: 'Cart synced.' });
     });
 
-    app.post('/api/orders', parseJson, async (req, res) => {
+    app.post('/api/orders', parseJson, (req, res) => {
         const data = req.body;
         const requestId = text(data.requestId, 36, 36, 'order reference');
         if (!/^[a-f0-9-]{36}$/.test(requestId)) fail(400, 'Invalid order reference.');
-        const id = visitor(req, res);
+        const id = visitor(req, res); const store = readStore();
+        const existing = store.orders.find(o => o.visitorId === id && o.requestId === requestId);
+        if (existing) return send(res, 200, { order: existing });
         const customer = { name: text(data.customer?.name, 2, 80, 'name'),
             email: text(data.customer?.email, 3, 120, 'email'),
             address: text(data.customer?.address, 10, 300, 'delivery address') };
@@ -125,8 +144,8 @@ function registerRoutes(app, parseJson) {
         const order = { id: crypto.randomUUID(), requestId, visitorId: id, customer, items,
             total: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
             status: 'New', payment: 'Demo - no payment collected', created_at: new Date().toISOString() };
-        const result = await storage.createOrder(order);
-        return send(res, result.created ? 201 : 200, { order: result.order });
+        store.orders.push(order); delete store.carts[id]; writeStore(store);
+        return send(res, 201, { order });
     });
 
     app.use('/api/admin', (req, res) => send(res, 404, { message: 'Admin API not found.' }));

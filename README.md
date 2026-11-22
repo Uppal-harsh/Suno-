@@ -28,8 +28,6 @@ The interface is designed around a simple shopping flow where users can communic
 - **HTML5** — semantic page structure
 - **CSS3** — layout, styling and responsive design
 - **JavaScript** — frontend interactions
-- **Node.js and Express** — local web server and API
-- **MongoDB** — optional persistent storage for orders, carts and Help messages
 - **Figma** — UI/UX design and prototyping
 - **Git & GitHub** — version control
 
@@ -57,8 +55,7 @@ The design prioritizes readable typography, strong contrast, large controls, cle
 
 ## Current Status
 
-The local store supports product discovery, voice search, carts, demo checkout,
-an admin dashboard, and optional MongoDB persistence.
+The frontend design and core page structure are under development.
 
 Completed:
 - Basic project structure
@@ -71,15 +68,14 @@ Completed:
 - Figma prototype
 
 The local demo supports category and keyword filtering, a persistent cart, quantity
-updates, and a validated Help form. With MongoDB configured, records are stored in
-the database; offline mode uses the ignored JSON files in `data/`.
+updates, and a validated Help form saved to `data/help_requests.json`.
 Voice uses the browser’s speech recognition and spoken prompts. Checkout saves a demo order for the admin.
 
 ## Run and prepare for viva
 
 Use Node.js 22 or newer. Run `npm ci` from the project folder, then `npm start`.
 Open [EasyKart locally](http://127.0.0.1:8000).
-Use this server for form submission; a static server cannot save form records.
+Use this server for form submission; a static server cannot write the JSON file.
 
 In VS Code you can also choose **Terminal → Run Task → Start EasyKart**.
 Keep that terminal running and open **http://127.0.0.1:8000**.
@@ -87,8 +83,8 @@ The Live Server **Go Live** button opens port 5500, which only previews pages;
 it rejects form POST requests with error 405. The Help page now explains this
 before submission and provides a link to the working form.
 
-See [DATABASE.md](DATABASE.md) for Atlas setup, the data model, migration behavior,
-verification steps, and project limitations. Form data in `data/` is excluded from Git.
+See [VIVA.md](VIVA.md) for the requirement mapping, code terms, demonstration steps
+and project limitations. Form data in `data/` is excluded from Git.
 
 ## Try voice shopping
 
@@ -120,41 +116,11 @@ To create a simple and accessible shopping interface that reduces the complexity
 **Batch:** 2025, 3rd Semester  
 **Academic Year:** 2026–27
 
-## Backend and MongoDB
+## Backend
 
-`server.js` serves the pages and API. `commerce.js` handles carts, checkout, and the
-admin dashboard. When `MONGODB_URI` is configured, MongoDB stores orders, carts, and
-Help requests in the database named by `MONGODB_DB_NAME` (default: `easykart`). On
-the first MongoDB startup, existing JSON records are imported into empty collections.
-Without a MongoDB URI, the server keeps using the local JSON files for an offline demo.
-
-### Connect MongoDB Atlas
-
-1. Create a free MongoDB Atlas cluster and a database user. Allow your current IP in
-   Atlas Network Access; avoid opening database access to every IP for a real deployment.
-2. In the project folder, copy `.env.example` to `.env`.
-3. Replace the `MONGODB_URI` example with the connection string from Atlas, filling in
-   the database user's username and password. URL-encode special characters in the password.
-4. Keep `.env` private. It is excluded from Git. Never place the connection string in
-   frontend JavaScript or commit it.
-5. Run `npm ci`, then `npm start`. The terminal confirms whether MongoDB or local JSON
-   storage is active. If the MongoDB connection fails, the server stops instead of
-   silently switching to local storage.
-
-Run `npm run db:check` for a read-only connection check. Then start the app and open
-`/api/health`; `storage: "mongodb"` confirms MongoDB mode. The health endpoint returns
-503 if the configured MongoDB connection is unavailable.
-
-MongoDB creates the `orders`, `carts`, and `help_requests` collections automatically.
-Unique indexes protect order retry handling and cart ownership. Existing JSON data is
-left in the ignored `data/` folder after import; keep a backup until you verify the
-records in Atlas. Internal `_migrations` checkpoints make imports resumable and prevent
-old records returning when collections become empty. Do not reset these checkpoints
-to import newer JSON changes. See [the database guide](DATABASE.md) for details.
-
-Run `npm test` for isolated JSON, MongoDB and HTTP regression tests. If the Postman
-CLI is installed, `npm run test:postman` runs the reusable demo collection against
-its own disposable database. Neither command uses Atlas or your real saved records.
+`server.js` uses Express for page serving, JSON request parsing and Help submissions.
+`commerce.js` registers the cart, checkout and admin routes. Node’s file-system module
+continues to read and write the existing local JSON files.
 
 
 ## Store and admin features
@@ -173,19 +139,18 @@ its own disposable database. Neither command uses Atlas or your real saved recor
 Run npm start (or node server.js) and keep the terminal open.
 Open http://127.0.0.1:8000, add products, then proceed to checkout.
 Open http://127.0.0.1:8000/admin.html or choose Store admin in the footer.
-The terminal displays a random admin password on each server start. To choose a persistent password, uncomment and set `ADMIN_PASSWORD` in `.env`; keep `.env` private.
+The terminal displays a random admin password on each server start. To choose a persistent password, set ADMIN_PASSWORD in your terminal environment before starting Node; do not put the password in Git.
 Admin sessions expire after eight hours and are invalidated when the server restarts. Sign out on a shared computer.
 Use Refresh in the dashboard to load the latest activity.
 
 ### Storage and limitations
 
-With MongoDB configured, Help messages, orders, and active carts are stored in MongoDB.
-Without it, Help messages remain in `data/help_requests.json`, and orders and carts are
-in `data/commerce.json`. These files are private and excluded from Git. The cart also
-remains in browser localStorage. Server syncing requires the Node server, not Live Server.
+Help messages remain in data/help_requests.json. Orders and active carts are in data/commerce.json.
+Both files are private and excluded from Git; the upgrade does not replace existing data.
+The cart also remains in browser localStorage. Server syncing requires the Node server, not Live Server.
 Saved carts are not restored to another device and are not verified customer identities.
 Orders are classroom demo records, not actual payments or fulfilment requests. Order value is not collected revenue.
-This remains a single-process, localhost-only classroom demo, not a production shop.
+This remains a single-process, localhost-only demo with JSON storage, not a production shop.
 `catalog.json` holds 100 demo products across five categories. Product records have a name,
 price in rupees and category, with optional local image paths and ratings. Edit this file to
 update the Products page, voice search and checkout. Restart the server after changing the catalog.
@@ -194,7 +159,6 @@ update the Products page, voice search and checkout. Restart the server after ch
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| GET | /api/health | Report active storage mode and connection health |
 | POST | /api/help | Submit Help message |
 | GET | /api/cart | Start anonymous browser session |
 | PUT | /api/cart | Sync current cart |
