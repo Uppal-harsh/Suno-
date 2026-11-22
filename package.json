@@ -5,7 +5,9 @@
   "description": "EasyKart with Express and MongoDB persistence",
   "scripts": {
     "start": "node server.js",
-    "db:import": "node import-data.js"
+    "db:import": "node import-data.js",
+    "test": "node --test test/*.test.js",
+    "test:integration": "node test/integration.js"
   },
   "engines": {
     "node": ">=22"
