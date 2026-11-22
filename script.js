@@ -152,7 +152,7 @@ function productCard(product) {
 }
 
 async function showProducts(root, params, signal) {
-    const response = await fetch("catalog.json", { signal });
+    const response = await fetch("/api/products", { signal });
     if (!response.ok) throw new Error("Could not load the catalog.");
     const catalog = await response.json();
     signal?.throwIfAborted();
@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const helpForm = document.getElementById("helpForm");
     if (helpForm) {
         helpForm.onsubmit = submitHelp;
-        // Live Server displays pages, but only our Node.js server saves JSON.
+        // Live Server displays pages, but only our Node.js server connects to MongoDB.
         if (window.location.protocol === "file:" || window.location.port !== "8000") {
             document.getElementById("serverNotice").hidden = false;
             helpForm.querySelector("button").disabled = true;

@@ -1,13 +1,12 @@
 // Express server: run node server.js, then open http://127.0.0.1:8000.
 const express = require('express');
-const fs = require('node:fs');
-const path = require('node:path');
+require('./config');
+const storage = require('./storage');
 
 const ROOT = __dirname;
 const commerce = require('./commerce');
-const DATA_FILE = path.join(ROOT, 'data', 'help_requests.json');
 const pages = new Set(['index.html', 'categories.html', 'products.html',
-    'cart.html', 'help.html', 'style.css', 'script.js', 'tomato.png', 'admin.html', 'admin.js', 'shop.js', 'voice.js', 'catalog.json']);
+    'cart.html', 'help.html', 'style.css', 'script.js', 'tomato.png', 'admin.html', 'admin.js', 'shop.js', 'voice.js']);
 const app = express();
 app.disable('x-powered-by');
 
@@ -35,7 +34,7 @@ function jsonBody(limit, invalidMessage) {
     };
 }
 
-function saveHelp(req, res) {
+async function saveHelp(req, res) {
     let name, email, message;
     try {
         const data = req.body;
@@ -53,16 +52,7 @@ function saveHelp(req, res) {
         return reply(res, 400, 'Please enter a valid name, email and message.');
     }
     try {
-        fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
-        const requests = fs.existsSync(DATA_FILE)
-            ? JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')) : [];
-        if (!Array.isArray(requests)) throw new Error('Saved data must be a list');
-        requests.push({ name, email, message, submitted_at: new Date().toISOString() });
-        // Synchronous read/write keeps submissions sequential in this small local demo.
-        // Rename only after writing, preserving the old file if the write fails.
-        const temporary = DATA_FILE + '.tmp';
-        fs.writeFileSync(temporary, JSON.stringify(requests, null, 2), 'utf8');
-        fs.renameSync(temporary, DATA_FILE);
+        await storage.addHelp({ name, email, message, submitted_at: new Date().toISOString() });
     } catch {
         return reply(res, 500, 'Could not save the request. Please try again.');
     }
@@ -73,6 +63,15 @@ app.post('/api/help', jsonBody(10000, 'Please enter a valid name, email and mess
 app.all('/api/help', (req, res) => {
     res.set('Allow', 'POST');
     reply(res, 405, 'Use POST to submit a help request.');
+});
+app.get('/api/products', async (req, res, next) => {
+    try {
+        res.set('Cache-Control', 'no-store').json(await storage.listProducts());
+    } catch (error) { next(error); }
+});
+app.get('/api/health', async (req, res) => {
+    const health = await storage.health();
+    res.set('Cache-Control', 'no-store').status(health.connected ? 200 : 503).json(health);
 });
 commerce.registerRoutes(app, jsonBody(16000, 'Enter a valid JSON object.'));
 
@@ -95,17 +94,39 @@ app.use((req, res) => {
     });
 });
 
-if (require.main === module) {
+async function start() {
+    await storage.connect();
     const server = app.listen(8000, '127.0.0.1', () => {
+        console.log('Storage: MongoDB connected.');
         console.log('Open http://127.0.0.1:8000 - press Ctrl+C to stop.');
         console.log('Admin: http://127.0.0.1:8000/admin.html');
         console.log('Admin password: ' + commerce.password);
     });
-    server.on('error', error => {
+    server.on('error', async error => {
         console.error(error.code === 'EADDRINUSE'
-            ? 'Port 8000 is busy. Stop the earlier server, then try again.' : error.message);
+            ? 'Port 8000 is busy. Stop the earlier server, then try again.' : 'Could not start the HTTP server.');
+        await storage.close();
+        process.exitCode = 1;
+    });
+    for (const signal of ['SIGINT', 'SIGTERM']) {
+        process.once(signal, () => {
+            const timeout = setTimeout(() => process.exit(1), 10000);
+            timeout.unref();
+            server.close(async () => {
+                await storage.close();
+                clearTimeout(timeout);
+            });
+        });
+    }
+    return server;
+}
+
+if (require.main === module) {
+    start().catch(() => {
+        console.error('Startup failed. Check MONGODB_URI, database credentials, and Atlas network access. See README.md.');
         process.exitCode = 1;
     });
 }
 
 module.exports = app;
+module.exports.start = start;

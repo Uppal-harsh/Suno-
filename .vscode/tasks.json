@@ -4,8 +4,8 @@
     {
       "label": "Start EasyKart",
       "type": "process",
-      "command": "node",
-      "args": ["server.js"],
+      "command": "npm",
+      "args": ["start"],
       "options": { "cwd": "${workspaceFolder}" },
       "problemMatcher": [],
       "presentation": { "reveal": "always" }

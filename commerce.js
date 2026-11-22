@@ -1,9 +1,7 @@
-// Local classroom demo: JSON files and cookie sessions.
-const fs = require('node:fs');
-const path = require('node:path');
+// Express commerce routes backed by MongoDB and cookie sessions.
+require('./config');
+const storage = require('./storage');
 const crypto = require('node:crypto');
-const catalog = require('./catalog.json');
-const file = path.join(__dirname, 'data', 'commerce.json');
 const password = process.env.ADMIN_PASSWORD || crypto.randomBytes(12).toString('base64url');
 const digest = value => crypto.createHash('sha256').update(value).digest();
 const sessions = new Map();
@@ -14,19 +12,6 @@ function send(res, status, body) {
     res.set('Cache-Control', 'no-store').status(status).json(body);
 }
 function fail(status, message) { throw Object.assign(new Error(message), { status }); }
-function readStore() {
-    if (!fs.existsSync(file)) return { orders: [], carts: {} };
-    const store = JSON.parse(fs.readFileSync(file, 'utf8'));
-    if (!Array.isArray(store.orders) || !store.carts || typeof store.carts !== 'object' || Array.isArray(store.carts)) {
-        throw new Error('Invalid saved store');
-    }
-    return store;
-}
-function writeStore(store) {
-    fs.mkdirSync(path.dirname(file), { recursive: true });
-    fs.writeFileSync(file + '.tmp', JSON.stringify(store, null, 2));
-    fs.renameSync(file + '.tmp', file);
-}
 function cookie(req, name) {
     const pair = (req.headers.cookie || '').split(';').map(x => x.trim()).find(x => x.startsWith(name + '='));
     return pair ? pair.slice(name.length + 1) : '';
@@ -45,8 +30,9 @@ function authenticated(req) {
     if (!expires || expires < Date.now()) { sessions.delete(token); fail(401, 'Please sign in to the admin portal.'); }
     return token;
 }
-function itemsFrom(input, allowEmpty = false) {
+async function itemsFrom(input, allowEmpty = false) {
     if (!Array.isArray(input) || input.length > 50 || (!allowEmpty && !input.length)) fail(400, 'Please add products before ordering.');
+    const catalog = await storage.listProducts();
     const items = new Map();
     for (const item of input) {
         const product = catalog.find(p => p.name === item?.name);
@@ -99,20 +85,20 @@ function registerRoutes(app, parseJson) {
         return send(res, 200, { message: 'Signed out.' });
     });
 
-    app.get('/api/admin/dashboard', (req, res) => {
-        const store = readStore();
-        const helpFile = path.join(__dirname, 'data', 'help_requests.json');
-        const help = fs.existsSync(helpFile) ? JSON.parse(fs.readFileSync(helpFile, 'utf8')) : [];
-        if (!Array.isArray(help)) throw new Error('Invalid help data');
-        return send(res, 200, { orders: store.orders, carts: Object.values(store.carts), help, statuses });
+    app.get('/api/admin/dashboard', async (req, res) => {
+        const [orders, carts, help] = await Promise.all([
+            storage.listOrders(), storage.listCarts(), storage.listHelp()
+        ]);
+        return send(res, 200, { orders, carts, help, statuses });
     });
 
-    app.patch(/^\/api\/admin\/orders\/([a-f0-9-]{36})$/, parseJson, (req, res) => {
+    app.patch(/^\/api\/admin\/orders\/([a-f0-9-]{36})$/, parseJson, async (req, res) => {
         const data = req.body;
         if (!statuses.includes(data.status)) fail(400, 'Invalid order status.');
-        const store = readStore(); const order = store.orders.find(o => o.id === req.params[0]);
+        const order = await storage.updateOrder(req.params[0], {
+            status: data.status, updated_at: new Date().toISOString()
+        });
         if (!order) fail(404, 'Order not found.');
-        order.status = data.status; order.updated_at = new Date().toISOString(); writeStore(store);
         return send(res, 200, { order });
     });
 
@@ -121,31 +107,35 @@ function registerRoutes(app, parseJson) {
         return send(res, 200, { visitor: id.slice(0, 8) });
     });
 
-    app.put('/api/cart', parseJson, (req, res) => {
-        const data = req.body; const items = itemsFrom(data.items, true);
-        const id = visitor(req, res); const store = readStore();
-        if (items.length) store.carts[id] = { visitor: id.slice(0, 8), items, updated_at: new Date().toISOString() };
-        else delete store.carts[id];
-        writeStore(store); return send(res, 200, { message: 'Cart synced.' });
+    app.put('/api/cart', parseJson, async (req, res) => {
+        const data = req.body; const items = await itemsFrom(data.items, true);
+        const id = visitor(req, res);
+        await storage.saveCart(id, items.length ? {
+            visitor: id.slice(0, 8), items, updated_at: new Date().toISOString()
+        } : null);
+        return send(res, 200, { message: 'Cart synced.' });
     });
 
-    app.post('/api/orders', parseJson, (req, res) => {
+    app.post('/api/orders', parseJson, async (req, res) => {
         const data = req.body;
         const requestId = text(data.requestId, 36, 36, 'order reference');
         if (!/^[a-f0-9-]{36}$/.test(requestId)) fail(400, 'Invalid order reference.');
-        const id = visitor(req, res); const store = readStore();
-        const existing = store.orders.find(o => o.visitorId === id && o.requestId === requestId);
-        if (existing) return send(res, 200, { order: existing });
+        const id = visitor(req, res);
+        const existing = await storage.findOrder(id, requestId);
+        if (existing) {
+            await storage.finishCheckout(existing);
+            return send(res, 200, { order: existing });
+        }
         const customer = { name: text(data.customer?.name, 2, 80, 'name'),
             email: text(data.customer?.email, 3, 120, 'email'),
             address: text(data.customer?.address, 10, 300, 'delivery address') };
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) fail(400, 'Please enter a valid email.');
-        const items = itemsFrom(data.items);
+        const items = await itemsFrom(data.items);
         const order = { id: crypto.randomUUID(), requestId, visitorId: id, customer, items,
             total: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
             status: 'New', payment: 'Demo - no payment collected', created_at: new Date().toISOString() };
-        store.orders.push(order); delete store.carts[id]; writeStore(store);
-        return send(res, 201, { order });
+        const saved = await storage.createOrder(order);
+        return send(res, saved.created ? 201 : 200, { order: saved.order });
     });
 
     app.use('/api/admin', (req, res) => send(res, 404, { message: 'Admin API not found.' }));
