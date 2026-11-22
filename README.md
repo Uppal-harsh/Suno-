@@ -210,6 +210,11 @@ Both product listings and voice search load `/api/products`.
 
 ### Verification and evaluation
 
+- [Demo checklist](docs/demo-checklist.md)
+- [Atlas troubleshooting](docs/atlas-troubleshooting.md)
+- [Data flow and storage](docs/data-flow.md)
+- [Running the tests](docs/testing.md)
+
 ```bash
 npm test
 npm run test:integration
