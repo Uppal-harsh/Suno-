@@ -6,12 +6,18 @@ const { MongoClient } = require('mongodb');
 function createStorage({
     dataDir = path.join(__dirname, 'data'),
     uri = process.env.MONGODB_URI,
-    databaseName = process.env.MONGODB_DB_NAME || 'easykart'
+    databaseName = process.env.MONGODB_DB_NAME || 'easykart',
+    clientFactory = connectionUri => new MongoClient(connectionUri, { family: 4, serverSelectionTimeoutMS: 10000 })
 } = {}) {
 const commerceFile = path.join(dataDir, 'commerce.json');
 const helpFile = path.join(dataDir, 'help_requests.json');
 let client;
 let collections;
+let connecting;
+
+function requireConnection() {
+    if (uri && !collections) throw new Error('MongoDB storage is not connected.');
+}
 
 function readJson(file, fallback) {
     if (!fs.existsSync(file)) return fallback;
@@ -29,25 +35,38 @@ async function connect() {
         console.log('Storage: local JSON files (set MONGODB_URI to use MongoDB).');
         return;
     }
-    client = new MongoClient(uri, { serverSelectionTimeoutMS: 10000 });
-    await client.connect();
-    const db = client.db(databaseName);
-    collections = {
+    if (collections) return;
+    if (!connecting) connecting = openMongo().finally(() => { connecting = undefined; });
+    return connecting;
+}
+
+async function openMongo() {
+    const nextClient = clientFactory(uri);
+    try {
+    await nextClient.connect();
+    const db = nextClient.db(databaseName);
+    const nextCollections = {
         orders: db.collection('orders'),
         carts: db.collection('carts'),
         help: db.collection('help_requests')
     };
     await Promise.all([
-        collections.orders.createIndex({ id: 1 }, { unique: true }),
-        collections.orders.createIndex({ visitorId: 1, requestId: 1 }, { unique: true }),
-        collections.carts.createIndex({ visitorId: 1 }, { unique: true }),
-        collections.help.createIndex({ submitted_at: -1 })
+        nextCollections.orders.createIndex({ id: 1 }, { unique: true }),
+        nextCollections.orders.createIndex({ visitorId: 1, requestId: 1 }, { unique: true }),
+        nextCollections.carts.createIndex({ visitorId: 1 }, { unique: true }),
+        nextCollections.help.createIndex({ submitted_at: -1 })
     ]);
-    await migrateJsonData();
+    await migrateJsonData(nextCollections);
+    client = nextClient;
+    collections = nextCollections;
     console.log(`Storage: MongoDB database "${databaseName}".`);
+    } catch (error) {
+        await nextClient.close().catch(() => {});
+        throw error;
+    }
 }
 
-async function migrateJsonData() {
+async function migrateJsonData(collections) {
     const [orderCount, cartCount, helpCount] = await Promise.all([
         collections.orders.countDocuments(), collections.carts.countDocuments(), collections.help.countDocuments()
     ]);
@@ -64,24 +83,29 @@ async function migrateJsonData() {
 }
 
 async function listOrders() {
+    requireConnection();
     if (!collections) return readJson(commerceFile, { orders: [], carts: {} }).orders;
     return collections.orders.find({}, { projection: { _id: 0 } }).sort({ created_at: 1 }).toArray();
 }
 async function listCarts() {
+    requireConnection();
     if (!collections) return Object.values(readJson(commerceFile, { orders: [], carts: {} }).carts);
     return collections.carts.find({}, { projection: { _id: 0, visitorId: 0 } }).sort({ updated_at: 1 }).toArray();
 }
 async function listHelp() {
+    requireConnection();
     if (!collections) return readJson(helpFile, []);
     return collections.help.find({}, { projection: { _id: 0 } }).sort({ submitted_at: 1 }).toArray();
 }
 async function addHelp(request) {
+    requireConnection();
     if (collections) return collections.help.insertOne(request);
     const help = readJson(helpFile, []);
     if (!Array.isArray(help)) throw new Error('Invalid saved help requests');
     help.push(request); writeJson(helpFile, help);
 }
 async function saveCart(visitorId, cart) {
+    requireConnection();
     if (collections) {
         if (!cart) await collections.carts.deleteOne({ visitorId });
         else await collections.carts.updateOne({ visitorId }, {
@@ -95,6 +119,7 @@ async function saveCart(visitorId, cart) {
     writeJson(commerceFile, store);
 }
 async function createOrder(order) {
+    requireConnection();
     if (collections) {
         let result;
         try {
@@ -118,6 +143,7 @@ async function createOrder(order) {
     return { order, created: true };
 }
 async function updateOrder(id, update) {
+    requireConnection();
     if (collections) {
         const result = await collections.orders.findOneAndUpdate({ id }, { $set: update }, {
             returnDocument: 'after', projection: { _id: 0 }
@@ -131,9 +157,11 @@ async function updateOrder(id, update) {
 }
 
 async function close() {
-    await client?.close();
+    if (connecting) await connecting.catch(() => {});
+    const currentClient = client;
     client = undefined;
     collections = undefined;
+    await currentClient?.close();
 }
 
 return { connect, close, addHelp, listOrders, listCarts, listHelp, saveCart, createOrder, updateOrder };

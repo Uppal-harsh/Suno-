@@ -97,7 +97,17 @@ if (require.main === module) {
             console.error(error.code === 'EADDRINUSE'
                 ? 'Port 8000 is busy. Stop the earlier server, then try again.' : error.message);
             process.exitCode = 1;
+            storage.close().catch(() => { process.exitCode = 1; });
         });
+        const shutdown = () => {
+            process.removeListener('SIGINT', shutdown);
+            process.removeListener('SIGTERM', shutdown);
+            server.close(() => {
+                storage.close().catch(() => { process.exitCode = 1; });
+            });
+        };
+        process.once('SIGINT', shutdown);
+        process.once('SIGTERM', shutdown);
     }).catch(error => {
         console.error('Database connection failed. Check MONGODB_URI and network access.');
         console.error(error.message);
