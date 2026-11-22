@@ -1,7 +1,7 @@
 // Express server: run node server.js, then open http://127.0.0.1:8000.
-require('dotenv').config();
-const express = require('express');
 const path = require('node:path');
+require('dotenv').config({ path: path.join(__dirname, '.env'), quiet: true });
+const express = require('express');
 
 const ROOT = __dirname;
 const commerce = require('./commerce');
@@ -20,6 +20,13 @@ app.use((req, res, next) => {
         return reply(res, 403, 'Use localhost or 127.0.0.1.');
     }
     next();
+});
+
+app.get('/api/health', async (req, res) => {
+    const { mode, connected } = await storage.health();
+    res.set('Cache-Control', 'no-store').status(connected ? 200 : 503).json({
+        status: connected ? 'ok' : 'unavailable', storage: mode
+    });
 });
 
 function jsonBody(limit, invalidMessage) {
@@ -95,7 +102,7 @@ if (require.main === module) {
         });
         server.on('error', error => {
             console.error(error.code === 'EADDRINUSE'
-                ? 'Port 8000 is busy. Stop the earlier server, then try again.' : error.message);
+                ? 'Port 8000 is busy. Stop the earlier server, then try again.' : 'Could not start the HTTP server.');
             process.exitCode = 1;
             storage.close().catch(() => { process.exitCode = 1; });
         });
@@ -109,8 +116,7 @@ if (require.main === module) {
         process.once('SIGINT', shutdown);
         process.once('SIGTERM', shutdown);
     }).catch(error => {
-        console.error('Database connection failed. Check MONGODB_URI and network access.');
-        console.error(error.message);
+        console.error('Database connection failed. Check MONGODB_URI, database user, IP access list and network access.');
         process.exitCode = 1;
     });
 }

@@ -5,7 +5,9 @@
   "description": "EasyKart with Express and MongoDB storage",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test --test-concurrency=1 tests/*.test.js"
+    "test": "node --test --test-concurrency=1 tests/*.test.js",
+    "db:check": "node scripts/check-db.js",
+    "test:postman": "node scripts/test-postman.js"
   },
   "engines": {
     "node": ">=22"

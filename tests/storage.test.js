@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { createStorage } = require('../storage');
+const { removeTestData } = require('../scripts/test-data');
 
 describe('JSON storage in a temporary directory', () => {
     let dataDir;
@@ -15,7 +16,7 @@ describe('JSON storage in a temporary directory', () => {
     });
     afterEach(async () => {
         await storage.close();
-        fs.rmSync(dataDir, { recursive: true, force: true });
+        removeTestData(dataDir);
     });
 
     it('starts with empty records without creating files', async () => {

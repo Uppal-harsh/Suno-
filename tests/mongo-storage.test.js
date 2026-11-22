@@ -7,6 +7,7 @@ const crypto = require('node:crypto');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const { MongoClient } = require('mongodb');
 const { createStorage } = require('../storage');
+const { removeTestData } = require('../scripts/test-data');
 
 describe('Storage backed by an isolated real MongoDB', { timeout: 180000 }, () => {
     let mongo;
@@ -34,7 +35,7 @@ describe('Storage backed by an isolated real MongoDB', { timeout: 180000 }, () =
     afterEach(async () => {
         await storage.close();
         await db.dropDatabase();
-        fs.rmSync(dataDir, { recursive: true, force: true });
+        removeTestData(dataDir);
     });
 
     it('connects once for concurrent callers, persists records and reconnects after close', async () => {
