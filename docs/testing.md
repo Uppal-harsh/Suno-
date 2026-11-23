@@ -14,4 +14,8 @@ npm.cmd run test:integration
 
 Start the local MongoDB process separately first. Close that terminal afterward so the URI override does not carry over to an Atlas demo.
 
+A successful integration run prints a line beginning `PASS: real MongoDB`.
+It checks persistence after closing and reopening the connection. Passing
+`npm test` alone does not establish that a live MongoDB connection works.
+
 When an integration check fails, record the stage printed by the runner. A connection-stage failure says the driver could not reach the configured database. A checkout assertion after a successful connection points to app behavior or stored test data.
