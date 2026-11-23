@@ -10,6 +10,12 @@
 | Send a Help message | The Help form sends `POST /api/help`. | The server validates and saves the message to `help_requests`. |
 | Update a status | A signed-in admin sends `PATCH /api/admin/orders/:id`. | The saved order receives the new status and update timestamp. |
 
+## Connection health
+
+`GET /api/health` pings MongoDB. HTTP 200 confirms connectivity, but does not
+confirm that products have been imported. Check `GET /api/products` separately
+when preparing a fresh database.
+
 ## Checkout validation
 
 Cart and checkout payloads accept at most 50 item entries, with integer quantities
