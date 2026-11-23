@@ -21,4 +21,10 @@ catalog setup; review the import instructions before presenting.
 4. In Atlas Data Explorer, refresh the configured database's `orders` collection. Find that order and show its items, total, and updated status.
 5. Submit a sample Help request and show the same message in both the admin inbox and `help_requests`.
 
+## Show persistence after a restart
+
+1. Note the saved order reference and its current status.
+2. Stop Node with Ctrl+C and run `npm start` again against the same database.
+3. Sign in to Store Admin again, find the reference, and confirm the status remains saved.
+
 For screenshots or a recording, use sample customer data and keep database credentials and the admin password out of view. If your project requires evidence from Atlas, show the Atlas collection itself. The health endpoint also reports MongoDB when the app is connected to a local MongoDB instance.
