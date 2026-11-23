@@ -28,6 +28,8 @@ The interface is designed around a simple shopping flow where users can communic
 - **HTML5** — semantic page structure
 - **CSS3** — layout, styling and responsive design
 - **JavaScript** — frontend interactions
+- **Node.js 22+ and Express** — local server and API routes
+- **MongoDB** — products, carts, orders and Help request storage
 - **Figma** — UI/UX design and prototyping
 - **Git & GitHub** — version control
 
