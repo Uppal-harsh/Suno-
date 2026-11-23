@@ -12,6 +12,10 @@ Run the server from the `Suno-` folder. The current app reads the project’s `.
 | Startup reports port 8000 is busy | Stop the earlier EasyKart server with Ctrl+C in its terminal, then run `npm start` again. |
 | Home opens but health returns 503 | The server lost its MongoDB connection after startup. Check whether the cluster is reachable from the current network. |
 
+If edits to `.env` seem to have no effect, check for a `MONGODB_URI` or
+`MONGODB_DB_NAME` already set in the launching terminal. Existing process
+environment values take precedence over `.env`; restart Node after changing configuration.
+
 On Windows, `Resolve-DnsName -Type SRV _mongodb._tcp.<cluster-host>` lists the replica endpoints. Use `Test-NetConnection -ComputerName <replica-host> -Port 27017` for each one. A successful TCP test alone does not verify TLS or database authentication.
 
 For a support request, capture the time, network used, hostname, port, and error code. Omit the username, password, and full URI. See the [Atlas connection troubleshooting guide](https://www.mongodb.com/docs/atlas/troubleshoot-connection/).
