@@ -66,7 +66,8 @@ The design prioritizes readable typography, strong contrast, large controls, cle
 
 ## Current Status
 
-The frontend design and core page structure are under development.
+The project includes storefront pages, an Express API, and MongoDB persistence.
+A running MongoDB connection is required to use the shopping and Help flows.
 
 Completed:
 - Basic project structure
