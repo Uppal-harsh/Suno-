@@ -95,8 +95,9 @@ The Live Server **Go Live** button opens port 5500, which only previews pages;
 it rejects form POST requests with error 405. The Help page now explains this
 before submission and provides a link to the working form.
 
-See [VIVA.md](VIVA.md) for the requirement mapping, code terms, demonstration steps
-and project limitations. Form data in `data/` is excluded from Git.
+See the [demo checklist](docs/demo-checklist.md) for presentation steps and
+[data flow guide](docs/data-flow.md) for storage behavior. Project limitations
+are listed below. Form data in `data/` is excluded from Git.
 
 ## Try voice shopping
 
