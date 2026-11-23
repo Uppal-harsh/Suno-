@@ -10,6 +10,12 @@
 | Send a Help message | The Help form sends `POST /api/help`. | The server validates and saves the message to `help_requests`. |
 | Update a status | A signed-in admin sends `PATCH /api/admin/orders/:id`. | The saved order receives the new status and update timestamp. |
 
+## Checkout validation
+
+Cart and checkout payloads accept at most 50 item entries, with integer quantities
+from 1 to 99. Duplicate product names are combined, with the same maximum of 99
+per product. Checkout also requires a customer name, email and delivery address.
+
 ## Where to make edits
 
 - On a fresh database, `npm run db:import` seeds products from `catalog.json` and can import previous carts, orders, and Help requests from the local JSON sources.
