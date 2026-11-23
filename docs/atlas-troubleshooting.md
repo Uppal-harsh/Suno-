@@ -4,6 +4,7 @@ Run the server from the `Suno-` folder. The current app reads the project’s `.
 
 | Symptom | Check |
 | --- | --- |
+| Requests return 403 with a localhost message | Open `http://127.0.0.1:8000` or `http://localhost:8000` on the server computer. The server binds to loopback and checks the Host header. |
 | The terminal asks you to set `MONGODB_URI` | Copy `.env.example` to `.env` if needed and replace the placeholders with the Atlas driver URI. |
 | Atlas rejects authentication | Use a database user from the same Atlas project. URL-encode reserved characters in the password and confirm the user has access to the database selected by `MONGODB_DB_NAME`. |
 | The server stalls or reports a network error | Confirm the cluster is active and the computer's current public IP has an active entry in Atlas Network Access. Verify outbound TCP port `27017` on the replica hostnames. |
