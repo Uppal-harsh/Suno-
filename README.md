@@ -40,6 +40,15 @@ EasyKart/
 ├── index.html
 ├── style.css
 ├── script.js
+├── server.js
+├── commerce.js
+├── storage.js
+├── config.js
+├── import-data.js
+├── catalog.json
+├── .env.example
+├── docs/
+├── test/
 ├── progress.md
 ├── README.md
 └── images/
