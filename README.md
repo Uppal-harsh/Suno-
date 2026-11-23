@@ -223,6 +223,8 @@ Both product listings and voice search load `/api/products`.
 
 ### Verification and evaluation
 
+- [Project architecture and explanation guide](docs/project-guide.md)
+- [Complete project workflow and sequence diagrams](docs/project-workflow.md)
 - [Demo checklist](docs/demo-checklist.md)
 - [Atlas troubleshooting](docs/atlas-troubleshooting.md)
 - [Data flow and storage](docs/data-flow.md)

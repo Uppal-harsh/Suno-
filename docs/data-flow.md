@@ -1,5 +1,8 @@
 # EasyKart data flow
 
+For the ordered shopping process, decision points and sequence diagrams, see the
+[complete project workflow](project-workflow.md).
+
 | Action | Browser and API | MongoDB |
 | --- | --- | --- |
 | Browse and search | Products and voice search request `GET /api/products`. | The list comes from `products`. |

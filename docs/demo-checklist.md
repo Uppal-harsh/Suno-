@@ -28,3 +28,8 @@ catalog setup; review the import instructions before presenting.
 3. Sign in to Store Admin again, find the reference, and confirm the status remains saved.
 
 For screenshots or a recording, use sample customer data and keep database credentials and the admin password out of view. If your project requires evidence from Atlas, show the Atlas collection itself. The health endpoint also reports MongoDB when the app is connected to a local MongoDB instance.
+
+## After presenting
+
+Sign out of Store Admin on a shared computer. Stop the server with Ctrl+C in
+the terminal when finished; saved MongoDB records remain available for the next run.
