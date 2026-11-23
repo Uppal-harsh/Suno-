@@ -151,9 +151,9 @@ and closes the database connection on shutdown.
 
 ### Start and sign in
 
-Run npm start (or node server.js) and keep the terminal open.
-Open http://127.0.0.1:8000, add products, then proceed to checkout.
-Open http://127.0.0.1:8000/admin.html or choose Store admin in the footer.
+Run `npm start` (or `node server.js`) and keep the terminal open.
+Open [the storefront](http://127.0.0.1:8000), add products, then proceed to checkout.
+Open [Store Admin](http://127.0.0.1:8000/admin.html) or choose Store admin in the footer.
 The terminal displays a random admin password on each server start. To choose a persistent password, set ADMIN_PASSWORD in your terminal environment before starting Node; do not put the password in Git.
 Admin sessions expire after eight hours and are invalidated when the server restarts. Sign out on a shared computer.
 Use Refresh in the dashboard to load the latest activity.
