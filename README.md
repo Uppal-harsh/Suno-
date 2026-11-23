@@ -142,7 +142,7 @@ and closes the database connection on shutdown.
 
 - Add-to-cart toast with View cart link, button feedback and a navigation item count.
 - Checkout collects customer name, email and delivery address and saves purchased items.
-- The server calculates totals using catalog.json, ignoring client-supplied prices.
+- The server calculates totals using MongoDB product prices, ignoring client-supplied prices.
 - Duplicate retries of the same checkout return the existing order.
 - Admin dashboard shows orders, customer details, items, quantities, totals and statuses.
 - Search and filter orders; update New, Confirmed, Packed, Delivered or Cancelled status.
