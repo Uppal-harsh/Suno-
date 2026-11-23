@@ -8,6 +8,11 @@
 4. Run `npm start`, then open [database health](http://127.0.0.1:8000/api/health). Confirm HTTP 200 and `{"mode":"mongodb","connected":true}`.
 5. Open [Store Admin](http://127.0.0.1:8000/admin.html) and sign in using the password from your terminal. Keep the terminal off the presentation screen.
 
+Before starting the shopping demonstration, open
+[the product API](http://127.0.0.1:8000/api/products) and confirm it returns a
+non-empty JSON array. A healthy connection with an empty array still needs
+catalog setup; review the import instructions before presenting.
+
 ## Show a saved order
 
 1. Open [Products](http://127.0.0.1:8000/products.html), add a product, and check the quantity and displayed total in Cart.
